@@ -102,5 +102,11 @@
     </PackageReference>
     <PackageReference Include="Prism.Unity" Version="7.1.0.431&#xD;" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MiniRisViewer.ServiceStatus\MiniRisViewer.ServiceStatus.csproj">
+      <Project>{1EEB3F88-7D05-4D17-90C1-39CD798A4DB9}</Project>
+      <Name>MiniRisViewer.ServiceStatus</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
