@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:MiniRisViewer.ServiceStatus.ViewModels"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
     d:DesignHeight="450"
@@ -16,14 +17,6 @@
     </UserControl.DataContext>
     <Grid>
         <DockPanel>
-            <StackPanel
-                VerticalAlignment="Top"
-                DockPanel.Dock="Top"
-                Orientation="Horizontal">
-                <TextBlock Text="時間:" />
-                <TextBlock Text="{Binding ScreenSynchronousTimer}" />
-
-            </StackPanel>
             <GroupBox
                 Margin="10"
                 DockPanel.Dock="Top"
@@ -32,18 +25,40 @@
                     VerticalAlignment="Top"
                     DockPanel.Dock="Top"
                     Orientation="Vertical">
-                    <TextBlock Text="FileImporter" />
-                    <TextBlock Text="{Binding ImporterStatus.Value}" />
-                    <TextBlock Text="MWMResponder" />
-                    <TextBlock Text="{Binding ResponderStatus.Value}" />
-                    <TextBlock Text="ScpCore" />
-                    <TextBlock Text="{Binding ScpCoreStatus.Value}" />
-                    <TextBlock Text="Asc" />
-                    <TextBlock Text="{Binding AscStatus.Value}" />
-                    <TextBlock Text="MppsReceiver" />
-                    <TextBlock Text="{Binding MppsStatus.Value}" />
+                    <materialDesign:Card Margin="16" Padding="32">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="FileImporter" />
+                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding ImporterStatus.Value}" />
+                        </StackPanel>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="16" Padding="32">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="MWMResponder" />
+                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding ResponderStatus.Value}" />
+                        </StackPanel>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="16" Padding="32">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="ScpCore" />
+                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding ScpCoreStatus.Value}" />
+                        </StackPanel>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="16" Padding="32">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="Asc" />
+                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding AscStatus.Value}" />
+                        </StackPanel>
+                    </materialDesign:Card>
+                    <materialDesign:Card Margin="16" Padding="32">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="MppsReceiver" />
+                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding MppsStatus.Value}" />
+                        </StackPanel>
+                    </materialDesign:Card>
                 </StackPanel>
             </GroupBox>
+
+
             <StackPanel
                 VerticalAlignment="Top"
                 DockPanel.Dock="Top"
