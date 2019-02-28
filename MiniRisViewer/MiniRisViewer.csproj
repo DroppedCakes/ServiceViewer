@@ -39,7 +39,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>toolbar_find.ico</ApplicationIcon>
+    <ApplicationIcon>Resource\toolbar_find.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -129,9 +129,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\toolbar_find.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="toolbar_find.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
