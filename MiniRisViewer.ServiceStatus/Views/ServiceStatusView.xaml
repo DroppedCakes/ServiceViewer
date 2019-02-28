@@ -25,34 +25,99 @@
                     VerticalAlignment="Top"
                     DockPanel.Dock="Top"
                     Orientation="Vertical">
-                    <materialDesign:Card Margin="16" Padding="32">
+                    <materialDesign:Card Margin="5" Padding="5">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="FileImporter" />
                             <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding ImporterStatus.Value}" />
+                            <StackPanel
+                                VerticalAlignment="Top"
+                                DockPanel.Dock="Top"
+                                Orientation="Horizontal">
+                                <Button
+                                    Margin="5"
+                                    Command="{Binding ImporterStartCommand}"
+                                    Content="START" />
+                                <Button
+                                    Margin="5"
+                                    Command="{Binding ImporterStopCommand}"
+                                    Content="Stop" />
+                            </StackPanel>
                         </StackPanel>
                     </materialDesign:Card>
-                    <materialDesign:Card Margin="16" Padding="32">
+                    <materialDesign:Card Margin="5" Padding="5">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="MWMResponder" />
                             <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding ResponderStatus.Value}" />
+                            <StackPanel
+                                VerticalAlignment="Top"
+                                DockPanel.Dock="Top"
+                                Orientation="Horizontal">
+                                <Button
+                                    Margin="5"
+                                    Command="{Binding ResponderStartCommand}"
+                                    Content="START" />
+                                <Button
+                                    Margin="5"
+                                    Command="{Binding ResponderStopCommand}"
+                                    Content="Stop" />
+                            </StackPanel>
                         </StackPanel>
                     </materialDesign:Card>
-                    <materialDesign:Card Margin="16" Padding="32">
+                    <materialDesign:Card Margin="5" Padding="5">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="ScpCore" />
                             <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding ScpCoreStatus.Value}" />
+                            <StackPanel
+                                VerticalAlignment="Top"
+                                DockPanel.Dock="Top"
+                                Orientation="Horizontal">
+                                <Button
+                                    Margin="5"
+                                    Command="{Binding ScpCoreStartCommand}"
+                                    Content="START" />
+                                <Button
+                                    Margin="5"
+                                    Command="{Binding ScpCoreStopCommand}"
+                                    Content="Stop" />
+                            </StackPanel>
                         </StackPanel>
                     </materialDesign:Card>
-                    <materialDesign:Card Margin="16" Padding="32">
+                    <materialDesign:Card Margin="5" Padding="5">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="Asc" />
                             <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding AscStatus.Value}" />
+                            <StackPanel
+                                VerticalAlignment="Top"
+                                DockPanel.Dock="Top"
+                                Orientation="Horizontal">
+                                <Button
+                                    Margin="5"
+                                    Command="{Binding AscStartCommand}"
+                                    Content="START" />
+                                <Button
+                                    Margin="5"
+                                    Command="{Binding AscStopCommand}"
+                                    Content="Stop" />
+                            </StackPanel>
                         </StackPanel>
                     </materialDesign:Card>
-                    <materialDesign:Card Margin="16" Padding="32">
+                    <materialDesign:Card Margin="5" Padding="5">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="MppsReceiver" />
                             <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding MppsStatus.Value}" />
+                            <StackPanel
+                                VerticalAlignment="Top"
+                                DockPanel.Dock="Top"
+                                Orientation="Horizontal">
+                                <Button
+                                    Margin="5"
+                                    Command="{Binding MppsStartCommand}"
+                                    Content="START" />
+                                <Button
+                                    Margin="5"
+                                    Command="{Binding MppsStopCommand}"
+                                    Content="Stop" />
+                            </StackPanel>
                         </StackPanel>
                     </materialDesign:Card>
                 </StackPanel>

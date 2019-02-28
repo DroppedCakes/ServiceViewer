@@ -21,8 +21,20 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public ReactiveProperty<string> ScpCoreStatus { get; } = new ReactiveProperty<string>();
         public ReactiveProperty<string> MppsStatus { get; } = new ReactiveProperty<string>();
 
-        public ReactiveCommand RebootOSCommand { get; }
+        #region ReactiveCommand
+        public ReactiveCommand ImporterStartCommand { get; }
+        public ReactiveCommand ImporterStopCommand { get; }
+        public ReactiveCommand ResponderStartCommand { get; }
+        public ReactiveCommand ResponderStopCommand { get; }
+        public ReactiveCommand ScpCoreStartCommand { get; }
+        public ReactiveCommand ScpCoreStopCommand { get; }
+        public ReactiveCommand AscStartCommand { get; }
+        public ReactiveCommand AscStopCommand { get; }
+        public ReactiveCommand MppsStartCommand { get; }
+        public ReactiveCommand MppsStopCommand { get; }
         public ReactiveCommand RestartServiceCommand { get; } = new ReactiveCommand();
+        #endregion ReactiveCommand
+
         public ReactiveTimer ScreenSynchronousTimer;
 
         private CompositeDisposable DisposeCollection = new CompositeDisposable();
@@ -52,7 +64,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         {
             model = new Domain.Model.ServiceStatus();
 
-            // M ->Vの接続
+            // M ->VMの接続
             ImporterStatus = model.ObserveProperty(x => x.ImporterStatus)
                 .ToReactiveProperty();
             ResponderStatus = model.ObserveProperty(x => x.ResponderStatus)
@@ -63,10 +75,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
                 .ToReactiveProperty();
             MppsStatus = model.ObserveProperty(x => x.MppsStatus)
                 .ToReactiveProperty();
-
-            // VM => Vの接続
-            ImporterStatus
-                .Subscribe(x => model.ImporterStatus = x);
 
             // 全てのサービスを再起動するコマンド
             RestartServiceCommand.Subscribe(_ => model.RestartServiceAll());
