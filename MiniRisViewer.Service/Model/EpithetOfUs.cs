@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiniRisViewer.Service.Model
+namespace MiniRisViewer.Domain.Model
 {
     public enum EpithetOfUs
     {

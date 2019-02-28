@@ -4,8 +4,9 @@ using System;
 using System.ServiceProcess;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
-namespace MiniRisViewer.Service.Model
+namespace MiniRisViewer.Domain.Model
 {
     public class ServiceStatus : BindableBase
     {
@@ -197,12 +198,27 @@ namespace MiniRisViewer.Service.Model
         }
 
         /// <summary>
+        ///  非同期でタスクの再起動を行う
+        /// </summary>
+        public async void RestartServiceAll()
+        {
+                 // ここもLINQでやりたいよね
+                 //Services.Select(x => RestartService(x.Value));
+                 foreach (KeyValuePair<EpithetOfUs, string> x in Services)
+                 {
+                     RestartService(x.Value);
+                 }
+
+        }
+
+        /// <summary>
         /// 引数として与えられた
         /// サービスの再起動を行う
         /// </summary>
         /// <param name="serviceName"></param>
         private void RestartService(string serviceName)
         {
+
             using (ServiceController sc = new ServiceController(serviceName))
             {
                 if (sc.Status == ServiceControllerStatus.Running)

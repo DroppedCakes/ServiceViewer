@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MiniRisViewer.Service.Model
+namespace MiniRisViewer.Domain.Model
 {
     public class AppConfig : BindableBase
     {
