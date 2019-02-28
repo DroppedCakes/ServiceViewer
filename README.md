@@ -6,7 +6,9 @@
 ## ç\ê¨
 - C#
 - .Net framework4.7.2
+- WPF
 - Prism
 - ReactiveProperty
-- Material Design In XAML Toolkit
-- Mahapps
+- UI
+	- Material Design In XAML Toolkit
+	- Mahapps
