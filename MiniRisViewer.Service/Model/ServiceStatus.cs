@@ -17,6 +17,9 @@ namespace MiniRisViewer.Domain.Model
         private const string UsScpCoreServiceName = "UsScpCore";
         private const string UsMppsReceiverServiceName = "UsMppsReceiver";
 
+        /// <summary>
+        /// サービスの通称とサービス名を保持するディクショナリー
+        /// </summary>
         private readonly Dictionary<EpithetOfUs, string> Services;
 
         /// <summary>
@@ -179,7 +182,8 @@ namespace MiniRisViewer.Domain.Model
         }
 
         /// <summary>
-        /// 
+        /// 引数として与えられた
+        /// サービスの状態を反転させる
         /// </summary>
         /// <param name="serviceName"></param>
         private void ReverseState(string serviceName)
@@ -198,7 +202,7 @@ namespace MiniRisViewer.Domain.Model
         }
 
         /// <summary>
-        ///  非同期でタスクの再起動を行う
+        ///  非同期でタスクの再起動を行う予定
         /// </summary>
         public async void RestartServiceAll()
         {

@@ -13,13 +13,21 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
 {
     public class ServiceStatusViewModel : BindableBase,IDisposable
     {
+        /// <summary>
+        /// Model
+        /// </summary>
         public Domain.Model.ServiceStatus model;
 
+        /// <summary>
+        ///  サービスの状態を保持するプロパティ
+        /// </summary>
+        #region ReactiveProperty
         public ReactiveProperty<string> ImporterStatus { get; } = new ReactiveProperty<string>();
         public ReactiveProperty<string> ResponderStatus { get; } = new ReactiveProperty<string>();
         public ReactiveProperty<string> AscStatus{ get; } = new ReactiveProperty<string>();
         public ReactiveProperty<string> ScpCoreStatus { get; } = new ReactiveProperty<string>();
         public ReactiveProperty<string> MppsStatus { get; } = new ReactiveProperty<string>();
+        #endregion ReactiveProperty
 
         #region ReactiveCommand
         public ReactiveCommand ImporterStartCommand { get; }
@@ -35,8 +43,14 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public ReactiveCommand RestartServiceCommand { get; } = new ReactiveCommand();
         #endregion ReactiveCommand
 
+        /// <summary>
+        /// サービスの状態を更新するタイマー
+        /// </summary>
         public ReactiveTimer ScreenSynchronousTimer;
 
+        /// <summary>
+        /// IDisposableの実装部
+        /// </summary>
         private CompositeDisposable DisposeCollection = new CompositeDisposable();
         #region IDisposable Support
         private bool disposedValue = false; // 重複する呼び出しを検出するには
@@ -62,9 +76,10 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// </summary>
         public ServiceStatusViewModel()
         {
+            // 後でDIにする
             model = new Domain.Model.ServiceStatus();
 
-            // M ->VMの接続
+            // M -> VMの接続
             ImporterStatus = model.ObserveProperty(x => x.ImporterStatus)
                 .ToReactiveProperty();
             ResponderStatus = model.ObserveProperty(x => x.ResponderStatus)
@@ -79,6 +94,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             // 全てのサービスを再起動するコマンド
             RestartServiceCommand.Subscribe(_ => model.RestartServiceAll());
 
+            // 1秒ごとに購読する
             ScreenSynchronousTimer = new ReactiveTimer(TimeSpan.FromSeconds(1));
             // タイマーを購読し、
             // サービスのステータスを最新のものに同期する
