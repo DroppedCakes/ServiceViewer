@@ -181,25 +181,54 @@ namespace MiniRisViewer.Domain.Model
             return retv;
         }
 
+
+ 
         /// <summary>
         /// 引数として与えられた
         /// サービスの状態を反転させる
         /// </summary>
         /// <param name="serviceName"></param>
-        private void ReverseState(string serviceName)
+        public void ReverseState(string serviceName)
         {
             using (ServiceController sc = new ServiceController(serviceName))
             {
-                if (sc.Status == ServiceControllerStatus.Paused)
+                switch (sc.Status)
                 {
-                    sc.Continue();
+                    case ServiceControllerStatus.ContinuePending:
+
+                        break;
+                    case ServiceControllerStatus.Paused:
+                        sc.Continue();
+                        break;
+                    case ServiceControllerStatus.PausePending:
+                        break;
+                    case ServiceControllerStatus.Running:
+                        break;
+                    case ServiceControllerStatus.StartPending:
+                        break;
+                    case ServiceControllerStatus.Stopped:
+                        sc.Start();
+                        break;
+                    case ServiceControllerStatus.StopPending:
+                        break;
+                    default:
+                        break;
                 }
-                else
-                {
-                    sc.Pause();
-                }
+
+                //if (sc.Status == ServiceControllerStatus.Paused ) 
+                //{
+                //    sc.Continue();
+                //}
+                //else
+                //{
+                //    sc.Pause();
+                //}
             }
         }
+
+
+
+
 
         /// <summary>
         ///  非同期でタスクの再起動を行う予定

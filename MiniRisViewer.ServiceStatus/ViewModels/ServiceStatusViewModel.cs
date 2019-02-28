@@ -30,7 +30,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         #endregion ReactiveProperty
 
         #region ReactiveCommand
-        public ReactiveCommand ImporterStartCommand { get; }
+        public ReactiveCommand ImporterStartCommand { get; } = new ReactiveCommand();
         public ReactiveCommand ImporterStopCommand { get; }
         public ReactiveCommand ResponderStartCommand { get; }
         public ReactiveCommand ResponderStopCommand { get; }
@@ -90,6 +90,12 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
                 .ToReactiveProperty();
             MppsStatus = model.ObserveProperty(x => x.MppsStatus)
                 .ToReactiveProperty();
+
+
+            // ReverseStateのお試し用
+            ImporterStartCommand.Subscribe(_ => model.ReverseState("UsFileImporter"));
+
+
 
             // 全てのサービスを再起動するコマンド
             RestartServiceCommand.Subscribe(_ => model.RestartServiceAll());
