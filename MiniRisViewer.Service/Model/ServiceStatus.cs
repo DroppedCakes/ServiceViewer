@@ -1,46 +1,34 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using System;
-using System.ServiceProcess;
+﻿using Prism.Mvvm;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ServiceProcess;
 
 namespace MiniRisViewer.Domain.Model
 {
     public class ServiceStatus : BindableBase
     {
-        // サービス名称
-        private const string UsFileImporterServiceName = "UsFileImporter";
-        private const string UsMwmResponderServiceName = "UsMwmResponder";
-        private const string UsAscServiceName = "UsAscService";
-        private const string UsScpCoreServiceName = "UsScpCore";
-        private const string UsMppsReceiverServiceName = "UsMppsReceiver";
-
         /// <summary>
         /// サービスの通称とサービス名を保持するディクショナリー
         /// </summary>
-        private readonly Dictionary<EpithetOfUs, string> Services;
+        private static readonly ServiceManager[] Services =        {
+            new ServiceManager(ServiceManager.UsFileImporterServiceName),
+            new  ServiceManager(ServiceManager.UsMwmResponderServiceName),
+            new  ServiceManager(ServiceManager.UsScpCoreServiceName ),
+            new  ServiceManager(ServiceManager.UsAscServiceName),
+            new  ServiceManager(ServiceManager.UsMppsReceiverServiceName ),
+        };
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public ServiceStatus()
         {
-            Services = new Dictionary<EpithetOfUs, string>()
-            {
-                {EpithetOfUs.Importer,UsFileImporterServiceName},
-                {EpithetOfUs.Responder,UsMwmResponderServiceName},
-                {EpithetOfUs.ScpCore,UsScpCoreServiceName },
-                {EpithetOfUs.Asc,UsAscServiceName},
-                {EpithetOfUs.Mpps,UsMppsReceiverServiceName },
-            };
         }
 
         /// <summary>
         ///  FileImporterのステータス
         /// </summary>
         private string importerStatus;
+
         public string ImporterStatus
         {
             get { return importerStatus; }
@@ -51,6 +39,7 @@ namespace MiniRisViewer.Domain.Model
         /// Responderのステータス
         /// </summary>
         private string responderStatus;
+
         public string ResponderStatus
         {
             get { return responderStatus; }
@@ -61,6 +50,7 @@ namespace MiniRisViewer.Domain.Model
         /// AssociationServiceのステータス
         /// </summary>
         private string ascStatus;
+
         public string AscStatus
         {
             get { return ascStatus; }
@@ -71,6 +61,7 @@ namespace MiniRisViewer.Domain.Model
         /// ScpCoreのステータス
         /// </summary>
         private string scpCoreStatus;
+
         public string ScpCoreStatus
         {
             get { return scpCoreStatus; }
@@ -81,6 +72,7 @@ namespace MiniRisViewer.Domain.Model
         /// MppsReceiverのステータス
         /// </summary>
         private string mppsStatus;
+
         public string MppsStatus
         {
             get { return mppsStatus; }
@@ -109,11 +101,11 @@ namespace MiniRisViewer.Domain.Model
         /// </summary>
         /// <param name="ailias"></param>
         /// <param name="serviceName"></param>
-        private void SynchronizeServiceState(EpithetOfUs ailias,string serviceName)
+        private void SynchronizeServiceState(EpithetOfUs ailias, string serviceName)
         {
             // 引数のサービス名からサービスの状態を取得し、
             // 文字列に変換する
-            var serviceStateString= ConvertToStatusName(GetServiceState(serviceName));
+            var serviceStateString = ConvertToStatusName(GetServiceState(serviceName));
 
             // サービス名によって、
             // 文字列の代入先を変化させる
@@ -121,16 +113,20 @@ namespace MiniRisViewer.Domain.Model
             {
                 case EpithetOfUs.Importer:
                     ImporterStatus = serviceStateString;
-                        break;
+                    break;
+
                 case EpithetOfUs.Responder:
                     ResponderStatus = serviceStateString;
                     break;
+
                 case EpithetOfUs.ScpCore:
                     ScpCoreStatus = serviceStateString;
                     break;
+
                 case EpithetOfUs.Asc:
                     AscStatus = serviceStateString;
                     break;
+
                 case EpithetOfUs.Mpps:
                     MppsStatus = serviceStateString;
                     break;
@@ -144,22 +140,29 @@ namespace MiniRisViewer.Domain.Model
         /// <returns></returns>
         private string ConvertToStatusName(ServiceControllerStatus status)
         {
-            switch(status)
+            switch (status)
             {
                 case ServiceControllerStatus.StartPending:
                     return "サービス開始させています";
+
                 case ServiceControllerStatus.Running:
                     return "動作中";
+
                 case ServiceControllerStatus.Stopped:
                     return "停止中";
+
                 case ServiceControllerStatus.StopPending:
                     return "停止させています";
+
                 case ServiceControllerStatus.Paused:
                     return "一時停止";
+
                 case ServiceControllerStatus.PausePending:
                     return "一時停止させています";
+
                 case ServiceControllerStatus.ContinuePending:
                     return "再開させています";
+
                 default:
                     return "不明";
             }
@@ -181,8 +184,6 @@ namespace MiniRisViewer.Domain.Model
             return retv;
         }
 
-
- 
         /// <summary>
         /// 引数として与えられた
         /// サービスの状態を反転させる
@@ -197,25 +198,32 @@ namespace MiniRisViewer.Domain.Model
                     case ServiceControllerStatus.ContinuePending:
 
                         break;
+
                     case ServiceControllerStatus.Paused:
                         sc.Continue();
                         break;
+
                     case ServiceControllerStatus.PausePending:
                         break;
+
                     case ServiceControllerStatus.Running:
                         break;
+
                     case ServiceControllerStatus.StartPending:
                         break;
+
                     case ServiceControllerStatus.Stopped:
                         sc.Start();
                         break;
+
                     case ServiceControllerStatus.StopPending:
                         break;
+
                     default:
                         break;
                 }
 
-                //if (sc.Status == ServiceControllerStatus.Paused ) 
+                //if (sc.Status == ServiceControllerStatus.Paused )
                 //{
                 //    sc.Continue();
                 //}
@@ -226,22 +234,17 @@ namespace MiniRisViewer.Domain.Model
             }
         }
 
-
-
-
-
         /// <summary>
         ///  非同期でタスクの再起動を行う予定
         /// </summary>
         public async void RestartServiceAll()
         {
-                 // ここもLINQでやりたいよね
-                 //Services.Select(x => RestartService(x.Value));
-                 foreach (KeyValuePair<EpithetOfUs, string> x in Services)
-                 {
-                     RestartService(x.Value);
-                 }
-
+            // ここもLINQでやりたいよね
+            //Services.Select(x => RestartService(x.Value));
+            foreach (KeyValuePair<EpithetOfUs, string> x in Services)
+            {
+                RestartService(x.Value);
+            }
         }
 
         /// <summary>
@@ -251,7 +254,6 @@ namespace MiniRisViewer.Domain.Model
         /// <param name="serviceName"></param>
         private void RestartService(string serviceName)
         {
-
             using (ServiceController sc = new ServiceController(serviceName))
             {
                 if (sc.Status == ServiceControllerStatus.Running)

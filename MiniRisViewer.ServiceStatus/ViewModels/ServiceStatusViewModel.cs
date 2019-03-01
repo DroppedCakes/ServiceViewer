@@ -40,7 +40,12 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public ReactiveCommand AscStopCommand { get; }
         public ReactiveCommand MppsStartCommand { get; }
         public ReactiveCommand MppsStopCommand { get; }
+        /// <summary>
+        /// 全てのサービスを再起動するコマンド
+        /// </summary>
         public ReactiveCommand RestartServiceCommand { get; } = new ReactiveCommand();
+
+        public ReactiveCommand<string> ShowLogCommand { get; private set;} = new ReactiveCommand<string>();
         #endregion ReactiveCommand
 
         /// <summary>
