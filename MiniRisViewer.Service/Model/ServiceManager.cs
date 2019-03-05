@@ -1,51 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Prism.Mvvm;
+using System;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace MiniRisViewer.Domain.Model
 {
-    public class ServiceManager
+    public class ServiceManager : BindableBase
     {
-        // サービス名称
-        public const string UsFileImporterServiceName = "UsFileImporter";
-        public const string UsMwmResponderServiceName = "UsMwmResponder";
-        public const string UsAscServiceName = "UsAscService";
-        public const string UsScpCoreServiceName = "UsScpCore";
-        public const string UsMppsReceiverServiceName = "UsMppsReceiver";
-
-        /// <summary>
-        /// サービスの名称
-        /// </summary>
-        public string ServiceName { get; }
-
-        /// <summary>
-        /// 実行ファイルのパス
-        /// </summary>
-        public string ServicePath { get; }
-
-        /// <summary>
-        /// サービスの状態
-        /// </summary>
-        public ServiceControllerStatus State { get; private set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Start()
-        {
-
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Stop()
-        {
-
-        }
 
         /// <summary>
         /// コンストラクタ
@@ -54,5 +15,198 @@ namespace MiniRisViewer.Domain.Model
         {
             ServiceName = serviceName;
         }
+
+        /// <summary>
+        /// サービスの名称
+        /// </summary>
+        public readonly string ServiceName;
+  
+        /// <summary>
+        /// 実行ファイルのパス
+        /// </summary>
+        public string ServicePath { get; }
+
+        /// <summary>
+        /// サービスの状態
+        /// </summary>
+        private ServiceControllerStatus status;
+        public ServiceControllerStatus Status
+        {
+            get { return status; }
+            set { SetProperty(ref status, value); }
+        }
+
+        /// <summary>
+        /// サービスの開始を行う
+        /// </summary>
+        public bool Start()
+        {
+            TimeSpan timeout = new TimeSpan(00,00,10);
+
+            bool CanStart = false;
+            try
+            {
+                using (ServiceController sc = new ServiceController(ServiceName))
+                {
+                    switch (sc.Status)
+                    {
+                        case ServiceControllerStatus.Stopped:
+                            //停止中の場合、開始する
+                            sc.Start();
+                            // サービスが開始するまで待機する
+                            sc.WaitForStatus(ServiceControllerStatus.Running, timeout);
+
+                            if (sc.Status == ServiceControllerStatus.Running )
+                            {
+                                CanStart = true;
+                            }
+                            break;
+
+                        case ServiceControllerStatus.StartPending:
+                            //再開処理中の場合、何もしない
+                            break;
+
+                        case ServiceControllerStatus.StopPending:
+                            //停止処理中の場合、何もしない
+                            break;
+
+                        case ServiceControllerStatus.Running:
+                            //動作しているので何もしない
+                            break;
+
+                        case ServiceControllerStatus.ContinuePending:
+                            //再開中の場合、何もしない
+                            break;
+
+                        case ServiceControllerStatus.PausePending:
+                            //一時停止処理中の場合、何もしない
+                            break;
+
+                        case ServiceControllerStatus.Paused:
+                            //一次停止の場合、何もしない
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                CanStart = false;
+            }
+            return CanStart;
+        }
+
+
+        /// <summary>
+        /// サービスの停止を行う
+        /// </summary>
+        /// Stop可能な状態のみこのメソッドが呼ばれること
+        public bool Stop()
+        {
+            TimeSpan timeout = new TimeSpan(00, 00, 10);
+
+            bool CanStop = false;
+            try
+            {
+                using (ServiceController sc = new ServiceController(ServiceName))
+                {
+
+                    switch (sc.Status)
+                    {
+                        case ServiceControllerStatus.Stopped:
+                            //停止中の場合、何もしない
+                            break;
+
+                        case ServiceControllerStatus.StartPending:
+                            //再開処理中の場合、何もしない
+                            break;
+
+                        case ServiceControllerStatus.StopPending:
+                            //停止処理中の場合、サービスが停止するまで待機する
+                            break;
+
+                        case ServiceControllerStatus.Running:
+                            //動作中の場合、停止する
+                            sc.Stop();
+                            // サービスが停止するまで待機する
+                            sc.WaitForStatus(ServiceControllerStatus.Stopped , timeout);
+
+                            if (sc.Status == ServiceControllerStatus.Stopped )
+                            {
+                                CanStop = true;
+                            }
+                            break;
+
+                        case ServiceControllerStatus.ContinuePending:
+                            //再開中の場合、何もしない
+                            break;
+
+                        case ServiceControllerStatus.PausePending:
+                            //一時停止処理中の場合、何もしない
+                            break;
+
+                        case ServiceControllerStatus.Paused:
+                            //一次停止中の場合、何もしない
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                CanStop = false;
+            }
+            return CanStop;
+        }
+
+        /// <summary>
+        /// サービスの再起動を行う
+        /// </summary>
+        public bool Restart()
+        {
+            TimeSpan timeout = new TimeSpan(00, 00, 10);
+
+            bool CanRestart = false;
+
+            try
+            {
+                using (ServiceController sc = new ServiceController(ServiceName))
+                {
+                    //停止中以外の場合
+                    if (sc.Status != ServiceControllerStatus.Stopped)
+                    {
+                        //停止処理中以外の場合
+                        if (sc.Status != ServiceControllerStatus.StopPending)
+                        {
+                            //停止する
+                            sc.Stop();
+                        }
+                        // サービスが停止するまで待機する
+                        sc.WaitForStatus(ServiceControllerStatus.Stopped,timeout);
+
+                    }
+
+                    sc.Start();
+                    // サービスが開始するまで待機する
+                    sc.WaitForStatus(ServiceControllerStatus.Running,timeout);
+                    if (sc.Status == ServiceControllerStatus.Running)
+                    {
+                        CanRestart = true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                CanRestart = false;
+            }
+
+            return CanRestart;
+
+        }
     }
+
 }

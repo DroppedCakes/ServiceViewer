@@ -4,6 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:MiniRisViewer.ServiceStatus.ViewModels"
+    xmlns:local1="clr-namespace:MiniRisViewer.ServiceStatus.Helper"
+    
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
@@ -11,7 +13,9 @@
     d:DesignWidth="1024"
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
-
+    <UserControl.Resources >
+        <local1:StatusConverter x:Key="StatusConverter" />
+    </UserControl.Resources>
     <UserControl.DataContext>
         <local:ServiceStatusViewModel />
     </UserControl.DataContext>
@@ -27,12 +31,14 @@
                     Orientation="Vertical">
                     <materialDesign:Card Margin="5" Padding="5">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="FileImporter" />
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding ImporterStatus.Value}" />
+                            <TextBlock 
+                                Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="FileImporter" />
+                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding ImporterStatus .Value , Converter={StaticResource StatusConverter}}" />
                             <StackPanel
                                 VerticalAlignment="Top"
                                 DockPanel.Dock="Top"
-                                Orientation="Horizontal">
+                                Orientation="Horizontal"
+                                Name="FileImporter">
                                 <Button
                                     Margin="5"
                                     Command="{Binding ImporterStartCommand}"
@@ -52,7 +58,7 @@
                     <materialDesign:Card Margin="5" Padding="5">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="MWMResponder" />
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding ResponderStatus.Value}" />
+                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding ResponderStatus.Value　 , Converter={StaticResource StatusConverter}}" />
                             <StackPanel
                                 VerticalAlignment="Top"
                                 DockPanel.Dock="Top"
@@ -71,7 +77,7 @@
                     <materialDesign:Card Margin="5" Padding="5">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="ScpCore" />
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding ScpCoreStatus.Value}" />
+                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding ScpCoreStatus.Value , Converter={StaticResource StatusConverter}}" />
                             <StackPanel
                                 VerticalAlignment="Top"
                                 DockPanel.Dock="Top"
@@ -90,7 +96,7 @@
                     <materialDesign:Card Margin="5" Padding="5">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="Asc" />
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding AscStatus.Value}" />
+                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding AscStatus.Value , Converter={StaticResource StatusConverter}}" />
                             <StackPanel
                                 VerticalAlignment="Top"
                                 DockPanel.Dock="Top"
@@ -109,7 +115,7 @@
                     <materialDesign:Card Margin="5" Padding="5">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="MppsReceiver" />
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding MppsStatus.Value}" />
+                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding MppsStatus.Value , Converter={StaticResource StatusConverter}}" />
                             <StackPanel
                                 VerticalAlignment="Top"
                                 DockPanel.Dock="Top"

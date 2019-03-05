@@ -8,10 +8,13 @@ using System.Linq;
 using System.Reactive.Disposables;
 using MiniRisViewer.Domain.Model;
 using Reactive.Bindings.Extensions;
+using System.ServiceProcess;
+
+
 
 namespace MiniRisViewer.ServiceStatus.ViewModels
 {
-    public class ServiceStatusViewModel : BindableBase,IDisposable
+    public class ServiceStatusViewModel : BindableBase, IDisposable
     {
         /// <summary>
         /// Model
@@ -22,30 +25,33 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         ///  サービスの状態を保持するプロパティ
         /// </summary>
         #region ReactiveProperty
-        public ReactiveProperty<string> ImporterStatus { get; } = new ReactiveProperty<string>();
-        public ReactiveProperty<string> ResponderStatus { get; } = new ReactiveProperty<string>();
-        public ReactiveProperty<string> AscStatus{ get; } = new ReactiveProperty<string>();
-        public ReactiveProperty<string> ScpCoreStatus { get; } = new ReactiveProperty<string>();
-        public ReactiveProperty<string> MppsStatus { get; } = new ReactiveProperty<string>();
+        public ReactiveProperty<ServiceControllerStatus> ImporterStatus { get; } = new ReactiveProperty<ServiceControllerStatus>();
+        public ReactiveProperty<ServiceControllerStatus> ResponderStatus { get; } = new ReactiveProperty<ServiceControllerStatus>();
+        public ReactiveProperty<ServiceControllerStatus> AscStatus { get; } = new ReactiveProperty<ServiceControllerStatus>();
+        public ReactiveProperty<ServiceControllerStatus> ScpCoreStatus { get; } = new ReactiveProperty<ServiceControllerStatus>();
+        public ReactiveProperty<ServiceControllerStatus> MppsStatus { get; } = new ReactiveProperty<ServiceControllerStatus>();
         #endregion ReactiveProperty
 
         #region ReactiveCommand
         public ReactiveCommand ImporterStartCommand { get; } = new ReactiveCommand();
-        public ReactiveCommand ImporterStopCommand { get; }
-        public ReactiveCommand ResponderStartCommand { get; }
-        public ReactiveCommand ResponderStopCommand { get; }
-        public ReactiveCommand ScpCoreStartCommand { get; }
-        public ReactiveCommand ScpCoreStopCommand { get; }
-        public ReactiveCommand AscStartCommand { get; }
-        public ReactiveCommand AscStopCommand { get; }
-        public ReactiveCommand MppsStartCommand { get; }
-        public ReactiveCommand MppsStopCommand { get; }
+        public ReactiveCommand ImporterStopCommand { get; } = new ReactiveCommand();
+        public ReactiveCommand ResponderStartCommand { get; } = new ReactiveCommand();
+        public ReactiveCommand ResponderStopCommand { get; } = new ReactiveCommand();
+        public ReactiveCommand ScpCoreStartCommand { get; } = new ReactiveCommand();
+        public ReactiveCommand ScpCoreStopCommand { get; } = new ReactiveCommand();
+        public ReactiveCommand AscStartCommand { get; } = new ReactiveCommand();
+        public ReactiveCommand AscStopCommand { get; } = new ReactiveCommand();
+        public ReactiveCommand MppsStartCommand { get; } = new ReactiveCommand();
+        public ReactiveCommand MppsStopCommand { get; } = new ReactiveCommand();
+
+        public ReactiveCommand StartCommand = new ReactiveCommand();
+
         /// <summary>
         /// 全てのサービスを再起動するコマンド
         /// </summary>
         public ReactiveCommand RestartServiceCommand { get; } = new ReactiveCommand();
 
-        public ReactiveCommand<string> ShowLogCommand { get; private set;} = new ReactiveCommand<string>();
+        public ReactiveCommand<string> ShowLogCommand { get; private set; } = new ReactiveCommand<string>();
         #endregion ReactiveCommand
 
         /// <summary>
@@ -79,39 +85,57 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// <summary>
         /// コンストラクタ
         /// </summary>
+        private string stringSserviceStatus;
+
+
+        private void StartButtonAction() {
+                
+
+        }
+
+
         public ServiceStatusViewModel()
         {
             // 後でDIにする
             model = new Domain.Model.ServiceStatus();
 
             // M -> VMの接続
-            ImporterStatus = model.ObserveProperty(x => x.ImporterStatus)
-                .ToReactiveProperty();
-            ResponderStatus = model.ObserveProperty(x => x.ResponderStatus)
-                .ToReactiveProperty();
-            AscStatus = model.ObserveProperty(x => x.AscStatus)
-                .ToReactiveProperty();
-            ScpCoreStatus = model.ObserveProperty(x => x.ScpCoreStatus)
-                .ToReactiveProperty();
-            MppsStatus = model.ObserveProperty(x => x.MppsStatus)
-                .ToReactiveProperty();
+            ImporterStatus =model.Services[((int)EpithetOfUs.Importer)].ObserveProperty(x=> x.Status ).ToReactiveProperty();
+            AscStatus = model.Services[((int)EpithetOfUs.Asc)].ObserveProperty(x => x.Status).ToReactiveProperty();
+            ResponderStatus = model.Services[((int)EpithetOfUs.Responder )].ObserveProperty(x => x.Status).ToReactiveProperty();
+            ScpCoreStatus = model.Services[((int)EpithetOfUs.ScpCore )].ObserveProperty(x => x.Status).ToReactiveProperty();
+            MppsStatus = model.Services[((int)EpithetOfUs.Mpps)].ObserveProperty(x => x.Status).ToReactiveProperty();
 
 
-            // ReverseStateのお試し用
-            ImporterStartCommand.Subscribe(_ => model.ReverseState("UsFileImporter"));
+            //Commandの設定
+            ImporterStartCommand.Subscribe(_ => model.Services[((int)EpithetOfUs.Importer)].Start() );
+            AscStartCommand.Subscribe(_ => model.Services[((int)EpithetOfUs.Asc)].Start());
+            ResponderStartCommand.Subscribe(_ => model.Services[((int)EpithetOfUs.Responder )].Start());
+            ScpCoreStartCommand.Subscribe(_ => model.Services[((int)EpithetOfUs.ScpCore )].Start());
+            MppsStartCommand.Subscribe(_ => model.Services[((int)EpithetOfUs.Mpps )].Start());
+
+            ImporterStopCommand.Subscribe(_ => model.Services[((int)EpithetOfUs.Importer)].Stop());
+            AscStopCommand.Subscribe(_ => model.Services[((int)EpithetOfUs.Asc)].Stop());
+            ResponderStopCommand.Subscribe(_ => model.Services[((int)EpithetOfUs.Responder)].Stop());
+            ScpCoreStopCommand.Subscribe(_ => model.Services[((int)EpithetOfUs.ScpCore)].Stop());
+            MppsStopCommand.Subscribe(_ => model.Services[((int)EpithetOfUs.Mpps)].Stop());
 
 
+            RestartServiceCommand.Subscribe(_ => model.RestartService());
 
-            // 全てのサービスを再起動するコマンド
-            RestartServiceCommand.Subscribe(_ => model.RestartServiceAll());
+
+            //// 全てのサービスを再起動するコマンド
+            //RestartServiceCommand.Subscribe(_ => model.RestartServiceAll());
 
             // 1秒ごとに購読する
             ScreenSynchronousTimer = new ReactiveTimer(TimeSpan.FromSeconds(1));
             // タイマーを購読し、
             // サービスのステータスを最新のものに同期する
-            ScreenSynchronousTimer.Subscribe(_=>model.RefreshServiceStatus());
+            ScreenSynchronousTimer.Subscribe(_=>model.ServiceStatusUpdate());
 
             ScreenSynchronousTimer.Start();
+
+            StartCommand.Subscribe (_ => StartButtonAction());
         }
 
     }

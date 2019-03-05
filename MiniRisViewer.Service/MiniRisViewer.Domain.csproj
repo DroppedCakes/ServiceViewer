@@ -102,6 +102,7 @@
     <Compile Include="Model\EpithetOfUs.cs" />
     <Compile Include="Model\ServiceManager.cs" />
     <Compile Include="Model\ServiceStatus.cs" />
+    <Compile Include="Model\ServiceList.cs" />
     <Compile Include="Service\ConfigLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
