@@ -69,15 +69,14 @@ namespace MiniRisViewer.Domain.Model
         /// </summary>
         public void RestartService()
         {
-            ////再起動できたかどうかをListで持っておく（現状戻り値なしなので使い道なし）
-            //var result = new List<bool>();
-  
-            //foreach (ServiceManager x in Services)
-            //{
-            //    result.Add(ServiceManager.Restart());
-            //    x.Status = GetServiceState(x.ServiceName);
-            //    ImporterStatus = x.Status;
-            //}
+
+            //再起動できたかどうかをListで持っておく（現状戻り値なしなので使い道なし）
+            var result = new List<bool>();
+
+            foreach (ServiceManager x in Services)
+            {
+                result.Add(x.Restart());
+            }
 
         }
 

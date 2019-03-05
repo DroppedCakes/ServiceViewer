@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:MiniRisViewer.ServiceStatus.ViewModels"
     xmlns:local1="clr-namespace:MiniRisViewer.ServiceStatus.Helper"
-    
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
@@ -13,7 +12,7 @@
     d:DesignWidth="1024"
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
-    <UserControl.Resources >
+    <UserControl.Resources>
         <local1:StatusConverter x:Key="StatusConverter" />
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -29,25 +28,36 @@
                     VerticalAlignment="Top"
                     DockPanel.Dock="Top"
                     Orientation="Vertical">
+
                     <materialDesign:Card Margin="5" Padding="5">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock 
-                                Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="FileImporter" />
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding ImporterStatus .Value , Converter={StaticResource StatusConverter}}" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Width="322"
+                                    Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                    Text="FileImporter" />
+                                <TextBlock
+                                    Width="322"
+                                    Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                    Text="{Binding ImporterStatus .Value, Converter={StaticResource StatusConverter}}" />
+                            </StackPanel>
                             <StackPanel
+                                x:Name="FileImporter"
+                                HorizontalAlignment="Right"
                                 VerticalAlignment="Top"
-                                DockPanel.Dock="Top"
-                                Orientation="Horizontal"
-                                Name="FileImporter">
+                                Orientation="Horizontal">
                                 <Button
+                                    Width="100"
                                     Margin="5"
                                     Command="{Binding ImporterStartCommand}"
                                     Content="START" />
                                 <Button
+                                    Width="100"
                                     Margin="5"
                                     Command="{Binding ImporterStopCommand}"
                                     Content="Stop" />
                                 <Button
+                                    Width="100"
                                     Margin="5"
                                     Command="{Binding ShowLogCommand}"
                                     CommandParameter="FileImporter"
@@ -57,17 +67,26 @@
                     </materialDesign:Card>
                     <materialDesign:Card Margin="5" Padding="5">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="MWMResponder" />
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding ResponderStatus.Value　 , Converter={StaticResource StatusConverter}}" />
+                            <TextBlock
+                                Width="322"
+                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                Text="MWMResponder" />
+                            <TextBlock
+                                Width="322"
+                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                Text="{Binding ResponderStatus.Value　 , Converter={StaticResource StatusConverter}}" />
                             <StackPanel
+                                Width="322"
                                 VerticalAlignment="Top"
                                 DockPanel.Dock="Top"
                                 Orientation="Horizontal">
                                 <Button
+                                    Width="150"
                                     Margin="5"
                                     Command="{Binding ResponderStartCommand}"
                                     Content="START" />
                                 <Button
+                                    Width="150"
                                     Margin="5"
                                     Command="{Binding ResponderStopCommand}"
                                     Content="Stop" />
@@ -76,17 +95,25 @@
                     </materialDesign:Card>
                     <materialDesign:Card Margin="5" Padding="5">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="ScpCore" />
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding ScpCoreStatus.Value , Converter={StaticResource StatusConverter}}" />
+                            <TextBlock
+                                Width="322"
+                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                Text="ScpCore" />
+                            <TextBlock
+                                Width="322"
+                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                Text="{Binding ScpCoreStatus.Value, Converter={StaticResource StatusConverter}}" />
                             <StackPanel
                                 VerticalAlignment="Top"
                                 DockPanel.Dock="Top"
                                 Orientation="Horizontal">
                                 <Button
+                                    Width="150"
                                     Margin="5"
                                     Command="{Binding ScpCoreStartCommand}"
                                     Content="START" />
                                 <Button
+                                    Width="150"
                                     Margin="5"
                                     Command="{Binding ScpCoreStopCommand}"
                                     Content="Stop" />
@@ -95,17 +122,25 @@
                     </materialDesign:Card>
                     <materialDesign:Card Margin="5" Padding="5">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="Asc" />
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding AscStatus.Value , Converter={StaticResource StatusConverter}}" />
+                            <TextBlock
+                                Width="322"
+                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                Text="Asc" />
+                            <TextBlock
+                                Width="322"
+                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                Text="{Binding AscStatus.Value, Converter={StaticResource StatusConverter}}" />
                             <StackPanel
                                 VerticalAlignment="Top"
                                 DockPanel.Dock="Top"
                                 Orientation="Horizontal">
                                 <Button
+                                    Width="150"
                                     Margin="5"
                                     Command="{Binding AscStartCommand}"
                                     Content="START" />
                                 <Button
+                                    Width="150"
                                     Margin="5"
                                     Command="{Binding AscStopCommand}"
                                     Content="Stop" />
@@ -114,17 +149,25 @@
                     </materialDesign:Card>
                     <materialDesign:Card Margin="5" Padding="5">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="MppsReceiver" />
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" Text="{Binding MppsStatus.Value , Converter={StaticResource StatusConverter}}" />
+                            <TextBlock
+                                Width="322"
+                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                Text="MppsReceiver" />
+                            <TextBlock
+                                Width="322"
+                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                Text="{Binding MppsStatus.Value, Converter={StaticResource StatusConverter}}" />
                             <StackPanel
                                 VerticalAlignment="Top"
                                 DockPanel.Dock="Top"
                                 Orientation="Horizontal">
                                 <Button
+                                    Width="150"
                                     Margin="5"
                                     Command="{Binding MppsStartCommand}"
                                     Content="START" />
                                 <Button
+                                    Width="150"
                                     Margin="5"
                                     Command="{Binding MppsStopCommand}"
                                     Content="Stop" />
@@ -139,14 +182,6 @@
                 VerticalAlignment="Top"
                 DockPanel.Dock="Top"
                 Orientation="Horizontal">
-                <Button
-                    Margin="5"
-                    Command="{Binding StartCommand}"
-                    Content="START" />
-                <Button
-                    Margin="5"
-                    Command="{Binding StopCommand}"
-                    Content="PAUSE" />
                 <Button
                     Margin="5"
                     Command="{Binding RestartServiceCommand}"
