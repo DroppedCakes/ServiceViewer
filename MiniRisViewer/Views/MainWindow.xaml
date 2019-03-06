@@ -7,7 +7,7 @@
     xmlns:prism="http://prismlibrary.com/"
     Title="{Binding Title}"
     Width="1024"
-    Height="768"
+    Height="460"
     prism:ViewModelLocator.AutoWireViewModel="True"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{DynamicResource MaterialDesignFont}"

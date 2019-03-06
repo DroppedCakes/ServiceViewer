@@ -44,7 +44,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public ReactiveCommand MppsStartCommand { get; } = new ReactiveCommand();
         public ReactiveCommand MppsStopCommand { get; } = new ReactiveCommand();
 
-        public ReactiveCommand StartCommand = new ReactiveCommand();
 
         /// <summary>
         /// 全てのサービスを再起動するコマンド
@@ -52,6 +51,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public ReactiveCommand RestartServiceCommand { get; } = new ReactiveCommand();
 
         public ReactiveCommand<string> ShowLogCommand { get; private set; } = new ReactiveCommand<string>();
+
         #endregion ReactiveCommand
 
         /// <summary>
@@ -87,13 +87,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// </summary>
         private string stringSserviceStatus;
 
-
-        private void StartButtonAction() {
-                
-
-        }
-
-
         public ServiceStatusViewModel()
         {
             // 後でDIにする
@@ -120,12 +113,9 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             ScpCoreStopCommand.Subscribe(_ => model.Services[((int)EpithetOfUs.ScpCore)].Stop());
             MppsStopCommand.Subscribe(_ => model.Services[((int)EpithetOfUs.Mpps)].Stop());
 
-
+            //// 全てのサービスを再起動するコマンド
             RestartServiceCommand.Subscribe(_ => model.RestartService());
 
-
-            //// 全てのサービスを再起動するコマンド
-            //RestartServiceCommand.Subscribe(_ => model.RestartServiceAll());
 
             // 1秒ごとに購読する
             ScreenSynchronousTimer = new ReactiveTimer(TimeSpan.FromSeconds(1));
@@ -135,7 +125,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
 
             ScreenSynchronousTimer.Start();
 
-            StartCommand.Subscribe (_ => StartButtonAction());
         }
 
     }

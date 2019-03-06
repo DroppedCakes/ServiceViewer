@@ -50,7 +50,7 @@
                                     Width="100"
                                     Margin="5"
                                     Command="{Binding ImporterStartCommand}"
-                                    Content="START" />
+                                    Content="Start" />
                                 <Button
                                     Width="100"
                                     Margin="5"
@@ -81,15 +81,21 @@
                                 DockPanel.Dock="Top"
                                 Orientation="Horizontal">
                                 <Button
-                                    Width="150"
+                                    Width="100"
                                     Margin="5"
                                     Command="{Binding ResponderStartCommand}"
-                                    Content="START" />
+                                    Content="Start" />
                                 <Button
-                                    Width="150"
+                                    Width="100"
                                     Margin="5"
                                     Command="{Binding ResponderStopCommand}"
                                     Content="Stop" />
+                                <Button
+                                    Width="100"
+                                    Margin="5"
+                                    Command="{Binding ShowLogCommand}"
+                                    CommandParameter="Responder"
+                                    Content="ShowLog" />
                             </StackPanel>
                         </StackPanel>
                     </materialDesign:Card>
@@ -108,15 +114,21 @@
                                 DockPanel.Dock="Top"
                                 Orientation="Horizontal">
                                 <Button
-                                    Width="150"
+                                    Width="100"
                                     Margin="5"
                                     Command="{Binding ScpCoreStartCommand}"
-                                    Content="START" />
+                                    Content="Start" />
                                 <Button
-                                    Width="150"
+                                    Width="100"
                                     Margin="5"
                                     Command="{Binding ScpCoreStopCommand}"
                                     Content="Stop" />
+                                <Button
+                                    Width="100"
+                                    Margin="5"
+                                    Command="{Binding ShowLogCommand}"
+                                    CommandParameter="ScpCore"
+                                    Content="ShowLog" />
                             </StackPanel>
                         </StackPanel>
                     </materialDesign:Card>
@@ -135,15 +147,21 @@
                                 DockPanel.Dock="Top"
                                 Orientation="Horizontal">
                                 <Button
-                                    Width="150"
+                                    Width="100"
                                     Margin="5"
                                     Command="{Binding AscStartCommand}"
-                                    Content="START" />
+                                    Content="Start" />
                                 <Button
-                                    Width="150"
+                                    Width="100"
                                     Margin="5"
                                     Command="{Binding AscStopCommand}"
                                     Content="Stop" />
+                                <Button
+                                    Width="100"
+                                    Margin="5"
+                                    Command="{Binding ShowLogCommand}"
+                                    CommandParameter="Asc"
+                                    Content="ShowLog" />
                             </StackPanel>
                         </StackPanel>
                     </materialDesign:Card>
@@ -162,15 +180,21 @@
                                 DockPanel.Dock="Top"
                                 Orientation="Horizontal">
                                 <Button
-                                    Width="150"
+                                    Width="100"
                                     Margin="5"
                                     Command="{Binding MppsStartCommand}"
-                                    Content="START" />
+                                    Content="Start" />
                                 <Button
-                                    Width="150"
+                                    Width="100"
                                     Margin="5"
                                     Command="{Binding MppsStopCommand}"
                                     Content="Stop" />
+                                <Button
+                                    Width="100"
+                                    Margin="5"
+                                    Command="{Binding ShowLogCommand}"
+                                    CommandParameter="Mpps"
+                                    Content="ShowLog" />
                             </StackPanel>
                         </StackPanel>
                     </materialDesign:Card>
@@ -184,7 +208,7 @@
                 Orientation="Horizontal">
                 <Button
                     Margin="5"
-                    Command="{Binding RestartServiceCommand}"
+                    Command="{Binding ReStartServiceCommand}"
                     Content="全てのサービスを再起動" />
             </StackPanel>
         </DockPanel>
