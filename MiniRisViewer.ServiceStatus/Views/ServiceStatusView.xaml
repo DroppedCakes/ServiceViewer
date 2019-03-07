@@ -201,7 +201,6 @@
                 </StackPanel>
             </GroupBox>
 
-
             <StackPanel
                 VerticalAlignment="Top"
                 DockPanel.Dock="Top"

@@ -1,5 +1,4 @@
 ﻿using MiniRisViewer.ServiceStatus;
-using MiniRisViewer.ServiceStatus.Views;
 using MiniRisViewer.Views;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -27,7 +26,6 @@ namespace MiniRisViewer
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

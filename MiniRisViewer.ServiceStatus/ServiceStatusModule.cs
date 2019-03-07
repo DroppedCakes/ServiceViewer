@@ -1,8 +1,6 @@
 ﻿using MiniRisViewer.ServiceStatus.ViewModels;
-using MiniRisViewer.ServiceStatus.Views;
 using Prism.Ioc;
 using Prism.Modularity;
-using Prism.Regions;
 
 namespace MiniRisViewer.ServiceStatus
 {
@@ -10,7 +8,6 @@ namespace MiniRisViewer.ServiceStatus
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {
- 
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

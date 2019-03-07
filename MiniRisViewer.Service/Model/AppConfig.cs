@@ -1,14 +1,11 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Prism.Mvvm;
 
 namespace MiniRisViewer.Domain.Model
 {
     public class AppConfig : BindableBase
     {
         private bool hideMpps;
+
         public bool HideMpps
         {
             get { return hideMpps; }
@@ -17,7 +14,6 @@ namespace MiniRisViewer.Domain.Model
 
         public AppConfig()
         {
-
         }
     }
 }

@@ -6,7 +6,6 @@ namespace MiniRisViewer.Domain.Model
 {
     public class ServiceStatus : BindableBase
     {
-
         /// <summary>
         /// 各サービスの状態
         /// </summary>
@@ -18,7 +17,6 @@ namespace MiniRisViewer.Domain.Model
             new  ServiceManager(ServiceList.UsMppsReceiverServiceName )
         };
 
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -26,8 +24,8 @@ namespace MiniRisViewer.Domain.Model
         {
         }
 
-
         private ServiceControllerStatus importerStatus;
+
         public ServiceControllerStatus ImporterStatus
         {
             get { return importerStatus; }
@@ -39,14 +37,12 @@ namespace MiniRisViewer.Domain.Model
         /// </summary>
         public void ServiceStatusUpdate()
         {
-            foreach ( ServiceManager  x in Services)
+            foreach (ServiceManager x in Services)
             {
                 x.Status = GetServiceState(x.ServiceName);
                 ImporterStatus = x.Status;
             }
-
         }
-
 
         /// <summary>
         /// 引数として与えられたサービス名から
@@ -69,7 +65,6 @@ namespace MiniRisViewer.Domain.Model
         /// </summary>
         public void RestartService()
         {
-
             //再起動できたかどうかをListで持っておく（現状戻り値なしなので使い道なし）
             var result = new List<bool>();
 
@@ -77,8 +72,6 @@ namespace MiniRisViewer.Domain.Model
             {
                 result.Add(x.Restart());
             }
-
         }
-
     }
 }

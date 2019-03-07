@@ -20,7 +20,7 @@
             ImporterLogPath = @"C:\WriteEnable\Logs\UsFileImporter";
             ResponderLogPath = @"";
             AscLogPath = @"";
-            ScpCoreLogPath=@"";
+            ScpCoreLogPath = @"";
             MppsLogPath = @"";
         }
 

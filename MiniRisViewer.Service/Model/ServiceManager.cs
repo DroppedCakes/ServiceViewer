@@ -2,12 +2,10 @@
 using System;
 using System.ServiceProcess;
 
-
 namespace MiniRisViewer.Domain.Model
 {
     public class ServiceManager : BindableBase
     {
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -20,7 +18,7 @@ namespace MiniRisViewer.Domain.Model
         /// サービスの名称
         /// </summary>
         public readonly string ServiceName;
-  
+
         /// <summary>
         /// 実行ファイルのパス
         /// </summary>
@@ -30,6 +28,7 @@ namespace MiniRisViewer.Domain.Model
         /// サービスの状態
         /// </summary>
         private ServiceControllerStatus status;
+
         public ServiceControllerStatus Status
         {
             get { return status; }
@@ -41,7 +40,7 @@ namespace MiniRisViewer.Domain.Model
         /// </summary>
         public bool Start()
         {
-            TimeSpan timeout = new TimeSpan(00,00,10);
+            TimeSpan timeout = new TimeSpan(00, 00, 10);
 
             bool CanStart = false;
             try
@@ -56,7 +55,7 @@ namespace MiniRisViewer.Domain.Model
                             // サービスが開始するまで待機する
                             sc.WaitForStatus(ServiceControllerStatus.Running, timeout);
 
-                            if (sc.Status == ServiceControllerStatus.Running )
+                            if (sc.Status == ServiceControllerStatus.Running)
                             {
                                 CanStart = true;
                             }
@@ -98,7 +97,6 @@ namespace MiniRisViewer.Domain.Model
             return CanStart;
         }
 
-
         /// <summary>
         /// サービスの停止を行う
         /// </summary>
@@ -112,7 +110,6 @@ namespace MiniRisViewer.Domain.Model
             {
                 using (ServiceController sc = new ServiceController(ServiceName))
                 {
-
                     switch (sc.Status)
                     {
                         case ServiceControllerStatus.Stopped:
@@ -131,9 +128,9 @@ namespace MiniRisViewer.Domain.Model
                             //動作中の場合、停止する
                             sc.Stop();
                             // サービスが停止するまで待機する
-                            sc.WaitForStatus(ServiceControllerStatus.Stopped , timeout);
+                            sc.WaitForStatus(ServiceControllerStatus.Stopped, timeout);
 
-                            if (sc.Status == ServiceControllerStatus.Stopped )
+                            if (sc.Status == ServiceControllerStatus.Stopped)
                             {
                                 CanStop = true;
                             }
@@ -186,13 +183,12 @@ namespace MiniRisViewer.Domain.Model
                             sc.Stop();
                         }
                         // サービスが停止するまで待機する
-                        sc.WaitForStatus(ServiceControllerStatus.Stopped,timeout);
-
+                        sc.WaitForStatus(ServiceControllerStatus.Stopped, timeout);
                     }
 
                     sc.Start();
                     // サービスが開始するまで待機する
-                    sc.WaitForStatus(ServiceControllerStatus.Running,timeout);
+                    sc.WaitForStatus(ServiceControllerStatus.Running, timeout);
                     if (sc.Status == ServiceControllerStatus.Running)
                     {
                         CanRestart = true;
@@ -205,8 +201,6 @@ namespace MiniRisViewer.Domain.Model
             }
 
             return CanRestart;
-
         }
     }
-
 }
