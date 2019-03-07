@@ -18,10 +18,10 @@
         public LogManager()
         {
             ImporterLogPath = @"C:\WriteEnable\Logs\UsFileImporter";
-            ResponderLogPath = @"";
-            AscLogPath = @"";
-            ScpCoreLogPath = @"";
-            MppsLogPath = @"";
+            ResponderLogPath = @"C:\WriteEnable";
+            AscLogPath = @"C:\WriteEnable";
+            ScpCoreLogPath = @"C:\WriteEnable";
+            MppsLogPath = @"C:WriteEnable";
         }
 
         /// <summary>
@@ -47,7 +47,7 @@
             StartExplorer(ScpCoreLogPath);
         }
 
-        public void ShowMppsLogPath()
+        public void ShowMppsLogFolder()
         {
             StartExplorer(MppsLogPath);
         }

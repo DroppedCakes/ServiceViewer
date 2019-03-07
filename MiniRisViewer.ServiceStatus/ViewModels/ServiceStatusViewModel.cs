@@ -51,6 +51,10 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public ReactiveCommand RestartServiceCommand { get; } = new ReactiveCommand();
 
         public ReactiveCommand ShowImporterLogCommand { get; private set; } = new ReactiveCommand();
+        public ReactiveCommand ShowResponderLogCommand { get; private set; } = new ReactiveCommand();
+        public ReactiveCommand ShowAscLogCommand { get; private set; } = new ReactiveCommand();
+        public ReactiveCommand ShowScpCoreLogCommand { get; private set; } = new ReactiveCommand();
+        public ReactiveCommand ShowMppsLogCommand { get; private set; } = new ReactiveCommand();
 
         #endregion ReactiveCommand
 
@@ -88,8 +92,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        private string stringSserviceStatus;
-
         public ServiceStatusViewModel()
         {
             // 後でDIにする
@@ -122,6 +124,10 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
 
             // ログ
             ShowImporterLogCommand.Subscribe(_ => LogManager.ShowImporterLogFolder());
+            ShowResponderLogCommand.Subscribe(_ => LogManager.ShowResponderLogFolder());
+            ShowAscLogCommand.Subscribe(_ => LogManager.ShowAscLogFolder());
+            ShowScpCoreLogCommand.Subscribe(_ => LogManager.ShowScpCoreLogFolder());
+            ShowMppsLogCommand.Subscribe(_ => LogManager.ShowMppsLogFolder());
 
             // 1秒ごとに購読する
             ScreenSynchronousTimer = new ReactiveTimer(TimeSpan.FromSeconds(1));

@@ -60,7 +60,6 @@
                                     Width="100"
                                     Margin="5"
                                     Command="{Binding ShowImporterLogCommand}"
-                                    CommandParameter="FileImporter"
                                     Content="ShowLog" />
                             </StackPanel>
                         </StackPanel>
@@ -93,8 +92,7 @@
                                 <Button
                                     Width="100"
                                     Margin="5"
-                                    Command="{Binding ShowLogCommand}"
-                                    CommandParameter="Responder"
+                                    Command="{Binding ShowResponderLogCommand}"
                                     Content="ShowLog" />
                             </StackPanel>
                         </StackPanel>
@@ -126,8 +124,7 @@
                                 <Button
                                     Width="100"
                                     Margin="5"
-                                    Command="{Binding ShowLogCommand}"
-                                    CommandParameter="ScpCore"
+                                    Command="{Binding ShowScpCoreLogCommand}"
                                     Content="ShowLog" />
                             </StackPanel>
                         </StackPanel>
@@ -159,8 +156,7 @@
                                 <Button
                                     Width="100"
                                     Margin="5"
-                                    Command="{Binding ShowLogCommand}"
-                                    CommandParameter="Asc"
+                                    Command="{Binding ShowAscLogCommand}"
                                     Content="ShowLog" />
                             </StackPanel>
                         </StackPanel>
@@ -192,8 +188,7 @@
                                 <Button
                                     Width="100"
                                     Margin="5"
-                                    Command="{Binding ShowLogCommand}"
-                                    CommandParameter="Mpps"
+                                    Command="{Binding ShowMppsLogCommand}"
                                     Content="ShowLog" />
                             </StackPanel>
                         </StackPanel>
