@@ -100,6 +100,7 @@
   <ItemGroup>
     <Compile Include="Model\AppConfig.cs" />
     <Compile Include="Model\EpithetOfUs.cs" />
+    <Compile Include="Model\LogManager.cs" />
     <Compile Include="Model\ServiceManager.cs" />
     <Compile Include="Model\ServiceStatus.cs" />
     <Compile Include="Model\ServiceList.cs" />

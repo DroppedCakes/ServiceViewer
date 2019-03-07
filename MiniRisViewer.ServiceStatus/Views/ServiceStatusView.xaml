@@ -59,7 +59,7 @@
                                 <Button
                                     Width="100"
                                     Margin="5"
-                                    Command="{Binding ShowLogCommand}"
+                                    Command="{Binding ShowImporterLogCommand}"
                                     CommandParameter="FileImporter"
                                     Content="ShowLog" />
                             </StackPanel>
