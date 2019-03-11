@@ -5,6 +5,7 @@ using Reactive.Bindings.Extensions;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.ServiceProcess;
 
 namespace MiniRisViewer.ServiceStatus.ViewModels
@@ -21,6 +22,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         #region DisplayName
 
         private string importerDisplayName;
+
         public string ImporterDisplayName
         {
             get { return importerDisplayName; }
@@ -28,6 +30,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         }
 
         private string responderDisplayName;
+
         public string ResponderDisplayName
         {
             get { return responderDisplayName; }
@@ -35,6 +38,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         }
 
         private string ascDiplayName;
+
         public string AscDiplayName
         {
             get { return ascDiplayName; }
@@ -42,6 +46,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         }
 
         private string scpCoreDisplayName;
+
         public string ScpCoreDisplayName
         {
             get { return scpCoreDisplayName; }
@@ -49,6 +54,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         }
 
         private string mppsDisplayName;
+
         public string MppsDisplayName
         {
             get { return mppsDisplayName; }
@@ -60,6 +66,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// <summary>
         ///  サービスの状態を保持するプロパティ
         /// </summary>
+
         #region ReactiveProperty
 
         #region Status
@@ -72,11 +79,11 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
 
         #endregion Status
 
-        public ReactiveProperty<bool> CanStartImporter { get; }
-        public ReactiveProperty<bool> CanStartResponder { get; }
-        public ReactiveProperty<bool> CanStartAsc { get; }
-        public ReactiveProperty<bool> CanStartScpCore { get; }
-        public ReactiveProperty<bool> CanStartMpps { get; }
+        public ReactiveProperty<bool> CanStopImporter { get; } = new ReactiveProperty<bool>();
+        public ReactiveProperty<bool> CanStopResponder { get; } = new ReactiveProperty<bool>();
+        public ReactiveProperty<bool> CanStopAsc { get; } = new ReactiveProperty<bool>();
+        public ReactiveProperty<bool> CanStopScpCore { get; } = new ReactiveProperty<bool>();
+        public ReactiveProperty<bool> CanStopMpps { get; } = new ReactiveProperty<bool>();
 
         #endregion ReactiveProperty
 
@@ -88,16 +95,16 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
 
         #region Start/Stop
 
-        public ReactiveCommand ImporterStartCommand { get; } = new ReactiveCommand();
-        public ReactiveCommand ImporterStopCommand { get; } = new ReactiveCommand();
-        public ReactiveCommand ResponderStartCommand { get; } = new ReactiveCommand();
-        public ReactiveCommand ResponderStopCommand { get; } = new ReactiveCommand();
-        public ReactiveCommand ScpCoreStartCommand { get; } = new ReactiveCommand();
-        public ReactiveCommand ScpCoreStopCommand { get; } = new ReactiveCommand();
-        public ReactiveCommand AscStartCommand { get; } = new ReactiveCommand();
-        public ReactiveCommand AscStopCommand { get; } = new ReactiveCommand();
-        public ReactiveCommand MppsStartCommand { get; } = new ReactiveCommand();
-        public ReactiveCommand MppsStopCommand { get; } = new ReactiveCommand();
+        public ReactiveCommand ImporterStartCommand { get; }
+        public ReactiveCommand ImporterStopCommand { get; } 
+        public ReactiveCommand ResponderStartCommand { get; } 
+        public ReactiveCommand ResponderStopCommand { get; } 
+        public ReactiveCommand ScpCoreStartCommand { get; } 
+        public ReactiveCommand ScpCoreStopCommand { get; } 
+        public ReactiveCommand AscStartCommand { get; }
+        public ReactiveCommand AscStopCommand { get; } 
+        public ReactiveCommand MppsStartCommand { get; } 
+        public ReactiveCommand MppsStopCommand { get; } 
 
         #endregion Start/Stop
 
@@ -158,21 +165,41 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             Model = new Domain.Model.ServiceStatus();
 
             LogManager = new LogManager();
-            
-            // M -> VMの接続
+
+            // Stop判定のM -> VMの接続
+            CanStopImporter = Model.Services[((int)Ailias.Importer)].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+            CanStopResponder = Model.Services[((int)Ailias.Responder)].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+            CanStopAsc = Model.Services[((int)Ailias.Asc)].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+            CanStopScpCore = Model.Services[((int)Ailias.ScpCore)].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+            CanStopMpps = Model.Services[((int)Ailias.Mpps)].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+
+            // ステータスのM -> VMの接続
             ImporterStatus = Model.Services[((int)Ailias.Importer)].ObserveProperty(x => x.Status).ToReactiveProperty();
             AscStatus = Model.Services[((int)Ailias.Asc)].ObserveProperty(x => x.Status).ToReactiveProperty();
             ResponderStatus = Model.Services[((int)Ailias.Responder)].ObserveProperty(x => x.Status).ToReactiveProperty();
             ScpCoreStatus = Model.Services[((int)Ailias.ScpCore)].ObserveProperty(x => x.Status).ToReactiveProperty();
             MppsStatus = Model.Services[((int)Ailias.Mpps)].ObserveProperty(x => x.Status).ToReactiveProperty();
 
-            // 画面表示名
+            // 画面表示名のM -> VMの接続
             ImporterDisplayName = Model.Services[((int)Ailias.Importer)].DisplayName;
             ResponderDisplayName = Model.Services[((int)Ailias.Responder)].DisplayName;
             AscDiplayName = Model.Services[((int)Ailias.Asc)].DisplayName;
             ScpCoreDisplayName = Model.Services[((int)Ailias.ScpCore)].DisplayName;
-            MppsDisplayName= Model.Services[((int)Ailias.Mpps)].DisplayName;
+            MppsDisplayName = Model.Services[((int)Ailias.Mpps)].DisplayName;
 
+            // 開始・停止ボタンは各サービスの
+            // CanStopPropertyによって、活性・非活性する
+            ImporterStartCommand = CanStopImporter.Select(x => x == false).ToReactiveCommand();
+            ImporterStopCommand = CanStopImporter.Select(x => x == true).ToReactiveCommand();
+            ResponderStartCommand = CanStopResponder.Select(x => x == false).ToReactiveCommand();
+            ResponderStopCommand = CanStopResponder.Select(x => x == true).ToReactiveCommand();
+            AscStartCommand = CanStopAsc.Select(x => x == false).ToReactiveCommand();
+            AscStopCommand = CanStopAsc.Select(x => x == true).ToReactiveCommand();
+            ScpCoreStartCommand = CanStopScpCore.Select(x => x == false).ToReactiveCommand();
+            ScpCoreStopCommand = CanStopScpCore.Select(x => x == true).ToReactiveCommand();
+            MppsStartCommand = CanStopMpps.Select(x => x == false).ToReactiveCommand();
+            MppsStopCommand = CanStopMpps.Select(x => x == true).ToReactiveCommand();
+            
             // StartCommandの購読
             ImporterStartCommand.Subscribe(_ => Model.Services[((int)Ailias.Importer)].Start());
             AscStartCommand.Subscribe(_ => Model.Services[((int)Ailias.Asc)].Start());

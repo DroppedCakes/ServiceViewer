@@ -28,14 +28,6 @@ namespace MiniRisViewer.Domain.Model
         };
         }
 
-        private ServiceControllerStatus importerStatus;
-
-        public ServiceControllerStatus ImporterStatus
-        {
-            get { return importerStatus; }
-            set { SetProperty(ref importerStatus, value); }
-        }
-
         /// <summary>
         /// 各サービスの状態を更新
         /// </summary>
@@ -43,25 +35,8 @@ namespace MiniRisViewer.Domain.Model
         {
             foreach (ServiceManager x in Services)
             {
-                x.Status = GetServiceState(x.ServiceName);
-                ImporterStatus = x.Status;
+                x.GetServiceState();
             }
-        }
-
-        /// <summary>
-        /// 引数として与えられたサービス名から
-        /// サービスの状態を取得する
-        /// </summary>
-        /// <param name="serviceName"></param>
-        /// <returns></returns>
-        private ServiceControllerStatus GetServiceState(string serviceName)
-        {
-            ServiceControllerStatus retv;
-            using (ServiceController sc = new ServiceController(serviceName))
-            {
-                retv = sc.Status;
-            }
-            return retv;
         }
 
         ///<summary>

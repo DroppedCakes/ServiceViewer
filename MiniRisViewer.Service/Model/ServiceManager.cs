@@ -9,7 +9,7 @@ namespace MiniRisViewer.Domain.Model
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ServiceManager(string serviceName,string displayName)
+        public ServiceManager(string serviceName, string displayName)
         {
             ServiceName = serviceName;
             DisplayName = displayName;
@@ -20,12 +20,17 @@ namespace MiniRisViewer.Domain.Model
         /// </summary>
         public readonly string ServiceName;
 
+        /// <summary>
+        /// 画面表示名称
+        /// </summary>
         public readonly string DisplayName;
 
         /// <summary>
         /// 実行ファイルのパス
         /// </summary>
         public string ServicePath { get; }
+
+        #region サービスの稼働状況
 
         /// <summary>
         /// サービスの状態
@@ -38,6 +43,28 @@ namespace MiniRisViewer.Domain.Model
             set { SetProperty(ref status, value); }
         }
 
+        private bool canStop;
+
+        public bool CanStop
+        {
+            get { return canStop; }
+            set { SetProperty(ref canStop, value); }
+        }
+
+        #endregion サービスの稼働状況
+
+        /// <summary>
+        /// サービスの状態を更新する
+        /// </summary>
+        public void GetServiceState()
+        {
+            using (ServiceController sc = new ServiceController(ServiceName))
+            {
+                Status = sc.Status;
+                CanStop = sc.CanStop;
+            }
+        }
+
         /// <summary>
         /// サービスの開始を行う
         /// </summary>
@@ -45,7 +72,7 @@ namespace MiniRisViewer.Domain.Model
         {
             TimeSpan timeout = new TimeSpan(00, 00, 10);
 
-            bool CanStart = false;
+            bool CanStart = true;
             try
             {
                 using (ServiceController sc = new ServiceController(ServiceName))
