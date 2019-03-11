@@ -35,7 +35,7 @@
                                 <TextBlock
                                     Width="322"
                                     Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                                    Text="FileImporter" />
+                                    Text="{Binding ImporterDisplayName, Mode=OneWay}" />
                                 <TextBlock
                                     Width="322"
                                     Style="{DynamicResource MaterialDesignTitleTextBlock}"
@@ -69,7 +69,7 @@
                             <TextBlock
                                 Width="322"
                                 Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                                Text="MWMResponder" />
+                                Text="{Binding ResponderDisplayName}" />
                             <TextBlock
                                 Width="322"
                                 Style="{DynamicResource MaterialDesignTitleTextBlock}"
@@ -102,7 +102,7 @@
                             <TextBlock
                                 Width="322"
                                 Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                                Text="ScpCore" />
+                                Text="{Binding ScpCoreDisplayName}" />
                             <TextBlock
                                 Width="322"
                                 Style="{DynamicResource MaterialDesignTitleTextBlock}"
@@ -134,7 +134,7 @@
                             <TextBlock
                                 Width="322"
                                 Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                                Text="Asc" />
+                                Text="{Binding AscDiplayName}" />
                             <TextBlock
                                 Width="322"
                                 Style="{DynamicResource MaterialDesignTitleTextBlock}"
@@ -166,7 +166,7 @@
                             <TextBlock
                                 Width="322"
                                 Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                                Text="MppsReceiver" />
+                                Text="{Binding MppsDisplayName}" />
                             <TextBlock
                                 Width="322"
                                 Style="{DynamicResource MaterialDesignTitleTextBlock}"

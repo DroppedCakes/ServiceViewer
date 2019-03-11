@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using MiniRisViewer.Domain.Service;
+using Prism.Mvvm;
 using System.Collections.Generic;
 using System.ServiceProcess;
 
@@ -9,19 +10,22 @@ namespace MiniRisViewer.Domain.Model
         /// <summary>
         /// 各サービスの状態
         /// </summary>
-        public ServiceManager[] Services =        {
-            new  ServiceManager( ServiceList.UsFileImporterServiceName),
-            new  ServiceManager(ServiceList.UsMwmResponderServiceName),
-            new  ServiceManager(ServiceList.UsScpCoreServiceName ),
-            new  ServiceManager(ServiceList.UsAscServiceName),
-            new  ServiceManager(ServiceList.UsMppsReceiverServiceName )
-        };
+        public ServiceManager[] Services;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public ServiceStatus()
         {
+            var config = ConfigLoader.LoadDisplayConfig();
+
+            Services = new ServiceManager[]{
+            new ServiceManager(ServiceList.UsFileImporterServiceName,config.FileImporterName),
+            new ServiceManager(ServiceList.UsMwmResponderServiceName,config.MwmResponderName),
+            new ServiceManager(ServiceList.UsScpCoreServiceName,config.ScpCoreName),
+            new ServiceManager(ServiceList.UsAscServiceName,config.AscName),
+            new ServiceManager(ServiceList.UsMppsReceiverServiceName,config.MppsReceiverName),
+        };
         }
 
         private ServiceControllerStatus importerStatus;

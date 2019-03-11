@@ -9,7 +9,7 @@ namespace MiniRisViewer.Domain.Service
         /// <summary>
         ///
         /// </summary>
-        private static readonly string ConfigPath = @"C:\ProgramData\UsTEC\MiniRisViewer\LogFolderPath.xml";
+        private static readonly string ConfigPath = @"C:\ProgramData\UsTEC\MiniRisViewer\Config.xml";
 
         /// <summary>
         ///
@@ -17,7 +17,7 @@ namespace MiniRisViewer.Domain.Service
         private static readonly string BaseKey = @"SYSTEM\CurrentControlSet\Services\";
 
         /// <summary>
-        ///
+        ///ログフォルダ群
         /// </summary>
         public class LogFolderPath
         {
@@ -26,6 +26,23 @@ namespace MiniRisViewer.Domain.Service
             public string ScpCoreLogPath;
             public string AscLogPath;
             public string MppsLogPath;
+        }
+
+        /// <summary>
+        /// 表示設定
+        /// </summary>
+        public class DisplaySetting
+        {
+            public string FileImporterName;
+            public string MwmResponderName;
+            public string AscName;
+            public string ScpCoreName;
+            public string MppsReceiverName;
+            public bool ShowImporter;
+            public bool ShowResponder;
+            public bool ShowScpCore;
+            public bool ShowAsc;
+            public bool ShowMpps;
         }
 
         /// <summary>
@@ -39,7 +56,7 @@ namespace MiniRisViewer.Domain.Service
         /// 設定ファイルを読込、
         /// ログファイルのパスを設定する
         /// </summary>
-        public static LogFolderPath LoadConfigFiles()
+        public static LogFolderPath LoadLogConfig()
         {
             //var importerRegKey = CombineRegistryPath("UsFileImporter");
             //var responderRegKey = CombineRegistryPath("UsMwmResponder");
@@ -47,7 +64,7 @@ namespace MiniRisViewer.Domain.Service
             //var ascRegKey = CombineRegistryPath("UsAscService");
             //var mppsRegKey = CombineRegistryPath("UsMppsReceiver");
 
-            XElement xDocument = XDocument.Load(ConfigPath).Element("LogPath");
+            XElement xDocument = XDocument.Load(ConfigPath).Element("Config").Element("LogPath");
 
             var instance = new LogFolderPath()
             {
@@ -56,6 +73,30 @@ namespace MiniRisViewer.Domain.Service
                 ScpCoreLogPath = xDocument.Element("ScpCoreLogPath").Value,
                 AscLogPath = xDocument.Element("AscLogPath").Value,
                 MppsLogPath = xDocument.Element("MppsReceiverLogPath").Value,
+            };
+            return instance;
+        }
+
+        /// <summary>
+        /// 画面表示設定を読込
+        /// </summary>
+        /// <returns></returns>
+        public static DisplaySetting LoadDisplayConfig()
+        {
+            XElement xDocument = XDocument.Load(ConfigPath).Element("Config").Element("DisplaySetting");
+
+            var instance = new DisplaySetting()
+            {
+                FileImporterName = xDocument.Element("FileImporterName").Value,
+                MwmResponderName = xDocument.Element("MwmResponderName").Value,
+                AscName = xDocument.Element("AscName").Value,
+                ScpCoreName = xDocument.Element("ScpCoreName").Value,
+                MppsReceiverName =xDocument.Element("MppsReceiverName").Value,
+                ShowImporter= System.Convert.ToBoolean(xDocument.Element("ShowFileImporter").Value),
+                ShowResponder = System.Convert.ToBoolean(xDocument.Element("ShowMwmResponder").Value),
+                ShowAsc= System.Convert.ToBoolean(xDocument.Element("ShowAsc").Value),
+                ShowScpCore= System.Convert.ToBoolean(xDocument.Element("ShowScpCore").Value),
+                ShowMpps = System.Convert.ToBoolean(xDocument.Element("ShowMppsReceiver").Value),
             };
             return instance;
         }

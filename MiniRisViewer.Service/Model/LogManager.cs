@@ -19,7 +19,7 @@ namespace MiniRisViewer.Domain.Model
         /// </summary>
         public LogManager()
         {
-            var log = ConfigLoader.LoadConfigFiles();
+            var log = ConfigLoader.LoadLogConfig();
             ImporterLogPath = log.ImporterLogPath;
             ResponderLogPath = log.ResponderLogPath;
             AscLogPath = log.AscLogPath;

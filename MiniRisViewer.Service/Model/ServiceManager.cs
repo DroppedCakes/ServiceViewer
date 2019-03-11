@@ -9,15 +9,18 @@ namespace MiniRisViewer.Domain.Model
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ServiceManager(string serviceName)
+        public ServiceManager(string serviceName,string displayName)
         {
             ServiceName = serviceName;
+            DisplayName = displayName;
         }
 
         /// <summary>
-        /// サービスの名称
+        /// サービスの正式名称
         /// </summary>
         public readonly string ServiceName;
+
+        public readonly string DisplayName;
 
         /// <summary>
         /// 実行ファイルのパス

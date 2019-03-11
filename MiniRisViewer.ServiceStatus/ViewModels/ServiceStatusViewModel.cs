@@ -18,10 +18,48 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
 
         public LogManager LogManager;
 
+        #region DisplayName
+
+        private string importerDisplayName;
+        public string ImporterDisplayName
+        {
+            get { return importerDisplayName; }
+            set { SetProperty(ref importerDisplayName, value); }
+        }
+
+        private string responderDisplayName;
+        public string ResponderDisplayName
+        {
+            get { return responderDisplayName; }
+            set { SetProperty(ref responderDisplayName, value); }
+        }
+
+        private string ascDiplayName;
+        public string AscDiplayName
+        {
+            get { return ascDiplayName; }
+            set { SetProperty(ref ascDiplayName, value); }
+        }
+
+        private string scpCoreDisplayName;
+        public string ScpCoreDisplayName
+        {
+            get { return scpCoreDisplayName; }
+            set { SetProperty(ref scpCoreDisplayName, value); }
+        }
+
+        private string mppsDisplayName;
+        public string MppsDisplayName
+        {
+            get { return mppsDisplayName; }
+            set { SetProperty(ref mppsDisplayName, value); }
+        }
+
+        #endregion DisplayName
+
         /// <summary>
         ///  サービスの状態を保持するプロパティ
         /// </summary>
-
         #region ReactiveProperty
 
         #region Status
@@ -120,13 +158,20 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             Model = new Domain.Model.ServiceStatus();
 
             LogManager = new LogManager();
-
+            
             // M -> VMの接続
             ImporterStatus = Model.Services[((int)EpithetOfUs.Importer)].ObserveProperty(x => x.Status).ToReactiveProperty();
             AscStatus = Model.Services[((int)EpithetOfUs.Asc)].ObserveProperty(x => x.Status).ToReactiveProperty();
             ResponderStatus = Model.Services[((int)EpithetOfUs.Responder)].ObserveProperty(x => x.Status).ToReactiveProperty();
             ScpCoreStatus = Model.Services[((int)EpithetOfUs.ScpCore)].ObserveProperty(x => x.Status).ToReactiveProperty();
             MppsStatus = Model.Services[((int)EpithetOfUs.Mpps)].ObserveProperty(x => x.Status).ToReactiveProperty();
+
+            // 画面表示名
+            ImporterDisplayName = Model.Services[((int)EpithetOfUs.Importer)].DisplayName;
+            ResponderDisplayName = Model.Services[((int)EpithetOfUs.Responder)].DisplayName;
+            AscDiplayName = Model.Services[((int)EpithetOfUs.Asc)].DisplayName;
+            ScpCoreDisplayName = Model.Services[((int)EpithetOfUs.ScpCore)].DisplayName;
+            MppsDisplayName= Model.Services[((int)EpithetOfUs.Mpps)].DisplayName;
 
             // StartCommandの購読
             ImporterStartCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.Importer)].Start());
