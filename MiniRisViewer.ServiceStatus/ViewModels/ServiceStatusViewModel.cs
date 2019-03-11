@@ -24,15 +24,31 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
 
         #region ReactiveProperty
 
+        #region Status
+
         public ReactiveProperty<ServiceControllerStatus> ImporterStatus { get; } = new ReactiveProperty<ServiceControllerStatus>();
         public ReactiveProperty<ServiceControllerStatus> ResponderStatus { get; } = new ReactiveProperty<ServiceControllerStatus>();
         public ReactiveProperty<ServiceControllerStatus> AscStatus { get; } = new ReactiveProperty<ServiceControllerStatus>();
         public ReactiveProperty<ServiceControllerStatus> ScpCoreStatus { get; } = new ReactiveProperty<ServiceControllerStatus>();
         public ReactiveProperty<ServiceControllerStatus> MppsStatus { get; } = new ReactiveProperty<ServiceControllerStatus>();
 
+        #endregion Status
+
+        public ReactiveProperty<bool> CanStartImporter { get; }
+        public ReactiveProperty<bool> CanStartResponder { get; }
+        public ReactiveProperty<bool> CanStartAsc { get; }
+        public ReactiveProperty<bool> CanStartScpCore { get; }
+        public ReactiveProperty<bool> CanStartMpps { get; }
+
         #endregion ReactiveProperty
 
+        private void Initialize()
+        {
+        }
+
         #region ReactiveCommand
+
+        #region Start/Stop
 
         public ReactiveCommand ImporterStartCommand { get; } = new ReactiveCommand();
         public ReactiveCommand ImporterStopCommand { get; } = new ReactiveCommand();
@@ -45,16 +61,22 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public ReactiveCommand MppsStartCommand { get; } = new ReactiveCommand();
         public ReactiveCommand MppsStopCommand { get; } = new ReactiveCommand();
 
+        #endregion Start/Stop
+
         /// <summary>
         /// 全てのサービスを再起動するコマンド
         /// </summary>
         public ReactiveCommand RestartServiceCommand { get; } = new ReactiveCommand();
+
+        #region Log
 
         public ReactiveCommand ShowImporterLogCommand { get; private set; } = new ReactiveCommand();
         public ReactiveCommand ShowResponderLogCommand { get; private set; } = new ReactiveCommand();
         public ReactiveCommand ShowAscLogCommand { get; private set; } = new ReactiveCommand();
         public ReactiveCommand ShowScpCoreLogCommand { get; private set; } = new ReactiveCommand();
         public ReactiveCommand ShowMppsLogCommand { get; private set; } = new ReactiveCommand();
+
+        #endregion Log
 
         #endregion ReactiveCommand
 
@@ -106,13 +128,14 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             ScpCoreStatus = Model.Services[((int)EpithetOfUs.ScpCore)].ObserveProperty(x => x.Status).ToReactiveProperty();
             MppsStatus = Model.Services[((int)EpithetOfUs.Mpps)].ObserveProperty(x => x.Status).ToReactiveProperty();
 
-            //Commandの設定
+            // StartCommandの購読
             ImporterStartCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.Importer)].Start());
             AscStartCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.Asc)].Start());
             ResponderStartCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.Responder)].Start());
             ScpCoreStartCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.ScpCore)].Start());
             MppsStartCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.Mpps)].Start());
 
+            // StopCommandの購読
             ImporterStopCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.Importer)].Stop());
             AscStopCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.Asc)].Stop());
             ResponderStopCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.Responder)].Stop());

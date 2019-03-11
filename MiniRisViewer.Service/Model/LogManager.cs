@@ -1,27 +1,30 @@
-﻿namespace MiniRisViewer.Domain.Model
+﻿using MiniRisViewer.Domain.Service;
+
+namespace MiniRisViewer.Domain.Model
 {
     public class LogManager
     {
-        private string ImporterLogPath;
+        private readonly string ImporterLogPath;
 
-        private string ResponderLogPath;
+        private readonly string ResponderLogPath;
 
-        private string AscLogPath;
+        private readonly string AscLogPath;
 
-        private string ScpCoreLogPath;
+        private readonly string ScpCoreLogPath;
 
-        private string MppsLogPath;
+        private readonly string MppsLogPath;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public LogManager()
         {
-            ImporterLogPath = @"C:\WriteEnable\Logs\UsFileImporter";
-            ResponderLogPath = @"C:\WriteEnable";
-            AscLogPath = @"C:\WriteEnable";
-            ScpCoreLogPath = @"C:\WriteEnable";
-            MppsLogPath = @"C:WriteEnable";
+            var log = ConfigLoader.LoadConfigFiles();
+            ImporterLogPath = log.ImporterLogPath;
+            ResponderLogPath = log.ResponderLogPath;
+            AscLogPath = log.AscLogPath;
+            ScpCoreLogPath = log.ScpCoreLogPath;
+            MppsLogPath = log.MppsLogPath;
         }
 
         /// <summary>
