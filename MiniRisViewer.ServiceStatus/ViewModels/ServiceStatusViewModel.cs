@@ -160,32 +160,32 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             LogManager = new LogManager();
             
             // M -> VMの接続
-            ImporterStatus = Model.Services[((int)EpithetOfUs.Importer)].ObserveProperty(x => x.Status).ToReactiveProperty();
-            AscStatus = Model.Services[((int)EpithetOfUs.Asc)].ObserveProperty(x => x.Status).ToReactiveProperty();
-            ResponderStatus = Model.Services[((int)EpithetOfUs.Responder)].ObserveProperty(x => x.Status).ToReactiveProperty();
-            ScpCoreStatus = Model.Services[((int)EpithetOfUs.ScpCore)].ObserveProperty(x => x.Status).ToReactiveProperty();
-            MppsStatus = Model.Services[((int)EpithetOfUs.Mpps)].ObserveProperty(x => x.Status).ToReactiveProperty();
+            ImporterStatus = Model.Services[((int)Ailias.Importer)].ObserveProperty(x => x.Status).ToReactiveProperty();
+            AscStatus = Model.Services[((int)Ailias.Asc)].ObserveProperty(x => x.Status).ToReactiveProperty();
+            ResponderStatus = Model.Services[((int)Ailias.Responder)].ObserveProperty(x => x.Status).ToReactiveProperty();
+            ScpCoreStatus = Model.Services[((int)Ailias.ScpCore)].ObserveProperty(x => x.Status).ToReactiveProperty();
+            MppsStatus = Model.Services[((int)Ailias.Mpps)].ObserveProperty(x => x.Status).ToReactiveProperty();
 
             // 画面表示名
-            ImporterDisplayName = Model.Services[((int)EpithetOfUs.Importer)].DisplayName;
-            ResponderDisplayName = Model.Services[((int)EpithetOfUs.Responder)].DisplayName;
-            AscDiplayName = Model.Services[((int)EpithetOfUs.Asc)].DisplayName;
-            ScpCoreDisplayName = Model.Services[((int)EpithetOfUs.ScpCore)].DisplayName;
-            MppsDisplayName= Model.Services[((int)EpithetOfUs.Mpps)].DisplayName;
+            ImporterDisplayName = Model.Services[((int)Ailias.Importer)].DisplayName;
+            ResponderDisplayName = Model.Services[((int)Ailias.Responder)].DisplayName;
+            AscDiplayName = Model.Services[((int)Ailias.Asc)].DisplayName;
+            ScpCoreDisplayName = Model.Services[((int)Ailias.ScpCore)].DisplayName;
+            MppsDisplayName= Model.Services[((int)Ailias.Mpps)].DisplayName;
 
             // StartCommandの購読
-            ImporterStartCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.Importer)].Start());
-            AscStartCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.Asc)].Start());
-            ResponderStartCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.Responder)].Start());
-            ScpCoreStartCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.ScpCore)].Start());
-            MppsStartCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.Mpps)].Start());
+            ImporterStartCommand.Subscribe(_ => Model.Services[((int)Ailias.Importer)].Start());
+            AscStartCommand.Subscribe(_ => Model.Services[((int)Ailias.Asc)].Start());
+            ResponderStartCommand.Subscribe(_ => Model.Services[((int)Ailias.Responder)].Start());
+            ScpCoreStartCommand.Subscribe(_ => Model.Services[((int)Ailias.ScpCore)].Start());
+            MppsStartCommand.Subscribe(_ => Model.Services[((int)Ailias.Mpps)].Start());
 
             // StopCommandの購読
-            ImporterStopCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.Importer)].Stop());
-            AscStopCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.Asc)].Stop());
-            ResponderStopCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.Responder)].Stop());
-            ScpCoreStopCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.ScpCore)].Stop());
-            MppsStopCommand.Subscribe(_ => Model.Services[((int)EpithetOfUs.Mpps)].Stop());
+            ImporterStopCommand.Subscribe(_ => Model.Services[((int)Ailias.Importer)].Stop());
+            AscStopCommand.Subscribe(_ => Model.Services[((int)Ailias.Asc)].Stop());
+            ResponderStopCommand.Subscribe(_ => Model.Services[((int)Ailias.Responder)].Stop());
+            ScpCoreStopCommand.Subscribe(_ => Model.Services[((int)Ailias.ScpCore)].Stop());
+            MppsStopCommand.Subscribe(_ => Model.Services[((int)Ailias.Mpps)].Stop());
 
             //// 全てのサービスを再起動するコマンド
             RestartServiceCommand.Subscribe(_ => Model.RestartService());

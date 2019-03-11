@@ -1,6 +1,6 @@
 ﻿namespace MiniRisViewer.Domain.Model
 {
-    public enum EpithetOfUs
+    public enum Ailias
     {
         Importer, Responder, Asc, ScpCore, Mpps
     }
