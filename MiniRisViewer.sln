@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniRisViewer", "MiniRisVie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniRisViewer.ServiceStatus", "MiniRisViewer.ServiceStatus\MiniRisViewer.ServiceStatus.csproj", "{1EEB3F88-7D05-4D17-90C1-39CD798A4DB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniRisViewer.Domain", "MiniRisViewer.Service\MiniRisViewer.Domain.csproj", "{1B2EB201-6585-4C08-8CF3-38AE0B4B940E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniRisViewer.Domain", "MiniRisViewer.Domain\MiniRisViewer.Domain.csproj", "{1B2EB201-6585-4C08-8CF3-38AE0B4B940E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C7CC87C2-40B6-4A17-9DD5-0632DE1ED654}"
 	ProjectSection(SolutionItems) = preProject
@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MiniRisViewerSetup", "MiniRisViewerSetup\MiniRisViewerSetup.vdproj", "{4B5D47D5-14F5-43C6-906C-43D58A8A966B}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MiniRisViewerSetup64", "x64MiniRisViewerSetup\x64MiniRisViewerSetup.vdproj", "{38C311E3-C1B4-40A8-AD3F-EDEED09FB63D}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MiniRisViewerSetup64", "MiniRisViewerSetup64\MiniRisViewerSetup64.vdproj", "{38C311E3-C1B4-40A8-AD3F-EDEED09FB63D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
