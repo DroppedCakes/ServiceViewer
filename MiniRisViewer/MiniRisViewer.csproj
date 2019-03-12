@@ -122,6 +122,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MiniRisViewer.Domain\MiniRisViewer.Domain.csproj">
+      <Project>{1B2EB201-6585-4C08-8CF3-38AE0B4B940E}</Project>
+      <Name>MiniRisViewer.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MiniRisViewer.ServiceStatus\MiniRisViewer.ServiceStatus.csproj">
       <Project>{1EEB3F88-7D05-4D17-90C1-39CD798A4DB9}</Project>
       <Name>MiniRisViewer.ServiceStatus</Name>

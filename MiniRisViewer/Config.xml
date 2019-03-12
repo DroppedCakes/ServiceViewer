@@ -1,21 +1,30 @@
 <Config>
-  <LogPath>
-    <FileImporterLogPath>C:\WriteEnable\Logs\UsFileImporter</FileImporterLogPath>
-    <MwmResponderLogPath>C:\WriteEnable\Logs\UsMwmResponder</MwmResponderLogPath>
-    <ScpCoreLogPath>C:\WriteEnable\Logs\UsScpCoreService</ScpCoreLogPath>
-    <AscLogPath>C:\WriteEnable\Logs\UsAscService</AscLogPath>
-    <MppsReceiverLogPath>C:\WriteEnable\Logs\UsMppsReceiver</MppsReceiverLogPath>
-  </LogPath>
-  <DisplaySetting>
-    <FileImporterName>ファイル取込サービス</FileImporterName>
-    <MwmResponderName>MWM応答サービス</MwmResponderName>
-    <AscName>DICOMアソシエーション</AscName>
-    <ScpCoreName>DICOMSCP</ScpCoreName>
-    <MppsReceiverName>MPPS通知連携サービス</MppsReceiverName>
-    <ShowFileImporter>true</ShowFileImporter>
-    <ShowMwmResponder>true</ShowMwmResponder>
-    <ShowAsc>true</ShowAsc>
-    <ShowScpCore>true</ShowScpCore>
-    <ShowMppsReceiver>true</ShowMppsReceiver>
-  </DisplaySetting>
+  <services>
+
+    <service name="UsFileImporter" visible="true">
+      <Caption>ファイル取込サービス</Caption>
+      <LogPath>C:\WriteEnable\Logs\UsFileImporter</LogPath>
+    </service>
+
+    <service name="UsMwmResponder" visible="true">
+      <Caption>MWM応答サービス</Caption>
+      <LogPath>C:\WriteEnable\Logs\UsMwmResponder</LogPath>
+    </service>
+
+    <service name="UsDicomScpCore" visible="true">
+      <Caption>DICOMSCP</Caption>
+      <LogPath>C:\WriteEnable\Logs\UsScpCoreService</LogPath>
+    </service>
+
+    <service name="UsDicomAssociationServer" visible="true">
+      <Caption>DICOMアソシエーション</Caption>
+      <LogPath>C:\WriteEnable\Logs\UsAscService</LogPath>
+    </service>
+
+    <service name="UsMppsReceiver" visible="true">
+      <Caption>MPPS通知連携</Caption>
+      <LogPath>C:\WriteEnable\Logs\UsMppsReceiver</LogPath>
+    </service>
+
+  </services>
 </Config>

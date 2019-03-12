@@ -10,24 +10,19 @@ namespace MiniRisViewer.Domain.Model
     public class ServiceStatus : BindableBase
     {
         /// <summary>
-        /// 各サービスの状態
+        /// 各サービスの状態・操作を行う
         /// </summary>
-        public ServiceManager[] Services;
+        public ServiceManager[] ServiceManagers;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ServiceStatus()
+        public ServiceStatus(Services services)
         {
-            var config = ConfigLoader.LoadDisplayConfig();
-
-            Services = new ServiceManager[]{
-            new ServiceManager(ServiceList.UsFileImporterServiceName,config.FileImporterName),
-            new ServiceManager(ServiceList.UsMwmResponderServiceName,config.MwmResponderName),
-            new ServiceManager(ServiceList.UsScpCoreServiceName,config.ScpCoreName),
-            new ServiceManager(ServiceList.UsAscServiceName,config.AscName),
-            new ServiceManager(ServiceList.UsMppsReceiverServiceName,config.MppsReceiverName),
-        };
+            foreach (Service.Service s in services.ServicesList)
+            {
+                new ServiceManager(s.Name, s.Caption);
+            }
         }
 
         /// <summary>
