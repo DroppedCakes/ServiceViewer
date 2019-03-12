@@ -8,6 +8,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     d:DesignHeight="768"
     d:DesignWidth="1024"
     prism:ViewModelLocator.AutoWireViewModel="True"
@@ -18,193 +19,195 @@
     <UserControl.DataContext>
         <local:ServiceStatusViewModel />
     </UserControl.DataContext>
-    <Grid>
-        <DockPanel>
-            <GroupBox
-                Margin="10"
-                DockPanel.Dock="Top"
-                Header="サービス稼働状況">
-                <StackPanel
-                    VerticalAlignment="Top"
+    <xctk:BusyIndicator BusyContent="{Binding ProgressMessage.Value}" IsBusy="{Binding InProgress.Value}">
+        <Grid>
+            <DockPanel>
+                <GroupBox
+                    Margin="10"
                     DockPanel.Dock="Top"
-                    Orientation="Vertical">
+                    Header="サービス稼働状況">
+                    <StackPanel
+                        VerticalAlignment="Top"
+                        DockPanel.Dock="Top"
+                        Orientation="Vertical">
 
-                    <materialDesign:Card Margin="5" Padding="5">
-                        <StackPanel Orientation="Horizontal">
+                        <materialDesign:Card Margin="5" Padding="5">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock
+                                        Width="322"
+                                        Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                        Text="{Binding ImporterDisplayName, Mode=OneWay}" />
+                                    <TextBlock
+                                        Width="322"
+                                        Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                        Text="{Binding ImporterStatus .Value, Converter={StaticResource StatusConverter}}" />
+                                </StackPanel>
+                                <StackPanel
+                                    x:Name="FileImporter"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Width="100"
+                                        Margin="5"
+                                        Command="{Binding ImporterStartCommand}"
+                                        Content="Start" />
+                                    <Button
+                                        Width="100"
+                                        Margin="5"
+                                        Command="{Binding ImporterStopCommand}"
+                                        Content="Stop" />
+                                    <Button
+                                        Width="100"
+                                        Margin="5"
+                                        Command="{Binding ShowImporterLogCommand}"
+                                        Content="ShowLog" />
+                                </StackPanel>
+                            </StackPanel>
+                        </materialDesign:Card>
+                        <materialDesign:Card Margin="5" Padding="5">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock
                                     Width="322"
                                     Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                                    Text="{Binding ImporterDisplayName, Mode=OneWay}" />
+                                    Text="{Binding ResponderDisplayName}" />
                                 <TextBlock
                                     Width="322"
                                     Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                                    Text="{Binding ImporterStatus .Value, Converter={StaticResource StatusConverter}}" />
+                                    Text="{Binding ResponderStatus.Value　 , Converter={StaticResource StatusConverter}}" />
+                                <StackPanel
+                                    Width="322"
+                                    VerticalAlignment="Top"
+                                    DockPanel.Dock="Top"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Width="100"
+                                        Margin="5"
+                                        Command="{Binding ResponderStartCommand}"
+                                        Content="Start" />
+                                    <Button
+                                        Width="100"
+                                        Margin="5"
+                                        Command="{Binding ResponderStopCommand}"
+                                        Content="Stop" />
+                                    <Button
+                                        Width="100"
+                                        Margin="5"
+                                        Command="{Binding ShowResponderLogCommand}"
+                                        Content="ShowLog" />
+                                </StackPanel>
                             </StackPanel>
-                            <StackPanel
-                                x:Name="FileImporter"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Top"
-                                Orientation="Horizontal">
-                                <Button
-                                    Width="100"
-                                    Margin="5"
-                                    Command="{Binding ImporterStartCommand}"
-                                    Content="Start" />
-                                <Button
-                                    Width="100"
-                                    Margin="5"
-                                    Command="{Binding ImporterStopCommand}"
-                                    Content="Stop" />
-                                <Button
-                                    Width="100"
-                                    Margin="5"
-                                    Command="{Binding ShowImporterLogCommand}"
-                                    Content="ShowLog" />
+                        </materialDesign:Card>
+                        <materialDesign:Card Margin="5" Padding="5">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Width="322"
+                                    Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                    Text="{Binding ScpCoreDisplayName}" />
+                                <TextBlock
+                                    Width="322"
+                                    Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                    Text="{Binding ScpCoreStatus.Value, Converter={StaticResource StatusConverter}}" />
+                                <StackPanel
+                                    VerticalAlignment="Top"
+                                    DockPanel.Dock="Top"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Width="100"
+                                        Margin="5"
+                                        Command="{Binding ScpCoreStartCommand}"
+                                        Content="Start" />
+                                    <Button
+                                        Width="100"
+                                        Margin="5"
+                                        Command="{Binding ScpCoreStopCommand}"
+                                        Content="Stop" />
+                                    <Button
+                                        Width="100"
+                                        Margin="5"
+                                        Command="{Binding ShowScpCoreLogCommand}"
+                                        Content="ShowLog" />
+                                </StackPanel>
                             </StackPanel>
-                        </StackPanel>
-                    </materialDesign:Card>
-                    <materialDesign:Card Margin="5" Padding="5">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Width="322"
-                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                                Text="{Binding ResponderDisplayName}" />
-                            <TextBlock
-                                Width="322"
-                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                                Text="{Binding ResponderStatus.Value　 , Converter={StaticResource StatusConverter}}" />
-                            <StackPanel
-                                Width="322"
-                                VerticalAlignment="Top"
-                                DockPanel.Dock="Top"
-                                Orientation="Horizontal">
-                                <Button
-                                    Width="100"
-                                    Margin="5"
-                                    Command="{Binding ResponderStartCommand}"
-                                    Content="Start" />
-                                <Button
-                                    Width="100"
-                                    Margin="5"
-                                    Command="{Binding ResponderStopCommand}"
-                                    Content="Stop" />
-                                <Button
-                                    Width="100"
-                                    Margin="5"
-                                    Command="{Binding ShowResponderLogCommand}"
-                                    Content="ShowLog" />
+                        </materialDesign:Card>
+                        <materialDesign:Card Margin="5" Padding="5">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Width="322"
+                                    Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                    Text="{Binding AscDiplayName}" />
+                                <TextBlock
+                                    Width="322"
+                                    Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                    Text="{Binding AscStatus.Value, Converter={StaticResource StatusConverter}}" />
+                                <StackPanel
+                                    VerticalAlignment="Top"
+                                    DockPanel.Dock="Top"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Width="100"
+                                        Margin="5"
+                                        Command="{Binding AscStartCommand}"
+                                        Content="Start" />
+                                    <Button
+                                        Width="100"
+                                        Margin="5"
+                                        Command="{Binding AscStopCommand}"
+                                        Content="Stop" />
+                                    <Button
+                                        Width="100"
+                                        Margin="5"
+                                        Command="{Binding ShowAscLogCommand}"
+                                        Content="ShowLog" />
+                                </StackPanel>
                             </StackPanel>
-                        </StackPanel>
-                    </materialDesign:Card>
-                    <materialDesign:Card Margin="5" Padding="5">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Width="322"
-                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                                Text="{Binding ScpCoreDisplayName}" />
-                            <TextBlock
-                                Width="322"
-                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                                Text="{Binding ScpCoreStatus.Value, Converter={StaticResource StatusConverter}}" />
-                            <StackPanel
-                                VerticalAlignment="Top"
-                                DockPanel.Dock="Top"
-                                Orientation="Horizontal">
-                                <Button
-                                    Width="100"
-                                    Margin="5"
-                                    Command="{Binding ScpCoreStartCommand}"
-                                    Content="Start" />
-                                <Button
-                                    Width="100"
-                                    Margin="5"
-                                    Command="{Binding ScpCoreStopCommand}"
-                                    Content="Stop" />
-                                <Button
-                                    Width="100"
-                                    Margin="5"
-                                    Command="{Binding ShowScpCoreLogCommand}"
-                                    Content="ShowLog" />
+                        </materialDesign:Card>
+                        <materialDesign:Card Margin="5" Padding="5">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Width="322"
+                                    Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                    Text="{Binding MppsDisplayName}" />
+                                <TextBlock
+                                    Width="322"
+                                    Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                    Text="{Binding MppsStatus.Value, Converter={StaticResource StatusConverter}}" />
+                                <StackPanel
+                                    VerticalAlignment="Top"
+                                    DockPanel.Dock="Top"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Width="100"
+                                        Margin="5"
+                                        Command="{Binding MppsStartCommand}"
+                                        Content="Start" />
+                                    <Button
+                                        Width="100"
+                                        Margin="5"
+                                        Command="{Binding MppsStopCommand}"
+                                        Content="Stop" />
+                                    <Button
+                                        Width="100"
+                                        Margin="5"
+                                        Command="{Binding ShowMppsLogCommand}"
+                                        Content="ShowLog" />
+                                </StackPanel>
                             </StackPanel>
-                        </StackPanel>
-                    </materialDesign:Card>
-                    <materialDesign:Card Margin="5" Padding="5">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Width="322"
-                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                                Text="{Binding AscDiplayName}" />
-                            <TextBlock
-                                Width="322"
-                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                                Text="{Binding AscStatus.Value, Converter={StaticResource StatusConverter}}" />
-                            <StackPanel
-                                VerticalAlignment="Top"
-                                DockPanel.Dock="Top"
-                                Orientation="Horizontal">
-                                <Button
-                                    Width="100"
-                                    Margin="5"
-                                    Command="{Binding AscStartCommand}"
-                                    Content="Start" />
-                                <Button
-                                    Width="100"
-                                    Margin="5"
-                                    Command="{Binding AscStopCommand}"
-                                    Content="Stop" />
-                                <Button
-                                    Width="100"
-                                    Margin="5"
-                                    Command="{Binding ShowAscLogCommand}"
-                                    Content="ShowLog" />
-                            </StackPanel>
-                        </StackPanel>
-                    </materialDesign:Card>
-                    <materialDesign:Card Margin="5" Padding="5">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Width="322"
-                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                                Text="{Binding MppsDisplayName}" />
-                            <TextBlock
-                                Width="322"
-                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                                Text="{Binding MppsStatus.Value, Converter={StaticResource StatusConverter}}" />
-                            <StackPanel
-                                VerticalAlignment="Top"
-                                DockPanel.Dock="Top"
-                                Orientation="Horizontal">
-                                <Button
-                                    Width="100"
-                                    Margin="5"
-                                    Command="{Binding MppsStartCommand}"
-                                    Content="Start" />
-                                <Button
-                                    Width="100"
-                                    Margin="5"
-                                    Command="{Binding MppsStopCommand}"
-                                    Content="Stop" />
-                                <Button
-                                    Width="100"
-                                    Margin="5"
-                                    Command="{Binding ShowMppsLogCommand}"
-                                    Content="ShowLog" />
-                            </StackPanel>
-                        </StackPanel>
-                    </materialDesign:Card>
-                </StackPanel>
-            </GroupBox>
+                        </materialDesign:Card>
+                    </StackPanel>
+                </GroupBox>
 
-            <StackPanel
-                VerticalAlignment="Top"
-                DockPanel.Dock="Top"
-                Orientation="Horizontal">
-                <Button
-                    Margin="5"
-                    Command="{Binding RestartServiceCommand}"
-                    Content="全てのサービスを再起動" />
-            </StackPanel>
-        </DockPanel>
-    </Grid>
+                <StackPanel
+                    VerticalAlignment="Top"
+                    DockPanel.Dock="Top"
+                    Orientation="Horizontal">
+                    <Button
+                        Margin="5"
+                        Command="{Binding RestartServiceCommand}"
+                        Content="全てのサービスを再起動" />
+                </StackPanel>
+            </DockPanel>
+        </Grid>
+    </xctk:BusyIndicator>
 </UserControl>

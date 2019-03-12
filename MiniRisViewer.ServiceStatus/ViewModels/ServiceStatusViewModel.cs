@@ -7,11 +7,16 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.ServiceProcess;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MiniRisViewer.ServiceStatus.ViewModels
 {
     public class ServiceStatusViewModel : BindableBase, IDisposable
     {
+        public Reactive.Bindings.Notifiers.BooleanNotifier InProgress { get; } = new Reactive.Bindings.Notifiers.BooleanNotifier(false);
+        public ReactivePropertySlim<string> ProgressMessage { get; } = new ReactivePropertySlim<string>("");
+
         /// <summary>
         /// Model
         /// </summary>
@@ -96,15 +101,15 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         #region Start/Stop
 
         public ReactiveCommand ImporterStartCommand { get; }
-        public ReactiveCommand ImporterStopCommand { get; } 
-        public ReactiveCommand ResponderStartCommand { get; } 
-        public ReactiveCommand ResponderStopCommand { get; } 
-        public ReactiveCommand ScpCoreStartCommand { get; } 
-        public ReactiveCommand ScpCoreStopCommand { get; } 
+        public ReactiveCommand ImporterStopCommand { get; }
+        public ReactiveCommand ResponderStartCommand { get; }
+        public ReactiveCommand ResponderStopCommand { get; }
+        public ReactiveCommand ScpCoreStartCommand { get; }
+        public ReactiveCommand ScpCoreStopCommand { get; }
         public ReactiveCommand AscStartCommand { get; }
-        public ReactiveCommand AscStopCommand { get; } 
-        public ReactiveCommand MppsStartCommand { get; } 
-        public ReactiveCommand MppsStopCommand { get; } 
+        public ReactiveCommand AscStopCommand { get; }
+        public ReactiveCommand MppsStartCommand { get; }
+        public ReactiveCommand MppsStopCommand { get; }
 
         #endregion Start/Stop
 
@@ -157,6 +162,25 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         #endregion IDisposable Support
 
         /// <summary>
+        /// 非同期でサービスの再起動を行い、
+        /// UIはBusyIndicatorでブロックする
+        /// </summary>
+        public async void RestartAllServiceAsync()
+        {
+            InProgress.TurnOn();
+            ProgressMessage.Value = "サービス再起動中";
+            try
+            {
+                await Task.Run(() => Model.RestartService());
+                //await Task.Run(() => Thread.Sleep(3000));
+            }
+            finally
+            {
+                InProgress.TurnOff();
+            }
+        }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         public ServiceStatusViewModel()
@@ -199,7 +223,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             ScpCoreStopCommand = CanStopScpCore.Select(x => x == true).ToReactiveCommand();
             MppsStartCommand = CanStopMpps.Select(x => x == false).ToReactiveCommand();
             MppsStopCommand = CanStopMpps.Select(x => x == true).ToReactiveCommand();
-            
+
             // StartCommandの購読
             ImporterStartCommand.Subscribe(_ => Model.Services[((int)Ailias.Importer)].Start());
             AscStartCommand.Subscribe(_ => Model.Services[((int)Ailias.Asc)].Start());
@@ -215,7 +239,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             MppsStopCommand.Subscribe(_ => Model.Services[((int)Ailias.Mpps)].Stop());
 
             //// 全てのサービスを再起動するコマンド
-            RestartServiceCommand.Subscribe(_ => Model.RestartService());
+            RestartServiceCommand.Subscribe(() => RestartAllServiceAsync());
 
             // ログ
             ShowImporterLogCommand.Subscribe(_ => LogManager.ShowImporterLogFolder());

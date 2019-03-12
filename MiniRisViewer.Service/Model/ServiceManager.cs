@@ -1,6 +1,7 @@
 ﻿using Prism.Mvvm;
 using System;
 using System.ServiceProcess;
+using System.Threading.Tasks;
 
 namespace MiniRisViewer.Domain.Model
 {
@@ -193,44 +194,28 @@ namespace MiniRisViewer.Domain.Model
         /// <summary>
         /// サービスの再起動を行う
         /// </summary>
-        public bool Restart()
+        public void Restart()
         {
             TimeSpan timeout = new TimeSpan(00, 00, 10);
-
-            bool CanRestart = false;
-
-            try
+            using (ServiceController sc = new ServiceController(ServiceName))
             {
-                using (ServiceController sc = new ServiceController(ServiceName))
+                //停止中以外の場合
+                if (sc.Status != ServiceControllerStatus.Stopped)
                 {
-                    //停止中以外の場合
-                    if (sc.Status != ServiceControllerStatus.Stopped)
+                    //停止処理中以外の場合
+                    if (sc.Status != ServiceControllerStatus.StopPending)
                     {
-                        //停止処理中以外の場合
-                        if (sc.Status != ServiceControllerStatus.StopPending)
-                        {
-                            //停止する
-                            sc.Stop();
-                        }
-                        // サービスが停止するまで待機する
-                        sc.WaitForStatus(ServiceControllerStatus.Stopped, timeout);
+                        //停止する
+                        sc.Stop();
                     }
-
-                    sc.Start();
-                    // サービスが開始するまで待機する
-                    sc.WaitForStatus(ServiceControllerStatus.Running, timeout);
-                    if (sc.Status == ServiceControllerStatus.Running)
-                    {
-                        CanRestart = true;
-                    }
+                    // サービスが停止するまで待機する
+                    sc.WaitForStatus(ServiceControllerStatus.Stopped, timeout);
                 }
-            }
-            catch (Exception)
-            {
-                CanRestart = false;
-            }
 
-            return CanRestart;
+                sc.Start();
+                // サービスが開始するまで待機する
+                sc.WaitForStatus(ServiceControllerStatus.Running, timeout);
+            }
         }
     }
 }

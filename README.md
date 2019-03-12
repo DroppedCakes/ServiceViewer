@@ -9,6 +9,7 @@
 - WPF
 - Prism
 - ReactiveProperty
+- Extended.Wpf.Toolkit
 - UI
 	- Material Design In XAML Toolkit
 	- Mahapps
@@ -28,3 +29,4 @@
 ## 実装予定
 - プロセスの強制終了
 - 再起動処理中に操作を受け付けないようにする
+- 非同期での再起動
