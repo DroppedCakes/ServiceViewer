@@ -130,5 +130,8 @@
   <ItemGroup>
     <Resource Include="Resource\toolbar_find.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Config.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

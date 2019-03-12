@@ -1,0 +1,21 @@
+<Config>
+  <LogPath>
+    <FileImporterLogPath>C:\WriteEnable\Logs\UsFileImporter</FileImporterLogPath>
+    <MwmResponderLogPath>C:\WriteEnable\Logs\UsMwmResponder</MwmResponderLogPath>
+    <ScpCoreLogPath>C:\WriteEnable\Logs\UsScpCoreService</ScpCoreLogPath>
+    <AscLogPath>C:\WriteEnable\Logs\UsAscService</AscLogPath>
+    <MppsReceiverLogPath>C:\WriteEnable\Logs\UsMppsReceiver</MppsReceiverLogPath>
+  </LogPath>
+  <DisplaySetting>
+    <FileImporterName>ファイル取込サービス</FileImporterName>
+    <MwmResponderName>MWM応答サービス</MwmResponderName>
+    <AscName>DICOMアソシエーション</AscName>
+    <ScpCoreName>DICOMSCP</ScpCoreName>
+    <MppsReceiverName>MPPS通知連携サービス</MppsReceiverName>
+    <ShowFileImporter>true</ShowFileImporter>
+    <ShowMwmResponder>true</ShowMwmResponder>
+    <ShowAsc>true</ShowAsc>
+    <ShowScpCore>true</ShowScpCore>
+    <ShowMppsReceiver>true</ShowMppsReceiver>
+  </DisplaySetting>
+</Config>
