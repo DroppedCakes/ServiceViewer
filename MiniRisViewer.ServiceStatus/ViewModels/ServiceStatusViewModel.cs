@@ -7,7 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.ServiceProcess;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace MiniRisViewer.ServiceStatus.ViewModels
