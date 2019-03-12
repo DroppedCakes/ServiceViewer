@@ -1,6 +1,7 @@
 ﻿using MiniRisViewer.Domain.Service;
 using Prism.Mvvm;
 using System.Collections.Generic;
+using System.Linq;
 using System.ServiceProcess;
 using System.Threading.Tasks;
 
@@ -43,12 +44,11 @@ namespace MiniRisViewer.Domain.Model
         ///<summary>
         ///全サービスの再起動を行う
         /// </summary>
-        public async void RestartService()
+        public async Task RestartService()
         {
-            foreach (ServiceManager x in Services)
-            {
-                await Task.Run(()=>x.Restart());
-            }
+            await Task.WhenAll(
+                this.Services.Select(service => Task.Run(() => service.Restart()))
+            );
         }
     }
 }

@@ -170,8 +170,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             ProgressMessage.Value = "サービス再起動中";
             try
             {
-                await Task.Run(() => Model.RestartService());
-                //await Task.Run(() => Thread.Sleep(3000));
+                await Task.Run(Model.RestartService);
             }
             finally
             {
