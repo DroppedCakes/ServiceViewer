@@ -2,26 +2,25 @@
 using Prism.Mvvm;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceProcess;
 using System.Threading.Tasks;
 
 namespace MiniRisViewer.Domain.Model
 {
-    public class ServiceStatus : BindableBase
+    public class ServiceAdministrator : BindableBase
     {
         /// <summary>
         /// 各サービスの状態・操作を行う
         /// </summary>
-        public ServiceManager[] ServiceManagers;
+        public List<ServiceManager> ServiceManagers = new List<ServiceManager>();
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ServiceStatus(Services services)
+        public ServiceAdministrator(Config config)
         {
-            foreach (Service.Service s in services.ServicesList)
+            foreach (Service.Service x in config.Services)
             {
-                new ServiceManager(s.Name, s.Caption);
+                ServiceManagers.Add(new ServiceManager(x.Name, x.Caption, x.LogPath, System.Convert.ToBoolean(x.Visible)));
             }
         }
 
@@ -30,7 +29,7 @@ namespace MiniRisViewer.Domain.Model
         /// </summary>
         public void ServiceStatusUpdate()
         {
-            foreach (ServiceManager x in Services)
+            foreach (ServiceManager x in ServiceManagers)
             {
                 x.GetServiceState();
             }
@@ -42,7 +41,7 @@ namespace MiniRisViewer.Domain.Model
         public async Task RestartService()
         {
             await Task.WhenAll(
-                this.Services.Select(service => Task.Run(() => service.Restart()))
+                ServiceManagers.Select(service => Task.Run(() => service.Restart()))
             );
         }
     }

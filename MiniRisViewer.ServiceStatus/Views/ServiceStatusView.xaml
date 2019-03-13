@@ -41,7 +41,7 @@
                                     <TextBlock
                                         Width="322"
                                         Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                                        Text="{Binding ImporterStatus .Value, Converter={StaticResource StatusConverter}}" />
+                                        Text="{Binding ImporterStatus.Value, Converter={StaticResource StatusConverter}}" />
                                 </StackPanel>
                                 <StackPanel
                                     x:Name="FileImporter"

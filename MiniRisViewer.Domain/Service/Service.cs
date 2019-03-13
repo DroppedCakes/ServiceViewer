@@ -1,19 +1,21 @@
-﻿using System.Xml.Serialization;
+﻿using System;
+using System.Xml.Serialization;
 
 namespace MiniRisViewer.Domain.Service
 {
+    [Serializable]
     public class Service
     {
-        [XmlAttribute(AttributeName = "Name")]
+        [XmlAttribute("name")]
         public string Name { get; set; }
 
-        [XmlAttribute(AttributeName = "Visible")]
-        public bool Visible { get; set; }
+        [XmlAttribute("visible")]
+        public string Visible { get; set; }
 
-        [XmlElement(ElementName = "Caption")]
+        [XmlElement("Caption")]
         public string Caption { get; set; }
 
-        [XmlElement(ElementName = "LogPath")]
+        [XmlElement("LogPath")]
         public string LogPath { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MiniRisViewer.Domain.Service;
+﻿using MiniRisViewer.Domain.Model;
+using MiniRisViewer.Domain.Service;
 using MiniRisViewer.ServiceStatus;
 using MiniRisViewer.Views;
 using Prism.Ioc;
@@ -29,7 +30,8 @@ namespace MiniRisViewer
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterInstance<Services>(ConfigLoader.LoadConfigFromFile(ConfigPath));
+            var config = ConfigLoader.LoadConfigFromFile(ConfigPath);
+            containerRegistry.RegisterInstance(new ServiceAdministrator(config));
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

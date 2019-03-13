@@ -10,10 +10,12 @@ namespace MiniRisViewer.Domain.Model
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ServiceManager(string serviceName, string displayName)
+        public ServiceManager(string serviceName, string displayName,string logFolderPath,bool visble)
         {
             ServiceName = serviceName;
             DisplayName = displayName;
+            LogFolderPath = logFolderPath;
+            Visible = visble;
         }
 
         /// <summary>
@@ -27,11 +29,16 @@ namespace MiniRisViewer.Domain.Model
         public readonly string DisplayName;
 
         /// <summary>
-        /// 実行ファイルのパス
+        /// ログ出力先フォルダのパス
         /// </summary>
-        public string ServicePath { get; }
+        public string LogFolderPath { get; }
 
-        #region サービスの稼働状況
+        private bool visible;
+        public bool Visible
+        {
+            get { return visible; }
+            set { SetProperty(ref visible, value); }
+        }
 
         /// <summary>
         /// サービスの状態
@@ -51,8 +58,6 @@ namespace MiniRisViewer.Domain.Model
             get { return canStop; }
             set { SetProperty(ref canStop, value); }
         }
-
-        #endregion サービスの稼働状況
 
         /// <summary>
         /// サービスの状態を更新する
@@ -216,6 +221,15 @@ namespace MiniRisViewer.Domain.Model
                 // サービスが開始するまで待機する
                 sc.WaitForStatus(ServiceControllerStatus.Running, timeout);
             }
+        }
+        /// <summary>
+        /// ログ出力先フォルダを
+        /// エクスプローラで開く
+        /// </summary>
+        public void ShowLogFolder()
+        {
+            System.Diagnostics.Process.Start(
+                "EXPLORER.EXE", LogFolderPath);
         }
     }
 }

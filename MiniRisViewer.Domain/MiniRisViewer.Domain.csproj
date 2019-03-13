@@ -99,14 +99,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Ailias.cs" />
-    <Compile Include="Model\LogManager.cs" />
     <Compile Include="Model\ServiceManager.cs" />
-    <Compile Include="Model\ServiceStatus.cs" />
-    <Compile Include="Model\ServiceList.cs" />
+    <Compile Include="Model\ServiceAdministrator.cs" />
     <Compile Include="Service\ConfigLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Service.cs" />
-    <Compile Include="Service\Services.cs" />
+    <Compile Include="Service\Config.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

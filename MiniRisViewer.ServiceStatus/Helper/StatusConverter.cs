@@ -15,31 +15,31 @@ namespace MiniRisViewer.ServiceStatus.Helper
 
             switch (target)
             {
-                case (1):
+                case 1:
                     ConvertStatus = "停止中";
                     break;
 
-                case (2):
+                case 2:
                     ConvertStatus = "サービス開始させています";
                     break;
 
-                case (3):
+                case 3:
                     ConvertStatus = "停止させています";
                     break;
 
-                case (4):
+                case 4:
                     ConvertStatus = "動作中";
                     break;
 
-                case (5):
+                case 5:
                     ConvertStatus = "再開させています";
                     break;
 
-                case (6):
+                case 6:
                     ConvertStatus = "一時停止させています";
                     break;
 
-                case (7):
+                case 7:
                     ConvertStatus = "一時停止中";
                     break;
 

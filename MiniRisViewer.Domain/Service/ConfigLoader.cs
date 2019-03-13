@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 using System.Xml.Serialization;
 
 namespace MiniRisViewer.Domain.Service
@@ -22,21 +23,30 @@ namespace MiniRisViewer.Domain.Service
         /// </summary>
         /// <param name="configPath">設定ファイルのフルパス</param>
         /// <returns>デシリアライズしたServices</returns>
-        public static Services LoadConfigFromFile(string configPath)
+        public static Config LoadConfigFromFile(string configPath)
         {
-            return Deserialize(configPath);
+            return Deserialize<Config>(configPath);
         }
 
-        /// <summary>
-        /// デシリアライザー
-        /// </summary>
-        /// <param name="configPath"></param>
-        /// <returns></returns>
-        public static Services Deserialize(string configPath)
+        // ファイルに書き出すときに使う
+        private static void Serialize<T>(string savePath, T graph)
         {
-            var serializer = new XmlSerializer(typeof(Services));
-            var deserializedServices = (Services)serializer.Deserialize(new StringReader(configPath));
-            return deserializedServices;
+            using (var sw = new StreamWriter(savePath, false, Encoding.UTF8))
+            {
+                var ns = new XmlSerializerNamespaces();
+                ns.Add(string.Empty, string.Empty);
+
+                new XmlSerializer(typeof(T)).Serialize(sw, graph, ns);
+            }
+        }
+
+        // ファイルを読み取るときに使う
+        private static T Deserialize<T>(string loadPath)
+        {
+            using (var sr = new StreamReader(loadPath))
+            {
+                return (T)new XmlSerializer(typeof(T)).Deserialize(sr);
+            }
         }
 
         /// <summary>
