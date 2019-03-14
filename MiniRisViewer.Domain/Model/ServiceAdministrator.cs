@@ -27,18 +27,17 @@ namespace MiniRisViewer.Domain.Model
         /// <summary>
         /// 各サービスの状態を更新
         /// </summary>
-        public void ServiceStatusUpdate()
+        public async void UpdateServiceStatusAsync()
         {
-            foreach (ServiceManager x in ServiceManagers)
-            {
-                x.GetServiceState();
-            }
+            await Task.WhenAll(
+                ServiceManagers.Select(service => Task.Run(() => service.GetServiceState()))
+                );
         }
 
         ///<summary>
         ///全サービスの再起動を行う
         /// </summary>
-        public async Task RestartService()
+        public async Task RestartServiceAsync()
         {
             await Task.WhenAll(
                 ServiceManagers.Select(service => Task.Run(() => service.Restart()))

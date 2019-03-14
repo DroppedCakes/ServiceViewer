@@ -165,7 +165,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             ProgressMessage.Value = "サービス再起動中";
             try
             {
-                await Task.Run(Model.RestartService);
+                await Task.Run(Model.RestartServiceAsync);
             }
             finally
             {
@@ -174,15 +174,29 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public void CreateModel()
+        {
+            try
+            {
+                string ConfigPath = @"C:\ProgramData\UsTEC\MiniRisViewer\Config.xml";
+                var config = ConfigLoader.LoadConfigFromFile(ConfigPath);
+                Model = new ServiceAdministrator(config);
+            }
+
+            catch (Exception)
+            {
+                // メッセージボックスだして、アプリを終了させる
+            }
+        }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         public ServiceStatusViewModel()
         {
-            // DI
-            string ConfigPath = @"C:\ProgramData\UsTEC\MiniRisViewer\Config.xml";
-
-            var config = ConfigLoader.LoadConfigFromFile(ConfigPath);
-            Model = new ServiceAdministrator(config);
+            CreateModel();
 
             // Stop判定のM -> VMの接続
             CanStopImporter = Model.ServiceManagers[(int)Ailias.Importer].ObserveProperty(x => x.CanStop).ToReactiveProperty();
@@ -246,7 +260,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             ScreenSynchronousTimer = new ReactiveTimer(TimeSpan.FromSeconds(1));
             // タイマーを購読し、
             // サービスのステータスを最新のものに同期する
-            ScreenSynchronousTimer.Subscribe(_ => Model.ServiceStatusUpdate());
+            ScreenSynchronousTimer.Subscribe(_ => Model.UpdateServiceStatusAsync());
 
             ScreenSynchronousTimer.Start();
         }
