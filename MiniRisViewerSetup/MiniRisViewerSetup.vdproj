@@ -27,6 +27,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_0D146BC4E5F06BC5817DC0033C305313"
+        "OwnerKey" = "8:_373F0E789AE345999922C6947DE9B5D0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0D146BC4E5F06BC5817DC0033C305313"
+        "OwnerKey" = "8:_2CFC6594E2604D6B9D93BD0F3D5DDEC7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_13FDA62CCEC177DB998BE106B7DACB6B"
         "OwnerKey" = "8:_C11BC05B8078D4F415EFCAA5FD302D05"
         "MsmSig" = "8:_UNDEFINED"
@@ -35,12 +47,6 @@
         {
         "MsmKey" = "8:_13FDA62CCEC177DB998BE106B7DACB6B"
         "OwnerKey" = "8:_2ADAD8F1C4A76DBB492904B1151BFB0D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_182204461D3D20AB60ED221EF3B022A5"
-        "OwnerKey" = "8:_373F0E789AE345999922C6947DE9B5D0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -58,7 +64,7 @@
         "Entry"
         {
         "MsmKey" = "8:_24818BA9AF00FC80C2A6B91309A61E4A"
-        "OwnerKey" = "8:_182204461D3D20AB60ED221EF3B022A5"
+        "OwnerKey" = "8:_2CFC6594E2604D6B9D93BD0F3D5DDEC7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -89,6 +95,12 @@
         {
         "MsmKey" = "8:_2ADAD8F1C4A76DBB492904B1151BFB0D"
         "OwnerKey" = "8:_79B20973EF8AF6A3AD41579A73C18010"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2CFC6594E2604D6B9D93BD0F3D5DDEC7"
+        "OwnerKey" = "8:_373F0E789AE345999922C6947DE9B5D0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -159,6 +171,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_6E3EC5E52CF242E1B81D96CB7DF36379"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_72E90B16BFAE89A62A64B6EA3478BBCB"
         "OwnerKey" = "8:_373F0E789AE345999922C6947DE9B5D0"
         "MsmSig" = "8:_UNDEFINED"
@@ -196,7 +214,7 @@
         "Entry"
         {
         "MsmKey" = "8:_79B20973EF8AF6A3AD41579A73C18010"
-        "OwnerKey" = "8:_182204461D3D20AB60ED221EF3B022A5"
+        "OwnerKey" = "8:_2CFC6594E2604D6B9D93BD0F3D5DDEC7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -233,18 +251,6 @@
         {
         "MsmKey" = "8:_9D5F68C47BDF75533C2E1EB879550D36"
         "OwnerKey" = "8:_373F0E789AE345999922C6947DE9B5D0"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AAB4A4F1E3D4D456400BFE3A26A61F7E"
-        "OwnerKey" = "8:_373F0E789AE345999922C6947DE9B5D0"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AAB4A4F1E3D4D456400BFE3A26A61F7E"
-        "OwnerKey" = "8:_182204461D3D20AB60ED221EF3B022A5"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -292,13 +298,13 @@
         "Entry"
         {
         "MsmKey" = "8:_D6E3CB4CEEB562493AD36A5E37B27D1B"
-        "OwnerKey" = "8:_182204461D3D20AB60ED221EF3B022A5"
+        "OwnerKey" = "8:_2CFC6594E2604D6B9D93BD0F3D5DDEC7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_D6E3CB4CEEB562493AD36A5E37B27D1B"
-        "OwnerKey" = "8:_AAB4A4F1E3D4D456400BFE3A26A61F7E"
+        "OwnerKey" = "8:_0D146BC4E5F06BC5817DC0033C305313"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -339,12 +345,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_DCBDEB1838454A9FA8E0EC0EAB464C03"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_DF9FED3D8B536114E8AE4848476757C7"
         "OwnerKey" = "8:_79B20973EF8AF6A3AD41579A73C18010"
         "MsmSig" = "8:_UNDEFINED"
@@ -352,7 +352,7 @@
         "Entry"
         {
         "MsmKey" = "8:_DF9FED3D8B536114E8AE4848476757C7"
-        "OwnerKey" = "8:_182204461D3D20AB60ED221EF3B022A5"
+        "OwnerKey" = "8:_2CFC6594E2604D6B9D93BD0F3D5DDEC7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -424,19 +424,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_182204461D3D20AB60ED221EF3B022A5"
+        "OwnerKey" = "8:_2CFC6594E2604D6B9D93BD0F3D5DDEC7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AAB4A4F1E3D4D456400BFE3A26A61F7E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0CC27BCD02C48516BF44F9FF2F12926F"
+        "OwnerKey" = "8:_0D146BC4E5F06BC5817DC0033C305313"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -455,6 +449,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_9D5F68C47BDF75533C2E1EB879550D36"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_0CC27BCD02C48516BF44F9FF2F12926F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -758,20 +758,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_13FDA62CCEC177DB998BE106B7DACB6B"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0D146BC4E5F06BC5817DC0033C305313"
             {
             "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:System.IO.Compression, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MiniRisViewer.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_13FDA62CCEC177DB998BE106B7DACB6B"
+                    "_0D146BC4E5F06BC5817DC0033C305313"
                     {
-                    "Name" = "8:System.IO.Compression.dll"
+                    "Name" = "8:MiniRisViewer.Domain.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:System.IO.Compression.dll"
+            "SourcePath" = "8:MiniRisViewer.Domain.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_26E7BE5069C440B699E58EDE417DD89F"
@@ -789,20 +789,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_182204461D3D20AB60ED221EF3B022A5"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_13FDA62CCEC177DB998BE106B7DACB6B"
             {
             "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MiniRisViewer.ServiceStatus, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyIsInGAC" = "11:TRUE"
+            "AssemblyAsmDisplayName" = "8:System.IO.Compression, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_182204461D3D20AB60ED221EF3B022A5"
+                    "_13FDA62CCEC177DB998BE106B7DACB6B"
                     {
-                    "Name" = "8:MiniRisViewer.ServiceStatus.dll"
+                    "Name" = "8:System.IO.Compression.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:MiniRisViewer.ServiceStatus.dll"
+            "SourcePath" = "8:System.IO.Compression.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_26E7BE5069C440B699E58EDE417DD89F"
@@ -896,6 +896,37 @@
                     }
                 }
             "SourcePath" = "8:netstandard.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_26E7BE5069C440B699E58EDE417DD89F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2CFC6594E2604D6B9D93BD0F3D5DDEC7"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MiniRisViewer.ServiceStatus, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_2CFC6594E2604D6B9D93BD0F3D5DDEC7"
+                    {
+                    "Name" = "8:MiniRisViewer.ServiceStatus.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MiniRisViewer.ServiceStatus.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_26E7BE5069C440B699E58EDE417DD89F"
@@ -1130,6 +1161,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6E3EC5E52CF242E1B81D96CB7DF36379"
+            {
+            "SourcePath" = "8:..\\MiniRisViewer\\Config.xml"
+            "TargetName" = "8:Config.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_8D3EDE32B5B947B2A7EABD42D2B35B74"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_72E90B16BFAE89A62A64B6EA3478BBCB"
             {
             "AssemblyRegister" = "3:1"
@@ -1330,37 +1381,6 @@
                     }
                 }
             "SourcePath" = "8:System.ValueTuple.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_26E7BE5069C440B699E58EDE417DD89F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AAB4A4F1E3D4D456400BFE3A26A61F7E"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MiniRisViewer.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_AAB4A4F1E3D4D456400BFE3A26A61F7E"
-                    {
-                    "Name" = "8:MiniRisViewer.Domain.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:MiniRisViewer.Domain.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_26E7BE5069C440B699E58EDE417DD89F"
@@ -1595,26 +1615,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DCBDEB1838454A9FA8E0EC0EAB464C03"
-            {
-            "SourcePath" = "8:..\\MiniRisViewer\\Config.xml"
-            "TargetName" = "8:Config.xml"
-            "Tag" = "8:"
-            "Folder" = "8:_1E48166AB6E54C18BCA5D7E9CA7EB56F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DF9FED3D8B536114E8AE4848476757C7"
             {
             "AssemblyRegister" = "3:1"
@@ -1768,39 +1768,6 @@
                 {
                 }
             }
-            "{1525181F-901A-416C-8A58-119130FE478E}:_8FFEC0EE07DB45EC828043DD211EDC64"
-            {
-            "Name" = "8:#1915"
-            "AlwaysCreate" = "11:FALSE"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Property" = "8:AppDataFolder"
-                "Folders"
-                {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_7A2F3D2A688D4411BA696FE5573295D3"
-                    {
-                    "Name" = "8:UsTEC"
-                    "AlwaysCreate" = "11:FALSE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_131D2A2118BF4AB19AFC8ECC2656CB5B"
-                        "Folders"
-                        {
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_1E48166AB6E54C18BCA5D7E9CA7EB56F"
-                            {
-                            "Name" = "8:MiniRisViewer"
-                            "AlwaysCreate" = "11:FALSE"
-                            "Condition" = "8:"
-                            "Transitive" = "11:FALSE"
-                            "Property" = "8:_C1E214401E774B158C5E218F428AFBBE"
-                                "Folders"
-                                {
-                                }
-                            }
-                        }
-                    }
-                }
-            }
             "{1525181F-901A-416C-8A58-119130FE478E}:_A5576DBA4715470DBFFAF716AF662E59"
             {
             "Name" = "8:#1916"
@@ -1810,6 +1777,40 @@
             "Property" = "8:DesktopFolder"
                 "Folders"
                 {
+                }
+            }
+            "{994432C3-9487-495D-8656-3E829A8DBDDE}:_EFB5B82666014FA1A89E2B0C27CF2336"
+            {
+            "DefaultLocation" = "8:C:\\ProgramData"
+            "Name" = "8:ProgramData"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:NEWPROPERTY1"
+                "Folders"
+                {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_BFDD2289C14A427E90BA73B8DA86764D"
+                    {
+                    "Name" = "8:UsTEC"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_44D06A3D1ACE4980869669AA08774F64"
+                        "Folders"
+                        {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_8D3EDE32B5B947B2A7EABD42D2B35B74"
+                            {
+                            "Name" = "8:MiniRisViewer"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_57D08D9BA4DD471E91D565553DE85352"
+                                "Folders"
+                                {
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -1829,7 +1830,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MiniRisViewer"
         "ProductCode" = "8:{2D49B47A-27CF-4077-9F48-3B4D1CBC9516}"
-        "PackageCode" = "8:{E6ADF6A8-BA00-4E19-B62E-E439E324211A}"
+        "PackageCode" = "8:{617E9BA7-5A7D-4856-9C1E-A861E6564C90}"
         "UpgradeCode" = "8:{0FAB647F-1E01-4F1C-A481-9DCD924935C2}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
