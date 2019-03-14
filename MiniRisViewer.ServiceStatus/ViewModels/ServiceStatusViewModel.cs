@@ -1,4 +1,5 @@
 ﻿using MiniRisViewer.Domain.Model;
+using MiniRisViewer.Domain.Service;
 using Prism.Mvvm;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
@@ -175,17 +176,20 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// <summary>
         /// デザイン用コンストラクタ
         /// </summary>
-        public ServiceStatusViewModel()
-        {
-        }
+        //public ServiceStatusViewModel()
+        //{
+        //}
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ServiceStatusViewModel(ServiceAdministrator serviceAdministrator)
+        public ServiceStatusViewModel()
         {
             // DI
-            Model = serviceAdministrator;
+            string ConfigPath = @"C:\ProgramData\UsTEC\MiniRisViewer\Config.xml";
+
+            var config = ConfigLoader.LoadConfigFromFile(ConfigPath);
+            Model = new ServiceAdministrator(config);
 
             // Stop判定のM -> VMの接続
             CanStopImporter = Model.ServiceManagers[(int)Ailias.Importer].ObserveProperty(x => x.CanStop).ToReactiveProperty();

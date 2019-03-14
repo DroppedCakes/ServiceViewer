@@ -26,6 +26,5 @@
       <Caption>MPPS通知連携</Caption>
       <LogPath>C:\WriteEnable\Logs\UsMppsReceiver</LogPath>
     </service>
-
   </services>
 </Config>

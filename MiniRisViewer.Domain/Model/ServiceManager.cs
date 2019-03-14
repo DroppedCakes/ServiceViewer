@@ -1,7 +1,6 @@
 ﻿using Prism.Mvvm;
 using System;
 using System.ServiceProcess;
-using System.Threading.Tasks;
 
 namespace MiniRisViewer.Domain.Model
 {
@@ -10,12 +9,13 @@ namespace MiniRisViewer.Domain.Model
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ServiceManager(string serviceName, string displayName,string logFolderPath,bool visble)
+        public ServiceManager(string serviceName, string displayName, string logFolderPath, bool visble)
         {
             ServiceName = serviceName;
             DisplayName = displayName;
             LogFolderPath = logFolderPath;
             Visible = visble;
+            GetServiceState();
         }
 
         /// <summary>
@@ -34,6 +34,7 @@ namespace MiniRisViewer.Domain.Model
         public string LogFolderPath { get; }
 
         private bool visible;
+
         public bool Visible
         {
             get { return visible; }
@@ -222,6 +223,7 @@ namespace MiniRisViewer.Domain.Model
                 sc.WaitForStatus(ServiceControllerStatus.Running, timeout);
             }
         }
+
         /// <summary>
         /// ログ出力先フォルダを
         /// エクスプローラで開く
