@@ -174,13 +174,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         }
 
         /// <summary>
-        /// デザイン用コンストラクタ
-        /// </summary>
-        //public ServiceStatusViewModel()
-        //{
-        //}
-
-        /// <summary>
         /// コンストラクタ
         /// </summary>
         public ServiceStatusViewModel()
@@ -226,18 +219,18 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             MppsStopCommand = CanStopMpps.Select(x => x == true).ToReactiveCommand();
 
             // StartCommandの購読
-            ImporterStartCommand.Subscribe(_ => Model.ServiceManagers[(int)Ailias.Importer].Start());
-            AscStartCommand.Subscribe(_ => Model.ServiceManagers[(int)Ailias.Asc].Start());
-            ResponderStartCommand.Subscribe(_ => Model.ServiceManagers[(int)Ailias.Responder].Start());
-            ScpCoreStartCommand.Subscribe(_ => Model.ServiceManagers[(int)Ailias.ScpCore].Start());
-            MppsStartCommand.Subscribe(_ => Model.ServiceManagers[(int)Ailias.Mpps].Start());
+            ImporterStartCommand.Subscribe(()=> Model.ServiceManagers[(int)Ailias.Importer].Start());
+            AscStartCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.Asc].Start());
+            ResponderStartCommand.Subscribe(()=> Model.ServiceManagers[(int)Ailias.Responder].Start());
+            ScpCoreStartCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.ScpCore].Start());
+            MppsStartCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.Mpps].Start());
 
             // StopCommandの購読
-            ImporterStopCommand.Subscribe(_ => Model.ServiceManagers[(int)Ailias.Importer].Stop());
-            AscStopCommand.Subscribe(_ => Model.ServiceManagers[(int)Ailias.Asc].Stop());
-            ResponderStopCommand.Subscribe(_ => Model.ServiceManagers[(int)Ailias.Responder].Stop());
-            ScpCoreStopCommand.Subscribe(_ => Model.ServiceManagers[(int)Ailias.ScpCore].Stop());
-            MppsStopCommand.Subscribe(_ => Model.ServiceManagers[(int)Ailias.Mpps].Stop());
+            ImporterStopCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.Importer].Stop());
+            AscStopCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.Asc].Stop());
+            ResponderStopCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.Responder].Stop());
+            ScpCoreStopCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.ScpCore].Stop());
+            MppsStopCommand.Subscribe(()=> Model.ServiceManagers[(int)Ailias.Mpps].Stop());
 
             //// 全てのサービスを再起動するコマンド
             RestartServiceCommand.Subscribe(() => RestartAllServiceAsync());
@@ -247,7 +240,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             ShowResponderLogCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.Responder].ShowLogFolder());
             ShowAscLogCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.Asc].ShowLogFolder());
             ShowScpCoreLogCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.ScpCore].ShowLogFolder());
-            ShowMppsLogCommand.Subscribe(_ => Model.ServiceManagers[(int)Ailias.Mpps].ShowLogFolder());
+            ShowMppsLogCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.Mpps].ShowLogFolder());
 
             // 1秒ごとに購読する
             ScreenSynchronousTimer = new ReactiveTimer(TimeSpan.FromSeconds(1));
