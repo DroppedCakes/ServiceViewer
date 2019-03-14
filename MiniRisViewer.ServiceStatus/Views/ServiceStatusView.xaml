@@ -26,20 +26,9 @@
             <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Auto">
                 <DockPanel>
 
-                    <Grid Width="auto" Height="auto">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="auto" />
-                        </Grid.RowDefinitions>
+                    <StackPanel Orientation="Vertical">
 
-                        <WrapPanel
-                            Grid.Row="0"
-                            Margin="5,5,5,5"
-                            Background="{DynamicResource AccentColorBrush4}">
+                        <WrapPanel Margin="5,5,5,5" Background="{DynamicResource AccentColorBrush4}">
                             <materialDesign:Card
                                 Width="350"
                                 Height="42"
@@ -89,10 +78,7 @@
                                     Text="{Binding ImporterStatus.Value　 , Converter={StaticResource StatusConverter}}" />
                             </materialDesign:Card>
                         </WrapPanel>
-                        <WrapPanel
-                            Grid.Row="1"
-                            Margin="5,5,5,5"
-                            Background="{DynamicResource AccentColorBrush4}">
+                        <WrapPanel Margin="5,5,5,5" Background="{DynamicResource AccentColorBrush4}">
                             <materialDesign:Card
                                 Width="350"
                                 Height="42"
@@ -143,10 +129,7 @@
                             </materialDesign:Card>
                         </WrapPanel>
 
-                        <WrapPanel
-                            Grid.Row="2"
-                            Margin="5,5,5,5"
-                            Background="{DynamicResource AccentColorBrush4}">
+                        <WrapPanel Margin="5,5,5,5" Background="{DynamicResource AccentColorBrush4}">
                             <materialDesign:Card
                                 Width="350"
                                 Height="42"
@@ -197,10 +180,7 @@
                             </materialDesign:Card>
                         </WrapPanel>
 
-                        <WrapPanel
-                            Grid.Row="3"
-                            Margin="5,5,5,5"
-                            Background="{DynamicResource AccentColorBrush4}">
+                        <WrapPanel Margin="5,5,5,5" Background="{DynamicResource AccentColorBrush4}">
                             <materialDesign:Card
                                 Width="350"
                                 Height="42"
@@ -253,10 +233,7 @@
 
                         </WrapPanel>
 
-                        <WrapPanel
-                            Grid.Row="4"
-                            Margin="5,5,5,5"
-                            Background="{DynamicResource AccentColorBrush4}">
+                        <WrapPanel Margin="5,5,5,5" Background="{DynamicResource AccentColorBrush4}">
                             <materialDesign:Card
                                 Width="350"
                                 Height="42"
@@ -307,16 +284,14 @@
                             </materialDesign:Card>
                         </WrapPanel>
 
-                        <StackPanel Grid.Row="5" Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
                             <Button
                                 Margin="5"
                                 Command="{Binding RestartServiceCommand}"
                                 Content="全てのサービスを再起動" />
                         </StackPanel>
 
-                    </Grid>
-
-
+                    </StackPanel>
                 </DockPanel>
             </ScrollViewer>
         </GroupBox>
