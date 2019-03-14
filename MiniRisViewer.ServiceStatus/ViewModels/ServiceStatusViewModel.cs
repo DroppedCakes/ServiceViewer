@@ -42,7 +42,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
 
         private string ascDiplayName;
 
-        public string AscDiplayName
+        public string AscDisplayName
         {
             get { return ascDiplayName; }
             set { SetProperty(ref ascDiplayName, value); }
@@ -215,7 +215,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             // 画面表示名のM -> VMの接続
             ImporterDisplayName = Model.ServiceManagers[(int)Ailias.Importer].DisplayName;
             ResponderDisplayName = Model.ServiceManagers[(int)Ailias.Responder].DisplayName;
-            AscDiplayName = Model.ServiceManagers[(int)Ailias.Asc].DisplayName;
+            AscDisplayName = Model.ServiceManagers[(int)Ailias.Asc].DisplayName;
             ScpCoreDisplayName = Model.ServiceManagers[(int)Ailias.ScpCore].DisplayName;
             MppsDisplayName = Model.ServiceManagers[(int)Ailias.Mpps].DisplayName;
 
