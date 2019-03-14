@@ -9,8 +9,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-    d:DesignHeight="380"
-    d:DesignWidth="950"
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
     <UserControl.Resources>
@@ -89,6 +87,61 @@
                             </StackPanel>
                         </materialDesign:Card>
                     </WrapPanel>
+                    <WrapPanel
+                        Grid.Row="1"
+                        Margin="5,5,5,5"
+                        Background="{DynamicResource AccentColorBrush4}">
+                        <materialDesign:Card
+                            Width="350"
+                            Height="42"
+                            Margin="5,5,5,5"
+                            Padding="0">
+                            <TextBlock
+                                Margin="10,5,10,5"
+                                VerticalAlignment="Center"
+                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                Text="{Binding ResponderDisplayName}" />
+                        </materialDesign:Card>
+                        <materialDesign:Card
+                            Width="200"
+                            Height="42"
+                            Margin="5,5,5,5"
+                            Padding="0">
+                            <TextBlock
+                                Margin="10,5,10,5"
+                                VerticalAlignment="Center"
+                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                Text="{Binding ResponderStatus.Value　 , Converter={StaticResource StatusConverter}}" />
+                        </materialDesign:Card>
+                        <materialDesign:Card
+                            Width="300"
+                            Height="42"
+                            Margin="5,5,5,5"
+                            Padding="0">
+                            <StackPanel
+                                VerticalAlignment="Top"
+                                DockPanel.Dock="Top"
+                                Orientation="Horizontal">
+                                <Button
+                                    Width="90"
+                                    Margin="5"
+                                    Command="{Binding ResponderStartCommand}"
+                                    Content="Start" />
+                                <Button
+                                    Width="90"
+                                    Margin="5"
+                                    Command="{Binding ResponderStopCommand}"
+                                    Content="Stop" />
+                                <Button
+                                    Width="90"
+                                    Margin="5"
+                                    Command="{Binding ShowResponderLogCommand}"
+                                    Content="ShowLog" />
+                            </StackPanel>
+                        </materialDesign:Card>
+                    </WrapPanel>
+
+
 
                     <WrapPanel
                         Grid.Row="2"
