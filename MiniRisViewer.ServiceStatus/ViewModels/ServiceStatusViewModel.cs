@@ -180,7 +180,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         {
             try
             {
-                string ConfigPath = @"C:\ProgramData\UsTEC\MiniRisViewer\Config.xml";
+                string ConfigPath = @"C:\ProgramData\UsTEC\MiniRisViwer\Config.xml";
                 var config = ConfigLoader.LoadConfigFromFile(ConfigPath);
                 Model = new ServiceAdministrator(config);
             }

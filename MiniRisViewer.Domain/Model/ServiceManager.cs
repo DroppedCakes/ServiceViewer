@@ -15,7 +15,6 @@ namespace MiniRisViewer.Domain.Model
             DisplayName = displayName;
             LogFolderPath = logFolderPath;
             Visible = visble;
-            GetServiceState();
         }
 
         /// <summary>
