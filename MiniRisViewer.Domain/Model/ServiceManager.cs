@@ -64,10 +64,17 @@ namespace MiniRisViewer.Domain.Model
         /// </summary>
         public void GetServiceState()
         {
-            using (ServiceController sc = new ServiceController(ServiceName))
+            try
             {
-                Status = sc.Status;
-                CanStop = sc.CanStop;
+                using (ServiceController sc = new ServiceController(ServiceName))
+                {
+                    Status = sc.Status;
+                    CanStop = sc.CanStop;
+                }
+            }
+            catch(Exception)
+            {
+                Status = 0;
             }
         }
 
@@ -201,26 +208,34 @@ namespace MiniRisViewer.Domain.Model
         /// </summary>
         public void Restart()
         {
-            TimeSpan timeout = new TimeSpan(00, 00, 10);
-            using (ServiceController sc = new ServiceController(ServiceName))
+            try
             {
-                //停止中以外の場合
-                if (sc.Status != ServiceControllerStatus.Stopped)
+                TimeSpan timeout = new TimeSpan(00, 00, 10);
+                using (ServiceController sc = new ServiceController(ServiceName))
                 {
-                    //停止処理中以外の場合
-                    if (sc.Status != ServiceControllerStatus.StopPending)
+                    //停止中以外の場合
+                    if (sc.Status != ServiceControllerStatus.Stopped)
                     {
-                        //停止する
-                        sc.Stop();
+                        //停止処理中以外の場合
+                        if (sc.Status != ServiceControllerStatus.StopPending)
+                        {
+                            //停止する
+                            sc.Stop();
+                        }
+                        // サービスが停止するまで待機する
+                        sc.WaitForStatus(ServiceControllerStatus.Stopped, timeout);
                     }
-                    // サービスが停止するまで待機する
-                    sc.WaitForStatus(ServiceControllerStatus.Stopped, timeout);
-                }
 
-                sc.Start();
-                // サービスが開始するまで待機する
-                sc.WaitForStatus(ServiceControllerStatus.Running, timeout);
+                    sc.Start();
+                    // サービスが開始するまで待機する
+                    sc.WaitForStatus(ServiceControllerStatus.Running, timeout);
+                }
             }
+            catch (Exception)
+            {
+
+            }
+            
         }
 
         /// <summary>
