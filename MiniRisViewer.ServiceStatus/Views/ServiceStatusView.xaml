@@ -7,291 +7,600 @@
     xmlns:local1="clr-namespace:MiniRisViewer.ServiceStatus.Helper"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
     <UserControl.Resources>
         <local1:StatusConverter x:Key="StatusConverter" />
+        <local1:SimpleStatus x:Key="SimpleStatus" />
+        <local1:DispButton x:Key="DispButton" />
+        <local1:DispPose x:Key="DispPose" />
     </UserControl.Resources>
+
     <UserControl.DataContext>
         <local:ServiceStatusViewModel />
     </UserControl.DataContext>
     <xctk:BusyIndicator BusyContent="{Binding ProgressMessage.Value}" IsBusy="{Binding InProgress.Value}">
-        <StackPanel>
-            <GroupBox Margin="16,16,16,16" Header="サービス稼働状況">
-                <WrapPanel Orientation="Horizontal">
-                    <materialDesign:Card
-                        Width="Auto"
-                        Margin="8,8,8,8"
-                        Padding="0"
-                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock
-                                Grid.Row="0"
-                                Margin="16,16,16,4"
-                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                Text="{Binding ImporterDisplayName}" />
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <GroupBox Margin="16,16,16,16" Header="サービス稼働状況">
+                    <WrapPanel Orientation="Horizontal">
 
-                            <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
-                            <TextBlock
-                                Grid.Row="2"
-                                Margin="16,0,16,8"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                Text="{Binding ImporterStatus.Value, Converter={StaticResource StatusConverter}}" />
-                            <StackPanel
-                                Grid.Row="2"
-                                Margin="16,0,16,8"
-                                HorizontalAlignment="Right"
-                                Orientation="Horizontal">
+
+                        <!--  ^追加お試し^  -->
+
+                        <materialDesign:Card
+                            Width="Auto"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            <StackPanel>
+
+                                <!--  ="Visible">  -->
+                                <TextBlock
+                                    Margin="16,16,16,4"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ImporterDisplayName}" />
+                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <StackPanel Visibility="{Binding ImporterStatus.Value, Converter={StaticResource DispButton}}">
+                                    <ToggleButton
+                                        Margin="16,0,16,8"
+                                        Command="{Binding ImporterCommand}"
+                                        IsChecked="{Binding ImporterStatus.Value, Converter={StaticResource SimpleStatus}}"
+                                        Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                        ToolTip="Default ToggleButton Style" />
+                                </StackPanel>
+                                <StackPanel Visibility="{Binding ImporterStatus.Value, Converter={StaticResource DispPose}}">
+                                    <ProgressBar
+                                        IsIndeterminate="true"
+                                        Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                        Value="50" />
+
+                                </StackPanel>
+                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
                                 <Button
-                                    Width="40"
-                                    Padding="2,0,2,0"
-                                    HorizontalAlignment="Right"
-                                    materialDesign:RippleAssist.IsCentered="True"
-                                    Command="{Binding ImporterStartCommand}"
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                    <materialDesign:PackIcon Kind="RayStartArrow" />
-                                </Button>
-                                <Button
-                                    Width="40"
-                                    Padding="2,0,2,0"
-                                    HorizontalAlignment="Right"
-                                    materialDesign:RippleAssist.IsCentered="True"
-                                    Command="{Binding ImporterStopCommand}"
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                    <materialDesign:PackIcon Kind="StopCircleOutline" />
-                                </Button>
+                                    Margin="16,0,16,8"
+                                    Command="{Binding ShowImporterLogCommand}"
+                                    Content="Log" />
+
                             </StackPanel>
-                        </Grid>
-                    </materialDesign:Card>
+                        </materialDesign:Card>
 
-                    <materialDesign:Card
-                        Grid.Row="1"
-                        Width="Auto"
-                        Margin="8,8,8,8"
-                        Padding="0"
-                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock
-                                Grid.Row="0"
-                                Margin="16,16,16,4"
-                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                Text="{Binding ResponderDisplayName}" />
+                        <materialDesign:Card
+                            Width="Auto"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            <StackPanel>
+                                <TextBlock
+                                    Margin="16,16,16,4"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ImporterDisplayName}" />
+                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <StackPanel Visibility="{Binding ImporterStatus.Value, Converter={StaticResource DispButton}}">
+                                    <ToggleButton
+                                        Margin="16,0,16,8"
+                                        Command="{Binding ImporterCommand}"
+                                        IsChecked="{Binding ImporterStatus.Value, Converter={StaticResource SimpleStatus}}"
+                                        Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                        ToolTip="Default ToggleButton Style" />
+                                </StackPanel>
+                                <StackPanel Visibility="{Binding ImporterStatus.Value, Converter={StaticResource DispPose}}">
+                                    <ProgressBar
+                                        IsIndeterminate="true"
+                                        Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                        Value="50" />
 
-                            <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
-                            <TextBlock
-                                Grid.Row="2"
-                                Margin="16,0,16,8"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                Text="{Binding ResponderStatus.Value, Converter={StaticResource StatusConverter}}" />
-                            <StackPanel
-                                Grid.Row="2"
-                                Margin="16,0,16,8"
-                                HorizontalAlignment="Right"
-                                Orientation="Horizontal">
-                                <Button
-                                    Width="40"
-                                    Padding="2,0,2,0"
-                                    HorizontalAlignment="Right"
-                                    materialDesign:RippleAssist.IsCentered="True"
-                                    Command="{Binding ResponderStartCommand}"
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                    <materialDesign:PackIcon Kind="RayStartArrow" />
-                                </Button>
-                                <Button
-                                    Width="40"
-                                    Padding="2,0,2,0"
-                                    HorizontalAlignment="Right"
-                                    materialDesign:RippleAssist.IsCentered="True"
-                                    Command="{Binding ResponderStopCommand}"
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                    <materialDesign:PackIcon Kind="StopCircleOutline" />
-                                </Button>
+                                </StackPanel>
+
                             </StackPanel>
-                        </Grid>
-                    </materialDesign:Card>
+                        </materialDesign:Card>
 
-                    <materialDesign:Card
-                        Grid.Row="2"
-                        Width="Auto"
-                        Margin="8,8,8,8"
-                        Padding="0"
-                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock
-                                Grid.Row="0"
-                                Margin="16,16,16,4"
-                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                Text="{Binding AscDisplayName}" />
+                        <materialDesign:Card
+                            Grid.Row="1"
+                            Width="Auto"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Margin="16,16,16,4"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ResponderDisplayName}" />
 
-                            <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
-                            <TextBlock
-                                Grid.Row="2"
-                                Margin="16,0,16,8"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                Text="{Binding AscStatus.Value, Converter={StaticResource StatusConverter}}" />
-                            <StackPanel
-                                Grid.Row="2"
-                                Margin="16,0,16,8"
-                                HorizontalAlignment="Right"
-                                Orientation="Horizontal">
-                                <Button
-                                    Width="40"
-                                    Padding="2,0,2,0"
+                                <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ResponderStatus.Value, Converter={StaticResource StatusConverter}}" />
+                                <StackPanel
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
                                     HorizontalAlignment="Right"
-                                    materialDesign:RippleAssist.IsCentered="True"
-                                    Command="{Binding AscStartCommand}"
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                    <materialDesign:PackIcon Kind="RayStartArrow" />
-                                </Button>
-                                <Button
-                                    Width="40"
-                                    Padding="2,0,2,0"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding ResponderStartCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="RayStartArrow" />
+                                    </Button>
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding ResponderStopCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="StopCircleOutline" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </materialDesign:Card>
+
+                        <materialDesign:Card
+                            Grid.Row="2"
+                            Width="Auto"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Margin="16,16,16,4"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding AscDisplayName}" />
+
+                                <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding AscStatus.Value, Converter={StaticResource StatusConverter}}" />
+                                <StackPanel
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
                                     HorizontalAlignment="Right"
-                                    materialDesign:RippleAssist.IsCentered="True"
-                                    Command="{Binding AscStopCommand}"
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                    <materialDesign:PackIcon Kind="StopCircleOutline" />
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                    </materialDesign:Card>
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding AscStartCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="RayStartArrow" />
+                                    </Button>
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding AscStopCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="StopCircleOutline" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </materialDesign:Card>
 
-                    <materialDesign:Card
-                        Grid.Row="3"
-                        Width="Auto"
-                        Margin="8,8,8,8"
-                        Padding="0"
-                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock
-                                Grid.Row="0"
-                                Margin="16,16,16,4"
-                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                Text="{Binding ScpCoreDisplayName}" />
+                        <materialDesign:Card
+                            Grid.Row="3"
+                            Width="Auto"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Margin="16,16,16,4"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ScpCoreDisplayName}" />
 
-                            <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
-                            <TextBlock
-                                Grid.Row="2"
-                                Margin="16,0,16,8"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                Text="{Binding ScpCoreStatus.Value, Converter={StaticResource StatusConverter}}" />
-                            <StackPanel
-                                Grid.Row="2"
-                                Margin="16,0,16,8"
-                                HorizontalAlignment="Right"
-                                Orientation="Horizontal">
-                                <Button
-                                    Width="40"
-                                    Padding="2,0,2,0"
+                                <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ScpCoreStatus.Value, Converter={StaticResource StatusConverter}}" />
+                                <StackPanel
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
                                     HorizontalAlignment="Right"
-                                    materialDesign:RippleAssist.IsCentered="True"
-                                    Command="{Binding ScpCoreStartCommand}"
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                    <materialDesign:PackIcon Kind="RayStartArrow" />
-                                </Button>
-                                <Button
-                                    Width="40"
-                                    Padding="2,0,2,0"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding ScpCoreStartCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="RayStartArrow" />
+                                    </Button>
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding ScpCoreStopCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="StopCircleOutline" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </materialDesign:Card>
+
+                        <materialDesign:Card
+                            Grid.Row="4"
+                            Width="Auto"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Margin="16,16,16,4"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding MppsDisplayName}" />
+
+                                <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding MppsStatus.Value, Converter={StaticResource StatusConverter}}" />
+                                <StackPanel
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
                                     HorizontalAlignment="Right"
-                                    materialDesign:RippleAssist.IsCentered="True"
-                                    Command="{Binding ScpCoreStopCommand}"
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                    <materialDesign:PackIcon Kind="StopCircleOutline" />
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                    </materialDesign:Card>
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding MppsStartCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="RayStartArrow" />
+                                    </Button>
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding MppsStopCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="StopCircleOutline" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </materialDesign:Card>
+                    </WrapPanel>
+                </GroupBox>
+                <GroupBox Margin="16,16,16,16" Header="サービス稼働状況">
+                    <WrapPanel Orientation="Horizontal">
+                        <materialDesign:Card
+                            Width="Auto"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Margin="16,16,16,4"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ImporterDisplayName}" />
 
-                    <materialDesign:Card
-                        Grid.Row="4"
-                        Width="Auto"
-                        Margin="8,8,8,8"
-                        Padding="0"
-                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock
-                                Grid.Row="0"
-                                Margin="16,16,16,4"
-                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                Text="{Binding MppsDisplayName}" />
-
-                            <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
-                            <TextBlock
-                                Grid.Row="2"
-                                Margin="16,0,16,8"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                Text="{Binding MppsStatus.Value, Converter={StaticResource StatusConverter}}" />
-                            <StackPanel
-                                Grid.Row="2"
-                                Margin="16,0,16,8"
-                                HorizontalAlignment="Right"
-                                Orientation="Horizontal">
-                                <Button
-                                    Width="40"
-                                    Padding="2,0,2,0"
+                                <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ImporterStatus.Value, Converter={StaticResource StatusConverter}}" />
+                                <StackPanel
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
                                     HorizontalAlignment="Right"
-                                    materialDesign:RippleAssist.IsCentered="True"
-                                    Command="{Binding MppsStartCommand}"
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                    <materialDesign:PackIcon Kind="RayStartArrow" />
-                                </Button>
-                                <Button
-                                    Width="40"
-                                    Padding="2,0,2,0"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding ImporterStartCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="RayStartArrow" />
+                                    </Button>
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding ImporterStopCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="StopCircleOutline" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </materialDesign:Card>
+
+                        <materialDesign:Card
+                            Grid.Row="1"
+                            Width="Auto"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Margin="16,16,16,4"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ResponderDisplayName}" />
+
+                                <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ResponderStatus.Value, Converter={StaticResource StatusConverter}}" />
+                                <StackPanel
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
                                     HorizontalAlignment="Right"
-                                    materialDesign:RippleAssist.IsCentered="True"
-                                    Command="{Binding MppsStopCommand}"
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                    <materialDesign:PackIcon Kind="StopCircleOutline" />
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                    </materialDesign:Card>
-                </WrapPanel>
-            </GroupBox>
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding ResponderStartCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="RayStartArrow" />
+                                    </Button>
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding ResponderStopCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="StopCircleOutline" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </materialDesign:Card>
 
-            <Button
-                Margin="16,16,16,16"
-                Command="{Binding RestartServiceCommand}"
-                Content="全てのサービスを再起動" />
+                        <materialDesign:Card
+                            Grid.Row="2"
+                            Width="Auto"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Margin="16,16,16,4"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding AscDisplayName}" />
 
-        </StackPanel>
+                                <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding AscStatus.Value, Converter={StaticResource StatusConverter}}" />
+                                <StackPanel
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
+                                    HorizontalAlignment="Right"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding AscStartCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="RayStartArrow" />
+                                    </Button>
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding AscStopCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="StopCircleOutline" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </materialDesign:Card>
+
+                        <materialDesign:Card
+                            Grid.Row="3"
+                            Width="Auto"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Margin="16,16,16,4"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ScpCoreDisplayName}" />
+
+                                <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ScpCoreStatus.Value, Converter={StaticResource StatusConverter}}" />
+                                <StackPanel
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
+                                    HorizontalAlignment="Right"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding ScpCoreStartCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="RayStartArrow" />
+                                    </Button>
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding ScpCoreStopCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="StopCircleOutline" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </materialDesign:Card>
+
+                        <materialDesign:Card
+                            Grid.Row="4"
+                            Width="Auto"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Margin="16,16,16,4"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding MppsDisplayName}" />
+
+                                <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding MppsStatus.Value, Converter={StaticResource StatusConverter}}" />
+                                <StackPanel
+                                    Grid.Row="2"
+                                    Margin="16,0,16,8"
+                                    HorizontalAlignment="Right"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding MppsStartCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="RayStartArrow" />
+                                    </Button>
+                                    <Button
+                                        Width="40"
+                                        Padding="2,0,2,0"
+                                        HorizontalAlignment="Right"
+                                        materialDesign:RippleAssist.IsCentered="True"
+                                        Command="{Binding MppsStopCommand}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+                                        <materialDesign:PackIcon Kind="StopCircleOutline" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </materialDesign:Card>
+                    </WrapPanel>
+                </GroupBox>
+
+
+
+                <StackPanel Orientation="Horizontal">
+
+                    <Button
+                        Margin="16,16,16,16"
+                        Command="{Binding AllstopServiceCommand}"
+                        Content="全てのサービスを停止" />
+
+                    <Button
+                        Margin="16,16,16,16"
+                        Command="{Binding AllstartServiceCommand}"
+                        Content="全てのサービスを起動" />
+
+                    <Button
+                        Margin="16,16,16,16"
+                        Command="{Binding RestartServiceCommand}"
+                        Content="全てのサービスを再起動" />
+
+                </StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
     </xctk:BusyIndicator>
 </UserControl>

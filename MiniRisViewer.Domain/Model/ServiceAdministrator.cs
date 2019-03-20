@@ -35,6 +35,28 @@ namespace MiniRisViewer.Domain.Model
         }
 
         ///<summary>
+        ///全サービスの停止を行う
+        /// </summary>
+        public async Task AllstopServiceAsync()
+        {
+            await Task.WhenAll(
+                ServiceManagers.Select(service => Task.Run(() => service.Stop()))
+            );
+        }
+
+
+        ///<summary>
+        ///全サービスの起動を行う
+        /// </summary>
+        public async Task AllstartServiceAsync()
+        {
+            await Task.WhenAll(
+                ServiceManagers.Select(service => Task.Run(() => service.Start()))
+            );
+        }
+
+
+        ///<summary>
         ///全サービスの再起動を行う
         /// </summary>
         public async Task RestartServiceAsync()

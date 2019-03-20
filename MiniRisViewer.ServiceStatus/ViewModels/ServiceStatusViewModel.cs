@@ -10,8 +10,10 @@ using System.Reactive.Linq;
 using System.ServiceProcess;
 using System.Threading.Tasks;
 
+
 namespace MiniRisViewer.ServiceStatus.ViewModels
-{
+
+    {
     public class ServiceStatusViewModel : BindableBase, IDisposable
     {
         public Reactive.Bindings.Notifiers.BooleanNotifier InProgress { get; } = new Reactive.Bindings.Notifiers.BooleanNotifier(false);
@@ -93,7 +95,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         #region ReactiveCommand
 
         #region Start/Stop
-
+        
         public ReactiveCommand ImporterStartCommand { get; }
         public ReactiveCommand ImporterStopCommand { get; }
         public ReactiveCommand ResponderStartCommand { get; }
@@ -107,6 +109,26 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
 
         #endregion Start/Stop
 
+
+        //お試しstart
+
+        //1つのボタンにしてみる
+        public ReactiveProperty<bool> StatusCommand { set; get; } = new ReactiveProperty<bool>();
+        //1つのボタンにしてみる
+        public ReactiveCommand ImporterCommand { get; } = new ReactiveCommand();
+
+        //お試しend
+
+
+
+        /// <summary>
+        /// 全てのサービスを停止するコマンド
+        /// </summary>
+        public ReactiveCommand AllstopServiceCommand { get; } = new ReactiveCommand();
+        /// <summary>
+        /// 全てのサービスを起動するコマンド
+        /// </summary>
+        public ReactiveCommand AllstartServiceCommand { get; } = new ReactiveCommand();
         /// <summary>
         /// 全てのサービスを再起動するコマンド
         /// </summary>
@@ -128,6 +150,9 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// サービスの状態を更新するタイマー
         /// </summary>
         public ReactiveTimer ScreenSynchronousTimer;
+        
+        public ReactiveCommand ShowDialogMaterialCommand{ get; private set; } = new ReactiveCommand();
+ 
 
         /// <summary>
         /// IDisposableの実装部
@@ -156,6 +181,39 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         #endregion IDisposable Support
 
         /// <summary>
+        /// 非同期でサービスの停止を行い、
+        /// UIはBusyIndicatorでブロックする
+        /// </summary>
+        public async void StopAllServiceAsync()
+        {
+            InProgress.TurnOn();
+            ProgressMessage.Value = "サービス停止中";
+            try
+            {
+                await Task.Run(Model.AllstopServiceAsync);
+            }
+            finally
+            {
+                InProgress.TurnOff();
+            }
+        }
+        /// <summary>
+        /// 非同期でサービスの再起動を行い、
+        /// UIはBusyIndicatorでブロックする
+        /// </summary>
+        public async void StartAllServiceAsync()
+        {
+            InProgress.TurnOn();
+            ProgressMessage.Value = "サービス起動中";
+            try
+            {
+                await Task.Run(Model.AllstartServiceAsync);
+            }
+            finally
+            {
+                InProgress.TurnOff();
+            }
+        }        /// <summary>
         /// 非同期でサービスの再起動を行い、
         /// UIはBusyIndicatorでブロックする
         /// </summary>
@@ -172,7 +230,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
                 InProgress.TurnOff();
             }
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -180,7 +237,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         {
             try
             {
-                string ConfigPath = @"C:\ProgramData\UsTEC\MiniRisViwer\Config.xml";
+                string ConfigPath = @"C:\ProgramData\UsTEC\MiniRisViewer\Config.xml";
                 var config = ConfigLoader.LoadConfigFromFile(ConfigPath);
                 Model = new ServiceAdministrator(config);
             }
@@ -190,6 +247,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
                 // メッセージボックスだして、アプリを終了させる
             }
         }
+
 
         /// <summary>
         /// コンストラクタ
@@ -219,6 +277,17 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             ScpCoreDisplayName = Model.ServiceManagers[(int)Ailias.ScpCore].DisplayName;
             MppsDisplayName = Model.ServiceManagers[(int)Ailias.Mpps].DisplayName;
 
+
+            //お試しstart
+            
+            ImporterCommand.Subscribe(() => {
+                  if (CanStopImporter.Value  != false) Model.ServiceManagers[(int)Ailias.Importer].Stop();
+                else Model.ServiceManagers[(int)Ailias.Importer].Start();
+            });
+            //お試しend
+
+
+
             // 開始・停止ボタンは各サービスの
             // CanStopPropertyによって、活性・非活性する
             ImporterStartCommand = CanStopImporter.Select(x => x == false).ToReactiveCommand();
@@ -246,6 +315,10 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             ScpCoreStopCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.ScpCore].Stop());
             MppsStopCommand.Subscribe(()=> Model.ServiceManagers[(int)Ailias.Mpps].Stop());
 
+            //// 全てのサービスを停止するコマンド
+            AllstopServiceCommand.Subscribe(() => StopAllServiceAsync());
+            //// 全てのサービスを起動するコマンド
+            AllstartServiceCommand.Subscribe(() => StartAllServiceAsync());
             //// 全てのサービスを再起動するコマンド
             RestartServiceCommand.Subscribe(() => RestartAllServiceAsync());
 
@@ -263,6 +336,11 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             ScreenSynchronousTimer.Subscribe(_ => Model.UpdateServiceStatusAsync());
 
             ScreenSynchronousTimer.Start();
+
+
         }
+
+
     }
+
 }
