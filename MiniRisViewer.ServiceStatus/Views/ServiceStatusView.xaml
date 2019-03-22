@@ -296,7 +296,7 @@
                     </WrapPanel>
                 </GroupBox>
 
-                <StackPanel Orientation="Horizontal">
+                <WrapPanel Orientation="Horizontal">
                     <materialDesign:Card
                         Width="auto"
                         Margin="0,0,0,0"
@@ -326,7 +326,8 @@
                             Command="{Binding RestartServiceCommand}"
                             Content="全てのサービスを再起動" />
                     </materialDesign:Card>
-                </StackPanel>
+
+                </WrapPanel>
 
 
                 <GroupBox Margin="16,16,16,16" Header="サービス稼働状況">
