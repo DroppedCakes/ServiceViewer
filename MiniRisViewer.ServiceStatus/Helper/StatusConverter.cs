@@ -59,6 +59,39 @@ namespace MiniRisViewer.ServiceStatus.Helper
 
 
     /// <summary>
+    //サービスの状態が不明の場合は、インストールされていないと判断して、表示しない
+    /// <summary>
+    [ValueConversion(typeof(ServiceControllerStatus ), typeof(String ))]
+    public class DispService : IValueConverter
+    {
+        public string DispServiceVisibility;
+
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            int target = (int)value;
+
+            if ((target >= 1) && (target <= 7))
+            {
+                DispServiceVisibility = "Visible";
+
+            }
+            else
+            {
+                DispServiceVisibility = "Collapsed";
+
+            }
+
+            return DispServiceVisibility;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
+    /// <summary>
     //ToggleButton（IsChecked）のため、実行中(4)以外はfalseとする
     /// <summary>
     [ValueConversion(typeof(ServiceControllerStatus), typeof(Boolean))]

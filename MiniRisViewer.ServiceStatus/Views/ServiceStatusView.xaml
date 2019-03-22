@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:MiniRisViewer.ServiceStatus.ViewModels"
     xmlns:local1="clr-namespace:MiniRisViewer.ServiceStatus.Helper"
+    xmlns:local2="clr-namespace:MiniRisViewer.ServiceStatus.Views"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
@@ -14,55 +15,390 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <local1:StatusConverter x:Key="StatusConverter" />
+        <local1:DispService x:Key="DispService" />
         <local1:SimpleStatus x:Key="SimpleStatus" />
         <local1:DispButton x:Key="DispButton" />
         <local1:DispPose x:Key="DispPose" />
     </UserControl.Resources>
 
     <UserControl.DataContext>
-        <local:ServiceStatusViewModel />
+        <!--        <local:ServiceStatusViewModel />-->
+        <local:ServiceStatusViewModel__ />
+
     </UserControl.DataContext>
+
     <xctk:BusyIndicator BusyContent="{Binding ProgressMessage.Value}" IsBusy="{Binding InProgress.Value}">
+
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <GroupBox Margin="16,16,16,16" Header="サービス稼働状況">
                     <WrapPanel Orientation="Horizontal">
+                        <materialDesign:Card
+                            Width="250"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            <StackPanel Visibility="{Binding ServiceViewModels[0].Status.Value, Converter={StaticResource DispService}}">
+                                <TextBlock
+                                    Margin="16,16,16,4"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ServiceViewModels[0].DisplayName}"
+                                    TextAlignment="Center" />
+                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <StackPanel Height=" 30">
+                                    <StackPanel Orientation="Horizontal" Visibility="{Binding ServiceViewModels[0].Status.Value, Converter={StaticResource DispButton}}">
+                                        <TextBlock
+                                            Margin="16,0,16,8"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                            Text="{Binding ServiceViewModels[0].Status.Value, Converter={StaticResource StatusConverter}}" />
+                                        <ToggleButton
+                                            Margin="16,0,16,8"
+                                            Command="{Binding ImporterCommand}"
+                                            IsChecked="{Binding ServiceViewModels[0].Status.Value, Converter={StaticResource SimpleStatus}}"
+                                            Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                            ToolTip="Default ToggleButton Style" />
+                                    </StackPanel>
+                                    <StackPanel Visibility="{Binding ServiceViewModels[0].Status.Value, Converter={StaticResource DispPose}}">
+                                        <ProgressBar
+                                            IsIndeterminate="true"
+                                            Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                            Value="50" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <Button
+                                    Margin="16,0,16,8"
+                                    Command="{Binding ServiceViewModels[0].ShowLogCommand}"
+                                    Content="Log" />
+
+                            </StackPanel>
+                        </materialDesign:Card>
+
+                        <materialDesign:Card
+                            Width="250"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            <StackPanel Visibility="{Binding ServiceViewModels[1].Status.Value, Converter={StaticResource DispService}}">
+                                <TextBlock
+                                    Margin="16,16,16,4"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ServiceViewModels[1].DisplayName}"
+                                    TextAlignment="Center" />
+                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <StackPanel Height=" 30">
+                                    <StackPanel Orientation="Horizontal" Visibility="{Binding ServiceViewModels[1].Status.Value, Converter={StaticResource DispButton}}">
+                                        <TextBlock
+                                            Margin="16,0,16,8"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                            Text="{Binding ServiceViewModels[1].Status.Value, Converter={StaticResource StatusConverter}}" />
+                                        <ToggleButton
+                                            Margin="16,0,16,8"
+                                            Command="{Binding ImporterCommand}"
+                                            IsChecked="{Binding ServiceViewModels[1].Status.Value, Converter={StaticResource SimpleStatus}}"
+                                            Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                            ToolTip="Default ToggleButton Style" />
+                                    </StackPanel>
+                                    <StackPanel Visibility="{Binding ServiceViewModels[1].Status.Value, Converter={StaticResource DispPose}}">
+                                        <ProgressBar
+                                            IsIndeterminate="true"
+                                            Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                            Value="50" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <Button
+                                    Margin="16,0,16,8"
+                                    Command="{Binding ServiceViewModels[0].ShowLogCommand}"
+                                    Content="Log" />
+
+                            </StackPanel>
+                        </materialDesign:Card>
+
+                        <materialDesign:Card
+                            Width="250"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            <StackPanel Visibility="{Binding ServiceViewModels[2].Status.Value, Converter={StaticResource DispService}}">
+                                <TextBlock
+                                    Margin="16,16,16,4"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ServiceViewModels[2].DisplayName}"
+                                    TextAlignment="Center" />
+                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <StackPanel Height=" 30">
+                                    <StackPanel Orientation="Horizontal" Visibility="{Binding ServiceViewModels[2].Status.Value, Converter={StaticResource DispButton}}">
+                                        <TextBlock
+                                            Margin="16,0,16,8"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                            Text="{Binding ServiceViewModels[2].Status.Value, Converter={StaticResource StatusConverter}}" />
+                                        <ToggleButton
+                                            Margin="16,0,16,8"
+                                            Command="{Binding ImporterCommand}"
+                                            IsChecked="{Binding ServiceViewModels[2].Status.Value, Converter={StaticResource SimpleStatus}}"
+                                            Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                            ToolTip="Default ToggleButton Style" />
+                                    </StackPanel>
+                                    <StackPanel Visibility="{Binding ServiceViewModels[2].Status.Value, Converter={StaticResource DispPose}}">
+                                        <ProgressBar
+                                            IsIndeterminate="true"
+                                            Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                            Value="50" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <Button
+                                    Margin="16,0,16,8"
+                                    Command="{Binding ServiceViewModels[2].ShowLogCommand}"
+                                    Content="Log" />
+
+                            </StackPanel>
+                        </materialDesign:Card>
+
+                        <materialDesign:Card
+                            Width="250"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            <StackPanel Visibility="{Binding ServiceViewModels[3].Status.Value, Converter={StaticResource DispService}}">
+                                <TextBlock
+                                    Margin="16,16,16,4"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ServiceViewModels[3].DisplayName}"
+                                    TextAlignment="Center" />
+                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <StackPanel Height=" 30">
+                                    <StackPanel Orientation="Horizontal" Visibility="{Binding ServiceViewModels[3].Status.Value, Converter={StaticResource DispButton}}">
+                                        <TextBlock
+                                            Margin="16,0,16,8"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                            Text="{Binding ServiceViewModels[3].Status.Value, Converter={StaticResource StatusConverter}}" />
+                                        <ToggleButton
+                                            Margin="16,0,16,8"
+                                            Command="{Binding ImporterCommand}"
+                                            IsChecked="{Binding ServiceViewModels[3].Status.Value, Converter={StaticResource SimpleStatus}}"
+                                            Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                            ToolTip="Default ToggleButton Style" />
+                                    </StackPanel>
+                                    <StackPanel Visibility="{Binding ServiceViewModels[3].Status.Value, Converter={StaticResource DispPose}}">
+                                        <ProgressBar
+                                            IsIndeterminate="true"
+                                            Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                            Value="50" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <Button
+                                    Margin="16,0,16,8"
+                                    Command="{Binding ServiceViewModels[3].ShowLogCommand}"
+                                    Content="Log" />
+
+                            </StackPanel>
+                        </materialDesign:Card>
+
+                        <materialDesign:Card
+                            Width="250"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            <StackPanel Visibility="{Binding ServiceViewModels[4].Status.Value, Converter={StaticResource DispService}}">
+                                <TextBlock
+                                    Margin="16,16,16,4"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ServiceViewModels[4].DisplayName}"
+                                    TextAlignment="Center" />
+                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <StackPanel Height=" 30">
+                                    <StackPanel Orientation="Horizontal" Visibility="{Binding ServiceViewModels[4].Status.Value, Converter={StaticResource DispButton}}">
+                                        <TextBlock
+                                            Margin="16,0,16,8"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                            Text="{Binding ServiceViewModels[4].Status.Value, Converter={StaticResource StatusConverter}}" />
+                                        <ToggleButton
+                                            Margin="16,0,16,8"
+                                            Command="{Binding ImporterCommand}"
+                                            IsChecked="{Binding ServiceViewModels[4].Status.Value, Converter={StaticResource SimpleStatus}}"
+                                            Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                            ToolTip="Default ToggleButton Style" />
+                                    </StackPanel>
+                                    <StackPanel Visibility="{Binding ServiceViewModels[4].Status.Value, Converter={StaticResource DispPose}}">
+                                        <ProgressBar
+                                            IsIndeterminate="true"
+                                            Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                            Value="50" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <Button
+                                    Margin="16,0,16,8"
+                                    Command="{Binding ServiceViewModels[4].ShowLogCommand}"
+                                    Content="Log" />
+
+                            </StackPanel>
+                        </materialDesign:Card>
 
 
-                        <!--  ^追加お試し^  -->
+                        <!--
+                        <materialDesign:Card
+                            Width="250"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+                            <StackPanel Visibility="{Binding ServiceViewModels[5].Status.Value, Converter={StaticResource DispService}}">
+                                <TextBlock
+                                    TextAlignment="Center"
+                                    Margin="16,16,16,4"
+                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                    Text="{Binding ServiceViewModels[5].DisplayName}" />
+                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <StackPanel Height=" 30">
+                                    <StackPanel Orientation="Horizontal" Visibility="{Binding ServiceViewModels[5].Status.Value, Converter={StaticResource DispButton}}">
+                                        <TextBlock
+                                            Margin="16,0,16,8"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                            Text="{Binding ServiceViewModels[5].Status.Value, Converter={StaticResource StatusConverter}}" />
+                                        <ToggleButton
+                                            Margin="16,0,16,8"
+                                            Command="{Binding ImporterCommand}"
+                                            IsChecked="{Binding ServiceViewModels[5].Status.Value, Converter={StaticResource SimpleStatus}}"
+                                            Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                            ToolTip="Default ToggleButton Style" />
+                                    </StackPanel>
+                                    <StackPanel Visibility="{Binding ServiceViewModels[5].Status.Value, Converter={StaticResource DispPose}}">
+                                        <ProgressBar
+                                            IsIndeterminate="true"
+                                            Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                            Value="50" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                <Button
+                                    Margin="16,0,16,8"
+                                    Command="{Binding ServiceViewModels[5].ShowLogCommand}"
+                                    Content="Log" />
+
+                            </StackPanel>
+                        </materialDesign:Card>-->
+
+                    </WrapPanel>
+                </GroupBox>
+
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:Card
+                        Width="auto"
+                        Margin="0,0,0,0"
+                        Padding="0">
+                        <Button
+                            Margin="16,16,16,16"
+                            Command="{Binding AllstopServiceCommand}"
+                            Content="全てのサービスを停止" />
+                    </materialDesign:Card>
+
+                    <materialDesign:Card
+                        Width="auto"
+                        Margin="0,0,0,0"
+                        Padding="0">
+
+                        <Button
+                            Margin="16,16,16,16"
+                            Command="{Binding AllstartServiceCommand}"
+                            Content="全てのサービスを起動" />
+                    </materialDesign:Card>
+                    <materialDesign:Card
+                        Width="auto"
+                        Margin="0,0,0,0"
+                        Padding="0">
+                        <Button
+                            Margin="16,16,16,16"
+                            Command="{Binding RestartServiceCommand}"
+                            Content="全てのサービスを再起動" />
+                    </materialDesign:Card>
+                </StackPanel>
+
+
+                <GroupBox Margin="16,16,16,16" Header="サービス稼働状況">
+                    <WrapPanel Orientation="Horizontal">
+                        <materialDesign:Card
+                            Width="Auto"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+
+                            <ListView ItemsSource="{Binding Items1}">
+                                <ListView.View>
+                                    <GridView>
+
+                                        <GridViewColumn DisplayMemberBinding="{Binding DisplayNameList}" Header="サービス名" />
+                                        <GridViewColumn DisplayMemberBinding="{Binding StatusList, Converter={StaticResource StatusConverter}}" Header="状態" />
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path DisplayNameList}" Header="操作" />
+                                    </GridView>
+
+                                </ListView.View>
+                            </ListView>
+                        </materialDesign:Card>
+                        <materialDesign:Card
+                            Width="Auto"
+                            Margin="8,8,8,8"
+                            Padding="0"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
+
+                            <TextBlock Text="aaaa">
+
+
+                                <ListBox ItemsSource="{Binding Path=DisplayNameList}" />
+                            </TextBlock>
+                        </materialDesign:Card>
 
                         <materialDesign:Card
                             Width="Auto"
                             Margin="8,8,8,8"
                             Padding="0"
                             Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                            <StackPanel>
-
-                                <!--  ="Visible">  -->
+                            <StackPanel Visibility="{Binding ServiceViewModels[0].Status.Value, Converter={StaticResource DispService}}">
                                 <TextBlock
                                     Margin="16,16,16,4"
                                     Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                    Text="{Binding ImporterDisplayName}" />
+                                    Text="{Binding ServiceViewModels[0].DisplayName}" />
                                 <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
-                                <StackPanel Visibility="{Binding ImporterStatus.Value, Converter={StaticResource DispButton}}">
-                                    <ToggleButton
-                                        Margin="16,0,16,8"
-                                        Command="{Binding ImporterCommand}"
-                                        IsChecked="{Binding ImporterStatus.Value, Converter={StaticResource SimpleStatus}}"
-                                        Style="{StaticResource MaterialDesignSwitchToggleButton}"
-                                        ToolTip="Default ToggleButton Style" />
-                                </StackPanel>
-                                <StackPanel Visibility="{Binding ImporterStatus.Value, Converter={StaticResource DispPose}}">
-                                    <ProgressBar
-                                        IsIndeterminate="true"
-                                        Style="{StaticResource MaterialDesignCircularProgressBar}"
-                                        Value="50" />
-
+                                <StackPanel Height=" 30">
+                                    <StackPanel Orientation="Horizontal" Visibility="{Binding ServiceViewModels[0].Status.Value, Converter={StaticResource DispButton}}">
+                                        <TextBlock
+                                            Margin="16,0,16,8"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                            Text="{Binding ServiceViewModels[0].Status.Value, Converter={StaticResource StatusConverter}}" />
+                                        <ToggleButton
+                                            Margin="16,0,16,8"
+                                            Command="{Binding ImporterCommand}"
+                                            IsChecked="{Binding ServiceViewModels[0].Status.Value, Converter={StaticResource SimpleStatus}}"
+                                            Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                            ToolTip="Default ToggleButton Style" />
+                                    </StackPanel>
+                                    <StackPanel Visibility="{Binding ServiceViewModels[0].Status.Value, Converter={StaticResource DispPose}}">
+                                        <ProgressBar
+                                            IsIndeterminate="true"
+                                            Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                            Value="50" />
+                                    </StackPanel>
                                 </StackPanel>
                                 <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
                                 <Button
                                     Margin="16,0,16,8"
-                                    Command="{Binding ShowImporterLogCommand}"
+                                    Command="{Binding ServiceViewModels[0].ShowLogCommand}"
                                     Content="Log" />
 
                             </StackPanel>
@@ -311,294 +647,7 @@
                         </materialDesign:Card>
                     </WrapPanel>
                 </GroupBox>
-                <GroupBox Margin="16,16,16,16" Header="サービス稼働状況">
-                    <WrapPanel Orientation="Horizontal">
-                        <materialDesign:Card
-                            Width="Auto"
-                            Margin="8,8,8,8"
-                            Padding="0"
-                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <TextBlock
-                                    Grid.Row="0"
-                                    Margin="16,16,16,4"
-                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                    Text="{Binding ImporterDisplayName}" />
 
-                                <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
-                                <TextBlock
-                                    Grid.Row="2"
-                                    Margin="16,0,16,8"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                    Text="{Binding ImporterStatus.Value, Converter={StaticResource StatusConverter}}" />
-                                <StackPanel
-                                    Grid.Row="2"
-                                    Margin="16,0,16,8"
-                                    HorizontalAlignment="Right"
-                                    Orientation="Horizontal">
-                                    <Button
-                                        Width="40"
-                                        Padding="2,0,2,0"
-                                        HorizontalAlignment="Right"
-                                        materialDesign:RippleAssist.IsCentered="True"
-                                        Command="{Binding ImporterStartCommand}"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                        <materialDesign:PackIcon Kind="RayStartArrow" />
-                                    </Button>
-                                    <Button
-                                        Width="40"
-                                        Padding="2,0,2,0"
-                                        HorizontalAlignment="Right"
-                                        materialDesign:RippleAssist.IsCentered="True"
-                                        Command="{Binding ImporterStopCommand}"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                        <materialDesign:PackIcon Kind="StopCircleOutline" />
-                                    </Button>
-                                </StackPanel>
-                            </Grid>
-                        </materialDesign:Card>
-
-                        <materialDesign:Card
-                            Grid.Row="1"
-                            Width="Auto"
-                            Margin="8,8,8,8"
-                            Padding="0"
-                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <TextBlock
-                                    Grid.Row="0"
-                                    Margin="16,16,16,4"
-                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                    Text="{Binding ResponderDisplayName}" />
-
-                                <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
-                                <TextBlock
-                                    Grid.Row="2"
-                                    Margin="16,0,16,8"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                    Text="{Binding ResponderStatus.Value, Converter={StaticResource StatusConverter}}" />
-                                <StackPanel
-                                    Grid.Row="2"
-                                    Margin="16,0,16,8"
-                                    HorizontalAlignment="Right"
-                                    Orientation="Horizontal">
-                                    <Button
-                                        Width="40"
-                                        Padding="2,0,2,0"
-                                        HorizontalAlignment="Right"
-                                        materialDesign:RippleAssist.IsCentered="True"
-                                        Command="{Binding ResponderStartCommand}"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                        <materialDesign:PackIcon Kind="RayStartArrow" />
-                                    </Button>
-                                    <Button
-                                        Width="40"
-                                        Padding="2,0,2,0"
-                                        HorizontalAlignment="Right"
-                                        materialDesign:RippleAssist.IsCentered="True"
-                                        Command="{Binding ResponderStopCommand}"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                        <materialDesign:PackIcon Kind="StopCircleOutline" />
-                                    </Button>
-                                </StackPanel>
-                            </Grid>
-                        </materialDesign:Card>
-
-                        <materialDesign:Card
-                            Grid.Row="2"
-                            Width="Auto"
-                            Margin="8,8,8,8"
-                            Padding="0"
-                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <TextBlock
-                                    Grid.Row="0"
-                                    Margin="16,16,16,4"
-                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                    Text="{Binding AscDisplayName}" />
-
-                                <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
-                                <TextBlock
-                                    Grid.Row="2"
-                                    Margin="16,0,16,8"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                    Text="{Binding AscStatus.Value, Converter={StaticResource StatusConverter}}" />
-                                <StackPanel
-                                    Grid.Row="2"
-                                    Margin="16,0,16,8"
-                                    HorizontalAlignment="Right"
-                                    Orientation="Horizontal">
-                                    <Button
-                                        Width="40"
-                                        Padding="2,0,2,0"
-                                        HorizontalAlignment="Right"
-                                        materialDesign:RippleAssist.IsCentered="True"
-                                        Command="{Binding AscStartCommand}"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                        <materialDesign:PackIcon Kind="RayStartArrow" />
-                                    </Button>
-                                    <Button
-                                        Width="40"
-                                        Padding="2,0,2,0"
-                                        HorizontalAlignment="Right"
-                                        materialDesign:RippleAssist.IsCentered="True"
-                                        Command="{Binding AscStopCommand}"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                        <materialDesign:PackIcon Kind="StopCircleOutline" />
-                                    </Button>
-                                </StackPanel>
-                            </Grid>
-                        </materialDesign:Card>
-
-                        <materialDesign:Card
-                            Grid.Row="3"
-                            Width="Auto"
-                            Margin="8,8,8,8"
-                            Padding="0"
-                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <TextBlock
-                                    Grid.Row="0"
-                                    Margin="16,16,16,4"
-                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                    Text="{Binding ScpCoreDisplayName}" />
-
-                                <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
-                                <TextBlock
-                                    Grid.Row="2"
-                                    Margin="16,0,16,8"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                    Text="{Binding ScpCoreStatus.Value, Converter={StaticResource StatusConverter}}" />
-                                <StackPanel
-                                    Grid.Row="2"
-                                    Margin="16,0,16,8"
-                                    HorizontalAlignment="Right"
-                                    Orientation="Horizontal">
-                                    <Button
-                                        Width="40"
-                                        Padding="2,0,2,0"
-                                        HorizontalAlignment="Right"
-                                        materialDesign:RippleAssist.IsCentered="True"
-                                        Command="{Binding ScpCoreStartCommand}"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                        <materialDesign:PackIcon Kind="RayStartArrow" />
-                                    </Button>
-                                    <Button
-                                        Width="40"
-                                        Padding="2,0,2,0"
-                                        HorizontalAlignment="Right"
-                                        materialDesign:RippleAssist.IsCentered="True"
-                                        Command="{Binding ScpCoreStopCommand}"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                        <materialDesign:PackIcon Kind="StopCircleOutline" />
-                                    </Button>
-                                </StackPanel>
-                            </Grid>
-                        </materialDesign:Card>
-
-                        <materialDesign:Card
-                            Grid.Row="4"
-                            Width="Auto"
-                            Margin="8,8,8,8"
-                            Padding="0"
-                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <TextBlock
-                                    Grid.Row="0"
-                                    Margin="16,16,16,4"
-                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                    Text="{Binding MppsDisplayName}" />
-
-                                <Separator Grid.Row="1" Style="{StaticResource MaterialDesignLightSeparator}" />
-                                <TextBlock
-                                    Grid.Row="2"
-                                    Margin="16,0,16,8"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                    Text="{Binding MppsStatus.Value, Converter={StaticResource StatusConverter}}" />
-                                <StackPanel
-                                    Grid.Row="2"
-                                    Margin="16,0,16,8"
-                                    HorizontalAlignment="Right"
-                                    Orientation="Horizontal">
-                                    <Button
-                                        Width="40"
-                                        Padding="2,0,2,0"
-                                        HorizontalAlignment="Right"
-                                        materialDesign:RippleAssist.IsCentered="True"
-                                        Command="{Binding MppsStartCommand}"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                        <materialDesign:PackIcon Kind="RayStartArrow" />
-                                    </Button>
-                                    <Button
-                                        Width="40"
-                                        Padding="2,0,2,0"
-                                        HorizontalAlignment="Right"
-                                        materialDesign:RippleAssist.IsCentered="True"
-                                        Command="{Binding MppsStopCommand}"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
-                                        <materialDesign:PackIcon Kind="StopCircleOutline" />
-                                    </Button>
-                                </StackPanel>
-                            </Grid>
-                        </materialDesign:Card>
-                    </WrapPanel>
-                </GroupBox>
-
-
-
-                <StackPanel Orientation="Horizontal">
-
-                    <Button
-                        Margin="16,16,16,16"
-                        Command="{Binding AllstopServiceCommand}"
-                        Content="全てのサービスを停止" />
-
-                    <Button
-                        Margin="16,16,16,16"
-                        Command="{Binding AllstartServiceCommand}"
-                        Content="全てのサービスを起動" />
-
-                    <Button
-                        Margin="16,16,16,16"
-                        Command="{Binding RestartServiceCommand}"
-                        Content="全てのサービスを再起動" />
-
-                </StackPanel>
 
             </StackPanel>
         </ScrollViewer>

@@ -13,6 +13,7 @@ namespace MiniRisViewer.ServiceStatus
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<ServiceStatusViewModel>();
+            containerRegistry.RegisterSingleton<ServiceStatusViewModel__>();
             containerRegistry.RegisterForNavigation<Views.ServiceStatus>();
         }
     }
