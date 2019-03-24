@@ -303,35 +303,18 @@
                 </GroupBox>
 
                 <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <materialDesign:Card
-                        Width="auto"
-                        Margin="0,0,0,0"
-                        Padding="0">
-                        <Button
-                            Margin="16,16,16,16"
-                            Command="{Binding AllstopServiceCommand}"
-                            Content="全てのサービスを停止" />
-                    </materialDesign:Card>
-
-                    <materialDesign:Card
-                        Width="auto"
-                        Margin="0,0,0,0"
-                        Padding="0">
-
-                        <Button
-                            Margin="16,16,16,16"
-                            Command="{Binding AllstartServiceCommand}"
-                            Content="全てのサービスを起動" />
-                    </materialDesign:Card>
-                    <materialDesign:Card
-                        Width="auto"
-                        Margin="0,0,0,0"
-                        Padding="0">
-                        <Button
-                            Margin="16,16,16,16"
-                            Command="{Binding RestartServiceCommand}"
-                            Content="全てのサービスを再起動" />
-                    </materialDesign:Card>
+                    <Button
+                        Margin="16,16,16,16"
+                        Command="{Binding AllstopServiceCommand}"
+                        Content="全てのサービスを停止" />
+                    <Button
+                        Margin="16,16,16,16"
+                        Command="{Binding AllstartServiceCommand}"
+                        Content="全てのサービスを起動" />
+                    <Button
+                        Margin="16,16,16,16"
+                        Command="{Binding RestartServiceCommand}"
+                        Content="全てのサービスを再起動" />
 
                 </WrapPanel>
 
