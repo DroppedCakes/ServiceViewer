@@ -37,8 +37,9 @@
                             Width="250"
                             Margin="8,8,8,8"
                             Padding="0"
-                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                            <StackPanel Visibility="{Binding ServiceViewModels[0].Status.Value, Converter={StaticResource DispService}}">
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                            Visibility="{Binding ServiceViewModels[0].Status.Value, Converter={StaticResource DispService}}">
+                            <StackPanel>
                                 <TextBlock
                                     Margin="16,16,16,4"
                                     Style="{StaticResource MaterialDesignHeadlineTextBlock}"
@@ -80,8 +81,9 @@
                             Width="250"
                             Margin="8,8,8,8"
                             Padding="0"
-                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                            <StackPanel Visibility="{Binding ServiceViewModels[1].Status.Value, Converter={StaticResource DispService}}">
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                            Visibility="{Binding ServiceViewModels[1].Status.Value, Converter={StaticResource DispService}}">
+                            <StackPanel>
                                 <TextBlock
                                     Margin="16,16,16,4"
                                     Style="{StaticResource MaterialDesignHeadlineTextBlock}"
@@ -123,8 +125,9 @@
                             Width="250"
                             Margin="8,8,8,8"
                             Padding="0"
-                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                            <StackPanel Visibility="{Binding ServiceViewModels[2].Status.Value, Converter={StaticResource DispService}}">
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                            Visibility="{Binding ServiceViewModels[2].Status.Value, Converter={StaticResource DispService}}">
+                            <StackPanel>
                                 <TextBlock
                                     Margin="16,16,16,4"
                                     Style="{StaticResource MaterialDesignHeadlineTextBlock}"
@@ -166,8 +169,9 @@
                             Width="250"
                             Margin="8,8,8,8"
                             Padding="0"
-                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                            <StackPanel Visibility="{Binding ServiceViewModels[3].Status.Value, Converter={StaticResource DispService}}">
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                            Visibility="{Binding ServiceViewModels[3].Status.Value, Converter={StaticResource DispService}}">
+                            <StackPanel>
                                 <TextBlock
                                     Margin="16,16,16,4"
                                     Style="{StaticResource MaterialDesignHeadlineTextBlock}"
@@ -209,8 +213,9 @@
                             Width="250"
                             Margin="8,8,8,8"
                             Padding="0"
-                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                            <StackPanel Visibility="{Binding ServiceViewModels[4].Status.Value, Converter={StaticResource DispService}}">
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                            Visibility="{Binding ServiceViewModels[4].Status.Value, Converter={StaticResource DispService}}">
+                            <StackPanel>
                                 <TextBlock
                                     Margin="16,16,16,4"
                                     Style="{StaticResource MaterialDesignHeadlineTextBlock}"
@@ -251,11 +256,12 @@
 
                         <!--
                         <materialDesign:Card
+                             Visibility="{Binding ServiceViewModels[5].Status.Value, Converter={StaticResource DispService}}"
                             Width="250"
                             Margin="8,8,8,8"
                             Padding="0"
                             Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}">
-                            <StackPanel Visibility="{Binding ServiceViewModels[5].Status.Value, Converter={StaticResource DispService}}">
+                            <StackPanel>
                                 <TextBlock
                                     TextAlignment="Center"
                                     Margin="16,16,16,4"
@@ -296,7 +302,7 @@
                     </WrapPanel>
                 </GroupBox>
 
-                <WrapPanel Orientation="Horizontal">
+                <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <materialDesign:Card
                         Width="auto"
                         Margin="0,0,0,0"
@@ -330,6 +336,7 @@
                 </WrapPanel>
 
 
+                <!--
                 <GroupBox Margin="16,16,16,16" Header="サービス稼働状況">
                     <WrapPanel Orientation="Horizontal">
                         <materialDesign:Card
@@ -648,6 +655,7 @@
                         </materialDesign:Card>
                     </WrapPanel>
                 </GroupBox>
+                -->
 
 
             </StackPanel>
