@@ -6,7 +6,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:prism="http://prismlibrary.com/"
     Title="{Binding Title}"
-    Width="850"
+    Width="800"
     Height="550"
     MinWidth="340"
     prism:ViewModelLocator.AutoWireViewModel="True"

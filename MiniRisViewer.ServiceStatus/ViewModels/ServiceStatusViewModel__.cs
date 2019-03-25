@@ -15,6 +15,10 @@ using System.Threading.Tasks;
 
 namespace MiniRisViewer.ServiceStatus.ViewModels
 {
+
+    /// <summary>
+    /// MV→Vのためのサービス
+    /// </summary>
     public class ServiceViewModel
     {
         public ReactiveProperty<ServiceControllerStatus> Status { set; get; } = new ReactiveProperty<ServiceControllerStatus>();
@@ -33,17 +37,11 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// Model
         /// </summary>
         public Domain.Model.ServiceAdministrator Model;
-        public ServiceViewModel[] ServiceViewModels { get; set; }
 
-
-        /// <summary>
-        ///  サービスの状態を保持するプロパティ
-        /// </summary>
-
-        //1つのボタンにしてみる
-        public ReactiveProperty<bool> StatusCommand { set; get; } = new ReactiveProperty<bool>();
-        //1つのボタンにしてみる
-        public ReactiveCommand ImporterCommand { get; } = new ReactiveCommand();
+        ///<summary>
+        ///全サービスの状態
+        ///</summary>
+        public List<ServiceViewModel> ServiceCards { get; set; }
 
 
         /// <summary>
@@ -163,11 +161,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             }
         }
 
-
-        public string[] DisplayNameList { get; set; }
-        public int[] StatusList { get; set; }
-        public ReactiveCommand[] LogCommandList { get; set; }
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -175,53 +168,35 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         {
             CreateModel();
 
-            ServiceViewModels = new ServiceViewModel[Enum.GetValues(typeof(Ailias)).Length];
+            this.ServiceCards = new List<ServiceViewModel>();
+            for (int num = 0; num < Enum.GetValues(typeof(Ailias)).Length; num++)
+            {
+                ServiceViewModel TmpServiceCard = new ServiceViewModel();
 
-            for (int num = 0; num < Enum.GetValues(typeof(Ailias)).Length; num++) {
+                if (((int)Model.ServiceManagers[num].Status >= 0) && ((int)Model.ServiceManagers[num].Status <= 7))
+                {
 
-                ServiceViewModels[num] = new ServiceViewModel();
-                
-                // Stop判定のM -> VMの接続
-                ServiceViewModels[num].CanStop = Model.ServiceManagers[num].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+                    // Stop判定のM -> VMの接続
+                    TmpServiceCard.CanStop = Model.ServiceManagers[num].ObserveProperty(x => x.CanStop).ToReactiveProperty();
 
-                // ステータスのM -> VMの接続
-                ServiceViewModels[num].Status = Model.ServiceManagers[num].ObserveProperty(x => x.Status).ToReactiveProperty();
+                    // ステータスのM -> VMの接続
+                    TmpServiceCard.Status = Model.ServiceManagers[num].ObserveProperty(x => x.Status).ToReactiveProperty();
 
-                // 画面表示名のM -> VMの接続
-                ServiceViewModels[num].DisplayName = Model.ServiceManagers[num].DisplayName;
+                    // 画面表示名のM -> VMの接続
+                    TmpServiceCard.DisplayName = Model.ServiceManagers[num].DisplayName;
 
-                // 開始・停止
-                ServiceViewModels[num].StartStopCommand.Subscribe(() => {
-                        if (ServiceViewModels[num].CanStop.Value != false) Model.ServiceManagers[num].Stop();
+                    // 開始・停止
+                    TmpServiceCard.StartStopCommand.Subscribe(() =>
+                    {
+                        if (TmpServiceCard.CanStop.Value != false) Model.ServiceManagers[num].Stop();
                         else Model.ServiceManagers[num].Start();
                     });
 
-                // ログ
-                ServiceViewModels[num].ShowLogCommand.Subscribe(() => Model.ServiceManagers[num].ShowLogFolder());
-            }
+                    // ログ
+                    TmpServiceCard.ShowLogCommand.Subscribe(() => Model.ServiceManagers[num].ShowLogFolder());
 
-            StatusList = new int[Enum.GetValues(typeof(Ailias)).Length];
-            int i = 0;
-            foreach (ServiceViewModel x in ServiceViewModels)
-            {
-                StatusList[i] = (int)x.Status.Value;
-                i = i + 1;
-            }
-
-            LogCommandList = new ReactiveCommand[Enum.GetValues(typeof(Ailias)).Length];
-            i = 0;
-            foreach (ServiceViewModel x in ServiceViewModels)
-            {
-                LogCommandList[i] = x.ShowLogCommand;
-                i = i + 1;
-            }
-
-            DisplayNameList = new String [Enum.GetValues(typeof(Ailias)).Length];
-            i = 0;
-            foreach (ServiceViewModel x in ServiceViewModels)
-            {
-                DisplayNameList[i] = (String)x.DisplayName;
-                i = i + 1;
+                    ServiceCards.Add(TmpServiceCard);
+                }
             }
 
             // 1秒ごとに購読する
@@ -230,9 +205,13 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             // サービスのステータスを最新のものに同期する
             ScreenSynchronousTimer.Subscribe(_ => Model.UpdateServiceStatusAsync());
             ScreenSynchronousTimer.Start();
+
+
         }
 
+
     }
+
 
 
 }
