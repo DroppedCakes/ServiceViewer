@@ -43,7 +43,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         ///</summary>
         public List<ServiceViewModel> ServiceCards { get; set; }
 
-
         /// <summary>
         /// 全てのサービスを停止するコマンド
         /// </summary>
@@ -168,36 +167,142 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         {
             CreateModel();
 
+
+            int num;
+
             this.ServiceCards = new List<ServiceViewModel>();
-            for (int num = 0; num < Enum.GetValues(typeof(Ailias)).Length; num++)
+            for (num = 0; num < Enum.GetValues(typeof(Ailias)).Length; ++num)
             {
                 ServiceViewModel TmpServiceCard = new ServiceViewModel();
+                ServiceCards.Add(TmpServiceCard);
 
-                if (((int)Model.ServiceManagers[num].Status >= 0) && ((int)Model.ServiceManagers[num].Status <= 7))
-                {
-
-                    // Stop判定のM -> VMの接続
-                    TmpServiceCard.CanStop = Model.ServiceManagers[num].ObserveProperty(x => x.CanStop).ToReactiveProperty();
-
-                    // ステータスのM -> VMの接続
-                    TmpServiceCard.Status = Model.ServiceManagers[num].ObserveProperty(x => x.Status).ToReactiveProperty();
-
-                    // 画面表示名のM -> VMの接続
-                    TmpServiceCard.DisplayName = Model.ServiceManagers[num].DisplayName;
-
-                    // 開始・停止
-                    TmpServiceCard.StartStopCommand.Subscribe(() =>
-                    {
-                        if (TmpServiceCard.CanStop.Value != false) Model.ServiceManagers[num].Stop();
-                        else Model.ServiceManagers[num].Start();
-                    });
-
-                    // ログ
-                    TmpServiceCard.ShowLogCommand.Subscribe(() => Model.ServiceManagers[num].ShowLogFolder());
-
-                    ServiceCards.Add(TmpServiceCard);
-                }
             }
+
+            int serviceCount = Enum.GetValues(typeof(Ailias)).Length;
+
+
+            // Stop判定のM -> VMの接続
+            ServiceCards[0].CanStop = Model.ServiceManagers[0].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+            // ステータスのM -> VMの接続
+            ServiceCards[0].Status = Model.ServiceManagers[0].ObserveProperty(x => x.Status).ToReactiveProperty();
+            //画面表示名のM->VMの接続
+            ServiceCards[0].DisplayName = Model.ServiceManagers[0].DisplayName;
+            //// 開始・停止
+            ServiceCards[0].StartStopCommand.Subscribe(() =>
+            {
+                if (ServiceCards[0].CanStop.Value != false) Model.ServiceManagers[0].Stop();
+                else Model.ServiceManagers[0].Start();
+            });
+            // ログ
+            ServiceCards[0].ShowLogCommand.Subscribe(() => Model.ServiceManagers[0].ShowLogFolder());
+
+
+            // Stop判定のM -> VMの接続
+            ServiceCards[1].CanStop = Model.ServiceManagers[1].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+            // ステータスのM -> VMの接続
+            ServiceCards[1].Status = Model.ServiceManagers[1].ObserveProperty(x => x.Status).ToReactiveProperty();
+            //画面表示名のM->VMの接続
+            ServiceCards[1].DisplayName = Model.ServiceManagers[1].DisplayName;
+            //// 開始・停止
+            ServiceCards[1].StartStopCommand.Subscribe(() =>
+            {
+                if (ServiceCards[1].CanStop.Value != false) Model.ServiceManagers[1].Stop();
+                else Model.ServiceManagers[1].Start();
+            });
+            // ログ
+            ServiceCards[1].ShowLogCommand.Subscribe(() => Model.ServiceManagers[1].ShowLogFolder());
+
+
+            // Stop判定のM -> VMの接続
+            ServiceCards[2].CanStop = Model.ServiceManagers[2].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+            // ステータスのM -> VMの接続
+            ServiceCards[2].Status = Model.ServiceManagers[2].ObserveProperty(x => x.Status).ToReactiveProperty();
+            //画面表示名のM->VMの接続
+            ServiceCards[2].DisplayName = Model.ServiceManagers[2].DisplayName;
+            //// 開始・停止
+            ServiceCards[2].StartStopCommand.Subscribe(() =>
+            {
+                if (ServiceCards[2].CanStop.Value != false) Model.ServiceManagers[2].Stop();
+                else Model.ServiceManagers[2].Start();
+            });
+            // ログ
+            ServiceCards[2].ShowLogCommand.Subscribe(() => Model.ServiceManagers[2].ShowLogFolder());
+
+            // Stop判定のM -> VMの接続
+            ServiceCards[3].CanStop = Model.ServiceManagers[3].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+            // ステータスのM -> VMの接続
+            ServiceCards[3].Status = Model.ServiceManagers[3].ObserveProperty(x => x.Status).ToReactiveProperty();
+            //画面表示名のM->VMの接続
+            ServiceCards[3].DisplayName = Model.ServiceManagers[3].DisplayName;
+            //// 開始・停止
+            ServiceCards[3].StartStopCommand.Subscribe(() =>
+            {
+                if (ServiceCards[3].CanStop.Value != false) Model.ServiceManagers[3].Stop();
+                else Model.ServiceManagers[3].Start();
+            });
+            // ログ
+            ServiceCards[3].ShowLogCommand.Subscribe(() => Model.ServiceManagers[3].ShowLogFolder());
+
+
+            // Stop判定のM -> VMの接続
+            ServiceCards[4].CanStop = Model.ServiceManagers[4].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+            // ステータスのM -> VMの接続
+            ServiceCards[4].Status = Model.ServiceManagers[4].ObserveProperty(x => x.Status).ToReactiveProperty();
+            //画面表示名のM->VMの接続
+            ServiceCards[4].DisplayName = Model.ServiceManagers[4].DisplayName;
+            //// 開始・停止
+            ServiceCards[4].StartStopCommand.Subscribe(() =>
+            {
+                if (ServiceCards[4].CanStop.Value != false) Model.ServiceManagers[4].Stop();
+                else Model.ServiceManagers[4].Start();
+            });
+            // ログ
+            ServiceCards[4].ShowLogCommand.Subscribe(() => Model.ServiceManagers[4].ShowLogFolder());
+
+
+            //int num;
+
+            //this.ServiceCards = new List<ServiceViewModel>();
+            //for (num = 0; num < Enum.GetValues(typeof(Ailias)).Length; ++num)
+            //{
+            //    ServiceViewModel TmpServiceCard = new ServiceViewModel();
+            //    ServiceCards.Add(TmpServiceCard);
+
+            //}
+
+            //int serviceCount = Enum.GetValues(typeof(Ailias)).Length;
+
+            //for (num = 0; num < serviceCount; num++)
+            //{
+            //    //ServiceViewModel TmpServiceCard = new ServiceViewModel();
+
+            //    if (((int)Model.ServiceManagers[num].Status >= 0) && ((int)Model.ServiceManagers[num].Status <= 7))
+            //    {
+
+            //        // Stop判定のM -> VMの接続
+            //        ServiceCards[num].CanStop = Model.ServiceManagers[num].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+
+            //        // ステータスのM -> VMの接続
+            //        ServiceCards[num].Status = Model.ServiceManagers[num].ObserveProperty(x => x.Status).ToReactiveProperty();
+
+            //        //画面表示名のM->VMの接続
+            //        ServiceCards[num].DisplayName = Model.ServiceManagers[num].DisplayName;
+
+            //        //// 開始・停止
+            //        ServiceCards[num].StartStopCommand.Subscribe(() =>
+            //        {
+            //            if (ServiceCards[num].CanStop.Value != false) Model.ServiceManagers[num].Stop();
+            //            else Model.ServiceManagers[num].Start();
+            //        });
+
+
+            //        // ログ
+            //        ServiceCards[num].ShowLogCommand.Subscribe(() => Model.ServiceManagers[num].ShowLogFolder());
+
+            //        //ServiceCards.Add(TmpServiceCard);
+            //    }
+            //}
+            ////num = 0;
 
             // 1秒ごとに購読する
             ScreenSynchronousTimer = new ReactiveTimer(TimeSpan.FromSeconds(1));
@@ -206,6 +311,12 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             ScreenSynchronousTimer.Subscribe(_ => Model.UpdateServiceStatusAsync());
             ScreenSynchronousTimer.Start();
 
+            //// 全てのサービスを停止するコマンド
+            AllstopServiceCommand.Subscribe(() => StopAllServiceAsync());
+            //// 全てのサービスを起動するコマンド
+            AllstartServiceCommand.Subscribe(() => StartAllServiceAsync());
+            //// 全てのサービスを再起動するコマンド
+            RestartServiceCommand.Subscribe(() => RestartAllServiceAsync());
 
         }
 

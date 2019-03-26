@@ -67,7 +67,7 @@
                                                         Text="{Binding Status.Value, Converter={StaticResource StatusConverter}}" />
                                                     <ToggleButton
                                                         Margin="16,0,16,8"
-                                                        Command="{Binding ImporterCommand}"
+                                                        Command="{Binding StartStopCommand}"
                                                         IsChecked="{Binding Status.Value, Converter={StaticResource SimpleStatus}}"
                                                         Style="{StaticResource MaterialDesignSwitchToggleButton}"
                                                         ToolTip="Default ToggleButton Style" />
