@@ -19,6 +19,7 @@
     TextOptions.TextRenderingMode="Auto">
 
     <Grid>
-        <ContentControl Grid.ColumnSpan="2" prism:RegionManager.RegionName="ContentRegion" />
-    </Grid>
+        <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+        <!--        <ContentControl Grid.ColumnSpan="2" prism:RegionManager.RegionName="ContentRegion" />
+-->    </Grid>
 </controls:MetroWindow>

@@ -22,6 +22,8 @@ namespace MiniRisViewer
             base.OnInitialized();
             var region_manager = CommonServiceLocator.ServiceLocator.Current.GetInstance<IRegionManager>();
             region_manager.RequestNavigate("ContentRegion", nameof(ServiceStatus));
+
+
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)

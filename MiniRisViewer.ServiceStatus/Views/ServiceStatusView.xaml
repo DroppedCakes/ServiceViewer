@@ -22,9 +22,7 @@
     </UserControl.Resources>
 
     <UserControl.DataContext>
-        <!--        <local:ServiceStatusViewModel />-->
         <local:ServiceStatusViewModel />
-
     </UserControl.DataContext>
 
     <xctk:BusyIndicator BusyContent="{Binding ProgressMessage.Value}" IsBusy="{Binding InProgress.Value}">
@@ -48,7 +46,6 @@
                                         Width="250"
                                         Margin="8,8,8,8"
                                         Padding="0"
-                                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                         Visibility="{Binding Status.Value, Converter={StaticResource DispService}}">
                                         <StackPanel>
                                             <TextBlock
@@ -67,15 +64,14 @@
                                                         Text="{Binding Status.Value, Converter={StaticResource StatusConverter}}" />
                                                     <ToggleButton
                                                         Margin="16,8,16,8"
-                                                        Command="{Binding StartStopCommand }"
+                                                        Command="{Binding StartStopCommand}"
                                                         IsChecked="{Binding Status.Value, Converter={StaticResource SimpleStatus}}"
                                                         Style="{StaticResource MaterialDesignSwitchToggleButton}"
                                                         ToolTip="Default ToggleButton Style" />
                                                 </StackPanel>
-                                                <StackPanel Visibility="{Binding Status.Value, Converter={StaticResource DispPose}}"
-                                                                                                                    Margin="16,8,16,8"
->
+                                                <StackPanel VerticalAlignment="Center" Visibility="{Binding Status.Value, Converter={StaticResource DispPose}}">
                                                     <ProgressBar
+                                                        Margin="16,8,16,8"
                                                         IsIndeterminate="true"
                                                         Style="{StaticResource MaterialDesignCircularProgressBar}"
                                                         Value="50" />

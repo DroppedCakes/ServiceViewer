@@ -168,61 +168,48 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             CreateModel();
 
 
-            int num;
-
-            this.ServiceCards = new List<ServiceViewModel>();
-            for (num = 0; num < Enum.GetValues(typeof(Ailias)).Length; ++num)
-            {
-                ServiceViewModel TmpServiceCard = new ServiceViewModel();
-                ServiceCards.Add(TmpServiceCard);
-
-            }
+            int loopindex;
 
             int serviceCount = Enum.GetValues(typeof(Ailias)).Length;
 
             this.ServiceCards = new List<ServiceViewModel>();
 
-            for (num = 0; num < serviceCount; ++num)
-            {
-                ServiceViewModel TmpServiceCard = new ServiceViewModel();
-                ServiceCards.Add(TmpServiceCard);
-
-            }
-
             int status;
-            for (num = 0; num < serviceCount; num++)
+            for (loopindex = 0; loopindex < serviceCount; loopindex++)
             {
                 //ServiceViewModel TmpServiceCard = new ServiceViewModel();
-                status = (int)Model.ServiceManagers[num].Status;
+                status = (int)Model.ServiceManagers[loopindex].Status;
 
-                //なぜかこうしないと実働時（num =  serviceCount)となる
-                int a = num;
+                //indexで値を受けないと（loopindex =  serviceCount)固定となる
+                int index = loopindex;
 
                 if ((0 <= status) && (status <= 7))
                 {
 
+                    ServiceViewModel TmpServiceCard = new ServiceViewModel();
+                    ServiceCards.Add(TmpServiceCard);
+
+
                     // Stop判定のM -> VMの接続
-                    ServiceCards[a].CanStop = Model.ServiceManagers[a].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+                    ServiceCards[index].CanStop = Model.ServiceManagers[index].ObserveProperty(x => x.CanStop).ToReactiveProperty();
 
                     // ステータスのM -> VMの接続
-                    ServiceCards[a].Status = Model.ServiceManagers[a].ObserveProperty(x => x.Status).ToReactiveProperty();
+                    ServiceCards[index].Status = Model.ServiceManagers[index].ObserveProperty(x => x.Status).ToReactiveProperty();
 
                     //画面表示名のM->VMの接続
-                    ServiceCards[a].DisplayName = Model.ServiceManagers[a].DisplayName;
+                    ServiceCards[index].DisplayName = Model.ServiceManagers[index].DisplayName;
 
                     //// 開始・停止
-                    ServiceCards[a].StartStopCommand.Subscribe(() =>
+                    ServiceCards[index].StartStopCommand.Subscribe(() =>
                     {
-                        if (ServiceCards[a].CanStop.Value != false) Model.ServiceManagers[a].Stop();
-                        else Model.ServiceManagers[a].Start();
+                        if (ServiceCards[index].CanStop.Value != false) Model.ServiceManagers[index].Stop();
+                        else Model.ServiceManagers[index].Start();
 
                     });
 
-
                     // ログ
-                    ServiceCards[a].ShowLogCommand.Subscribe(() => Model.ServiceManagers[a].ShowLogFolder());
+                    ServiceCards[index].ShowLogCommand.Subscribe(() => Model.ServiceManagers[index].ShowLogFolder());
 
-                    //ServiceCards.Add(TmpServiceCard);
                 }
             }
 
