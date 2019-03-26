@@ -23,7 +23,7 @@
 
     <UserControl.DataContext>
         <!--        <local:ServiceStatusViewModel />-->
-        <local:ServiceStatusViewModel__ />
+        <local:ServiceStatusViewModel />
 
     </UserControl.DataContext>
 
@@ -57,22 +57,24 @@
                                                 Text="{Binding DisplayName}"
                                                 TextAlignment="Center" />
                                             <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
-                                            <StackPanel Height=" 30">
+                                            <StackPanel Height="50">
                                                 <StackPanel Orientation="Horizontal" Visibility="{Binding Status.Value, Converter={StaticResource DispButton}}">
                                                     <TextBlock
-                                                        Margin="16,0,16,8"
+                                                        Margin="16,8,16,8"
                                                         HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         Style="{StaticResource MaterialDesignHeadlineTextBlock}"
                                                         Text="{Binding Status.Value, Converter={StaticResource StatusConverter}}" />
                                                     <ToggleButton
-                                                        Margin="16,0,16,8"
-                                                        Command="{Binding StartStopCommand}"
+                                                        Margin="16,8,16,8"
+                                                        Command="{Binding StartStopCommand }"
                                                         IsChecked="{Binding Status.Value, Converter={StaticResource SimpleStatus}}"
                                                         Style="{StaticResource MaterialDesignSwitchToggleButton}"
                                                         ToolTip="Default ToggleButton Style" />
                                                 </StackPanel>
-                                                <StackPanel Visibility="{Binding Status.Value, Converter={StaticResource DispPose}}">
+                                                <StackPanel Visibility="{Binding Status.Value, Converter={StaticResource DispPose}}"
+                                                                                                                    Margin="16,8,16,8"
+>
                                                     <ProgressBar
                                                         IsIndeterminate="true"
                                                         Style="{StaticResource MaterialDesignCircularProgressBar}"

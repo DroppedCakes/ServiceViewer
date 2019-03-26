@@ -4,6 +4,8 @@ using Prism.Mvvm;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -12,8 +14,20 @@ using System.Threading.Tasks;
 
 
 namespace MiniRisViewer.ServiceStatus.ViewModels
+{
 
+    /// <summary>
+    /// MV→Vのためのサービス
+    /// </summary>
+    public class ServiceViewModel
     {
+        public ReactiveProperty<ServiceControllerStatus> Status { set; get; } = new ReactiveProperty<ServiceControllerStatus>();
+        public ReactiveProperty<bool> CanStop { set; get; } = new ReactiveProperty<bool>();
+        public ReactiveCommand StartStopCommand { set; get; } = new ReactiveCommand();
+        public ReactiveCommand ShowLogCommand { get; private set; } = new ReactiveCommand();
+        public string DisplayName { get; set; }
+    }
+
     public class ServiceStatusViewModel : BindableBase, IDisposable
     {
         public Reactive.Bindings.Notifiers.BooleanNotifier InProgress { get; } = new Reactive.Bindings.Notifiers.BooleanNotifier(false);
@@ -24,103 +38,10 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// </summary>
         public Domain.Model.ServiceAdministrator Model;
 
-        #region DisplayName
-
-        private string importerDisplayName;
-
-        public string ImporterDisplayName
-        {
-            get { return importerDisplayName; }
-            set { SetProperty(ref importerDisplayName, value); }
-        }
-
-        private string responderDisplayName;
-
-        public string ResponderDisplayName
-        {
-            get { return responderDisplayName; }
-            set { SetProperty(ref responderDisplayName, value); }
-        }
-
-        private string ascDiplayName;
-
-        public string AscDisplayName
-        {
-            get { return ascDiplayName; }
-            set { SetProperty(ref ascDiplayName, value); }
-        }
-
-        private string scpCoreDisplayName;
-
-        public string ScpCoreDisplayName
-        {
-            get { return scpCoreDisplayName; }
-            set { SetProperty(ref scpCoreDisplayName, value); }
-        }
-
-        private string mppsDisplayName;
-
-        public string MppsDisplayName
-        {
-            get { return mppsDisplayName; }
-            set { SetProperty(ref mppsDisplayName, value); }
-        }
-
-        #endregion DisplayName
-
-        /// <summary>
-        ///  サービスの状態を保持するプロパティ
-        /// </summary>
-
-
- 
-        #region ReactiveProperty
-
-        #region Status
-        public ReactiveProperty<ServiceControllerStatus> ImporterStatus { get; } = new ReactiveProperty<ServiceControllerStatus>();
-        public ReactiveProperty<ServiceControllerStatus> ResponderStatus { get; } = new ReactiveProperty<ServiceControllerStatus>();
-        public ReactiveProperty<ServiceControllerStatus> AscStatus { get; } = new ReactiveProperty<ServiceControllerStatus>();
-        public ReactiveProperty<ServiceControllerStatus> ScpCoreStatus { get; } = new ReactiveProperty<ServiceControllerStatus>();
-        public ReactiveProperty<ServiceControllerStatus> MppsStatus { get; } = new ReactiveProperty<ServiceControllerStatus>();
-
-        #endregion Status
-
-        public ReactiveProperty<bool> CanStopImporter { get; } = new ReactiveProperty<bool>();
-        public ReactiveProperty<bool> CanStopResponder { get; } = new ReactiveProperty<bool>();
-        public ReactiveProperty<bool> CanStopAsc { get; } = new ReactiveProperty<bool>();
-        public ReactiveProperty<bool> CanStopScpCore { get; } = new ReactiveProperty<bool>();
-        public ReactiveProperty<bool> CanStopMpps { get; } = new ReactiveProperty<bool>();
-
-        #endregion ReactiveProperty
-
-        #region ReactiveCommand
-
-        #region Start/Stop
-        
-        public ReactiveCommand ImporterStartCommand { get; }
-        public ReactiveCommand ImporterStopCommand { get; }
-        public ReactiveCommand ResponderStartCommand { get; }
-        public ReactiveCommand ResponderStopCommand { get; }
-        public ReactiveCommand ScpCoreStartCommand { get; }
-        public ReactiveCommand ScpCoreStopCommand { get; }
-        public ReactiveCommand AscStartCommand { get; }
-        public ReactiveCommand AscStopCommand { get; }
-        public ReactiveCommand MppsStartCommand { get; }
-        public ReactiveCommand MppsStopCommand { get; }
-
-        #endregion Start/Stop
-
-
-        //お試しstart
-
-        //1つのボタンにしてみる
-        public ReactiveProperty<bool> StatusCommand { set; get; } = new ReactiveProperty<bool>();
-        //1つのボタンにしてみる
-        public ReactiveCommand ImporterCommand { get; } = new ReactiveCommand();
-
-        //お試しend
-
-
+        ///<summary>
+        ///全サービスの状態
+        ///</summary>
+        public List<ServiceViewModel> ServiceCards { get; set; }
 
         /// <summary>
         /// 全てのサービスを停止するコマンド
@@ -135,25 +56,14 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// </summary>
         public ReactiveCommand RestartServiceCommand { get; } = new ReactiveCommand();
 
-        #region Log
-
-        public ReactiveCommand ShowImporterLogCommand { get; private set; } = new ReactiveCommand();
-        public ReactiveCommand ShowResponderLogCommand { get; private set; } = new ReactiveCommand();
-        public ReactiveCommand ShowAscLogCommand { get; private set; } = new ReactiveCommand();
-        public ReactiveCommand ShowScpCoreLogCommand { get; private set; } = new ReactiveCommand();
-        public ReactiveCommand ShowMppsLogCommand { get; private set; } = new ReactiveCommand();
-
-        #endregion Log
-
-        #endregion ReactiveCommand
 
         /// <summary>
         /// サービスの状態を更新するタイマー
         /// </summary>
         public ReactiveTimer ScreenSynchronousTimer;
-        
-        public ReactiveCommand ShowDialogMaterialCommand{ get; private set; } = new ReactiveCommand();
- 
+
+        public ReactiveCommand ShowDialogMaterialCommand { get; private set; } = new ReactiveCommand();
+
 
         /// <summary>
         /// IDisposableの実装部
@@ -215,9 +125,9 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
                 InProgress.TurnOff();
             }
         }        /// <summary>
-        /// 非同期でサービスの再起動を行い、
-        /// UIはBusyIndicatorでブロックする
-        /// </summary>
+                 /// 非同期でサービスの再起動を行い、
+                 /// UIはBusyIndicatorでブロックする
+                 /// </summary>
         public async void RestartAllServiceAsync()
         {
             InProgress.TurnOn();
@@ -236,6 +146,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// </summary>
         public void CreateModel()
         {
+
             try
             {
                 string ConfigPath = @"C:\ProgramData\UsTEC\MiniRisViewer\Config.xml";
@@ -249,7 +160,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             }
         }
 
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -257,64 +167,148 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         {
             CreateModel();
 
+
+            int num;
+
+            this.ServiceCards = new List<ServiceViewModel>();
+            for (num = 0; num < Enum.GetValues(typeof(Ailias)).Length; ++num)
+            {
+                ServiceViewModel TmpServiceCard = new ServiceViewModel();
+                ServiceCards.Add(TmpServiceCard);
+
+            }
+
+
             // Stop判定のM -> VMの接続
-            CanStopImporter = Model.ServiceManagers[(int)Ailias.Importer].ObserveProperty(x => x.CanStop).ToReactiveProperty();
-            CanStopResponder = Model.ServiceManagers[(int)Ailias.Responder].ObserveProperty(x => x.CanStop).ToReactiveProperty();
-            CanStopAsc = Model.ServiceManagers[(int)Ailias.Asc].ObserveProperty(x => x.CanStop).ToReactiveProperty();
-            CanStopScpCore = Model.ServiceManagers[(int)Ailias.ScpCore].ObserveProperty(x => x.CanStop).ToReactiveProperty();
-            CanStopMpps = Model.ServiceManagers[(int)Ailias.Mpps].ObserveProperty(x => x.CanStop).ToReactiveProperty();
-
+            ServiceCards[0].CanStop = Model.ServiceManagers[0].ObserveProperty(x => x.CanStop).ToReactiveProperty();
             // ステータスのM -> VMの接続
-            ImporterStatus = Model.ServiceManagers[(int)Ailias.Importer].ObserveProperty(x => x.Status).ToReactiveProperty();
-            AscStatus = Model.ServiceManagers[(int)Ailias.Asc].ObserveProperty(x => x.Status).ToReactiveProperty();
-            ResponderStatus = Model.ServiceManagers[(int)Ailias.Responder].ObserveProperty(x => x.Status).ToReactiveProperty();
-            ScpCoreStatus = Model.ServiceManagers[(int)Ailias.ScpCore].ObserveProperty(x => x.Status).ToReactiveProperty();
-            MppsStatus = Model.ServiceManagers[(int)Ailias.Mpps].ObserveProperty(x => x.Status).ToReactiveProperty();
-
-            // 画面表示名のM -> VMの接続
-            ImporterDisplayName = Model.ServiceManagers[(int)Ailias.Importer].DisplayName;
-            ResponderDisplayName = Model.ServiceManagers[(int)Ailias.Responder].DisplayName;
-            AscDisplayName = Model.ServiceManagers[(int)Ailias.Asc].DisplayName;
-            ScpCoreDisplayName = Model.ServiceManagers[(int)Ailias.ScpCore].DisplayName;
-            MppsDisplayName = Model.ServiceManagers[(int)Ailias.Mpps].DisplayName;
-
-
-            //お試しstart
-            
-            ImporterCommand.Subscribe(() => {
-                  if (CanStopImporter.Value  != false) Model.ServiceManagers[(int)Ailias.Importer].Stop();
-                else Model.ServiceManagers[(int)Ailias.Importer].Start();
+            ServiceCards[0].Status = Model.ServiceManagers[0].ObserveProperty(x => x.Status).ToReactiveProperty();
+            //画面表示名のM->VMの接続
+            ServiceCards[0].DisplayName = Model.ServiceManagers[0].DisplayName;
+            //// 開始・停止
+            ServiceCards[0].StartStopCommand.Subscribe(() =>
+            {
+                if (ServiceCards[0].CanStop.Value != false) Model.ServiceManagers[0].Stop();
+                else Model.ServiceManagers[0].Start();
             });
-            //お試しend
+            // ログ
+            ServiceCards[0].ShowLogCommand.Subscribe(() => Model.ServiceManagers[0].ShowLogFolder());
 
 
+            // Stop判定のM -> VMの接続
+            ServiceCards[1].CanStop = Model.ServiceManagers[1].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+            // ステータスのM -> VMの接続
+            ServiceCards[1].Status = Model.ServiceManagers[1].ObserveProperty(x => x.Status).ToReactiveProperty();
+            //画面表示名のM->VMの接続
+            ServiceCards[1].DisplayName = Model.ServiceManagers[1].DisplayName;
+            //// 開始・停止
+            ServiceCards[1].StartStopCommand.Subscribe(() =>
+            {
+                if (ServiceCards[1].CanStop.Value != false) Model.ServiceManagers[1].Stop();
+                else Model.ServiceManagers[1].Start();
+            });
+            // ログ
+            ServiceCards[1].ShowLogCommand.Subscribe(() => Model.ServiceManagers[1].ShowLogFolder());
 
-            // 開始・停止ボタンは各サービスの
-            // CanStopPropertyによって、活性・非活性する
-           // ImporterStartCommand = CanStopImporter.Select(x => x == false).ToReactiveCommand();
-            //ImporterStopCommand = CanStopImporter.Select(x => x == true).ToReactiveCommand();
-            ResponderStartCommand = CanStopResponder.Select(x => x == false).ToReactiveCommand();
-            ResponderStopCommand = CanStopResponder.Select(x => x == true).ToReactiveCommand();
-            AscStartCommand = CanStopAsc.Select(x => x == false).ToReactiveCommand();
-            AscStopCommand = CanStopAsc.Select(x => x == true).ToReactiveCommand();
-            ScpCoreStartCommand = CanStopScpCore.Select(x => x == false).ToReactiveCommand();
-            ScpCoreStopCommand = CanStopScpCore.Select(x => x == true).ToReactiveCommand();
-            MppsStartCommand = CanStopMpps.Select(x => x == false).ToReactiveCommand();
-            MppsStopCommand = CanStopMpps.Select(x => x == true).ToReactiveCommand();
 
-            // StartCommandの購読
-            //ImporterStartCommand.Subscribe(()=> Model.ServiceManagers[(int)Ailias.Importer].Start());
-            AscStartCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.Asc].Start());
-            ResponderStartCommand.Subscribe(()=> Model.ServiceManagers[(int)Ailias.Responder].Start());
-            ScpCoreStartCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.ScpCore].Start());
-            MppsStartCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.Mpps].Start());
+            // Stop判定のM -> VMの接続
+            ServiceCards[2].CanStop = Model.ServiceManagers[2].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+            // ステータスのM -> VMの接続
+            ServiceCards[2].Status = Model.ServiceManagers[2].ObserveProperty(x => x.Status).ToReactiveProperty();
+            //画面表示名のM->VMの接続
+            ServiceCards[2].DisplayName = Model.ServiceManagers[2].DisplayName;
+            //// 開始・停止
+            ServiceCards[2].StartStopCommand.Subscribe(() =>
+            {
+                if (ServiceCards[2].CanStop.Value != false) Model.ServiceManagers[2].Stop();
+                else Model.ServiceManagers[2].Start();
+            });
+            // ログ
+            ServiceCards[2].ShowLogCommand.Subscribe(() => Model.ServiceManagers[2].ShowLogFolder());
 
-            // StopCommandの購読
-            //ImporterStopCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.Importer].Stop());
-            AscStopCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.Asc].Stop());
-            ResponderStopCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.Responder].Stop());
-            ScpCoreStopCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.ScpCore].Stop());
-            MppsStopCommand.Subscribe(()=> Model.ServiceManagers[(int)Ailias.Mpps].Stop());
+            // Stop判定のM -> VMの接続
+            ServiceCards[3].CanStop = Model.ServiceManagers[3].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+            // ステータスのM -> VMの接続
+            ServiceCards[3].Status = Model.ServiceManagers[3].ObserveProperty(x => x.Status).ToReactiveProperty();
+            //画面表示名のM->VMの接続
+            ServiceCards[3].DisplayName = Model.ServiceManagers[3].DisplayName;
+            //// 開始・停止
+            ServiceCards[3].StartStopCommand.Subscribe(() =>
+            {
+                if (ServiceCards[3].CanStop.Value != false) Model.ServiceManagers[3].Stop();
+                else Model.ServiceManagers[3].Start();
+            });
+            // ログ
+            ServiceCards[3].ShowLogCommand.Subscribe(() => Model.ServiceManagers[3].ShowLogFolder());
+
+
+            // Stop判定のM -> VMの接続
+            ServiceCards[4].CanStop = Model.ServiceManagers[4].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+            // ステータスのM -> VMの接続
+            ServiceCards[4].Status = Model.ServiceManagers[4].ObserveProperty(x => x.Status).ToReactiveProperty();
+            //画面表示名のM->VMの接続
+            ServiceCards[4].DisplayName = Model.ServiceManagers[4].DisplayName;
+            //// 開始・停止
+            ServiceCards[4].StartStopCommand.Subscribe(() =>
+            {
+                if (ServiceCards[4].CanStop.Value != false) Model.ServiceManagers[4].Stop();
+                else Model.ServiceManagers[4].Start();
+            });
+            // ログ
+            ServiceCards[4].ShowLogCommand.Subscribe(() => Model.ServiceManagers[4].ShowLogFolder());
+
+
+            //int num;
+            //int serviceCount = Enum.GetValues(typeof(Ailias)).Length;
+
+            //this.ServiceCards = new List<ServiceViewModel>();
+
+            //for (num = 0; num < serviceCount; ++num)
+            //{
+            //    ServiceViewModel TmpServiceCard = new ServiceViewModel();
+            //    ServiceCards.Add(TmpServiceCard);
+
+            //}
+
+            //int status =(int)Model.ServiceManagers[num].Status;
+            //for (num = 0; num < serviceCount; num++)
+            //{
+            //    //ServiceViewModel TmpServiceCard = new ServiceViewModel();
+
+            //    if (( 0 <= status ) && ( status <= 7))
+            //    {
+
+            //        // Stop判定のM -> VMの接続
+            //        ServiceCards[num].CanStop = Model.ServiceManagers[num].ObserveProperty(x => x.CanStop).ToReactiveProperty();
+
+            //        // ステータスのM -> VMの接続
+            //        ServiceCards[num].Status = Model.ServiceManagers[num].ObserveProperty(x => x.Status).ToReactiveProperty();
+
+            //        //画面表示名のM->VMの接続
+            //        ServiceCards[num].DisplayName = Model.ServiceManagers[num].DisplayName;
+
+            //        //// 開始・停止
+            //        ServiceCards[num].StartStopCommand.Subscribe(() =>
+            //        {
+            //            if (ServiceCards[num].CanStop.Value != false) Model.ServiceManagers[num].Stop();
+            //            else Model.ServiceManagers[num].Start();
+            //        });
+
+
+            //        // ログ
+            //        ServiceCards[num].ShowLogCommand.Subscribe(() => Model.ServiceManagers[num].ShowLogFolder());
+
+            //        //ServiceCards.Add(TmpServiceCard);
+            //    }
+            //}
+            ////num = 0; debugで使用
+
+            // 1秒ごとに購読する
+            ScreenSynchronousTimer = new ReactiveTimer(TimeSpan.FromSeconds(1));
+            // タイマーを購読し、
+            // サービスのステータスを最新のものに同期する
+            ScreenSynchronousTimer.Subscribe(_ => Model.UpdateServiceStatusAsync());
+            ScreenSynchronousTimer.Start();
 
             //// 全てのサービスを停止するコマンド
             AllstopServiceCommand.Subscribe(() => StopAllServiceAsync());
@@ -323,25 +317,11 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             //// 全てのサービスを再起動するコマンド
             RestartServiceCommand.Subscribe(() => RestartAllServiceAsync());
 
-            // ログ
-            ShowImporterLogCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.Importer].ShowLogFolder());
-            ShowResponderLogCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.Responder].ShowLogFolder());
-            ShowAscLogCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.Asc].ShowLogFolder());
-            ShowScpCoreLogCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.ScpCore].ShowLogFolder());
-            ShowMppsLogCommand.Subscribe(() => Model.ServiceManagers[(int)Ailias.Mpps].ShowLogFolder());
-
-            // 1秒ごとに購読する
-            ScreenSynchronousTimer = new ReactiveTimer(TimeSpan.FromSeconds(1));
-            // タイマーを購読し、
-            // サービスのステータスを最新のものに同期する
-            ScreenSynchronousTimer.Subscribe(_ => Model.UpdateServiceStatusAsync());
-
-            ScreenSynchronousTimer.Start();
-
-
         }
 
 
     }
+
+
 
 }

@@ -65,7 +65,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Helper\StatusConverter.cs" />
-    <Compile Include="ViewModels\ServiceStatusViewModel__.cs" />
     <Compile Include="ViewModels\ServiceStatusViewModel.cs" />
     <Compile Include="Views\ServiceStatusView.xaml.cs">
       <DependentUpon>ServiceStatusView.xaml</DependentUpon>
