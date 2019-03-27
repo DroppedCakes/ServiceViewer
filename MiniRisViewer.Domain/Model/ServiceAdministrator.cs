@@ -20,7 +20,9 @@ namespace MiniRisViewer.Domain.Model
         {
             foreach (Service.Service x in config.Services)
             {
-                ServiceManagers.Add(new ServiceManager(x.Name, x.Caption, x.LogPath, System.Convert.ToBoolean(x.Visible)));
+                //ServiceManagers.Add(new ServiceManager(x.Name, x.Caption, x.LogPath, System.Convert.ToBoolean(x.Visible)));
+                ServiceManagers.Add(new ServiceManager(x.Name, x.Caption, x.LogPath));
+
             }
         }
 
