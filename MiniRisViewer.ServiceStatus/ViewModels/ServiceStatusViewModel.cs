@@ -36,7 +36,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
 
             StartStopCommand.Subscribe(() =>{if (CanStop.Value != false) x.Stop(); else x.Start();});
             ShowLogCommand.Subscribe(() => x.ShowLogFolder());
-
         }
 
     }
