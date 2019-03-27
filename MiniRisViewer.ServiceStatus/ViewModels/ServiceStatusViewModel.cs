@@ -13,7 +13,6 @@ using System.Reactive.Linq;
 using System.ServiceProcess;
 using System.Threading.Tasks;
 
-
 namespace MiniRisViewer.ServiceStatus.ViewModels
 {
 
@@ -45,6 +44,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
 
     public class ServiceStatusViewModel : BindableBase, IDisposable
     {
+        #region other
         public Reactive.Bindings.Notifiers.BooleanNotifier InProgress { get; } = new Reactive.Bindings.Notifiers.BooleanNotifier(false);
         public ReactivePropertySlim<string> ProgressMessage { get; } = new ReactivePropertySlim<string>("");
 
@@ -175,6 +175,9 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             }
         }
 
+        #endregion 
+
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -183,27 +186,50 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             CreateModel();
 
 
+            ////試作3:試作2を改良したい
+            //this.ServiceCards = new List<ServiceViewModel>();
+
+            //this.ServiceCards = Model.ServiceManagers
+            //    .Where(a => 0 < (int)a.Status)
+            //    .Where(a => (int)a.Status <= 7)
+            //    .Select(a => new ServiceViewModel
+            //    {
+            //        CanStop = a.ObserveProperty(x => x.CanStop).ToReactiveProperty(),
+            //        Status = a.ObserveProperty(x => x.Status).ToReactiveProperty(),
+            //        DisplayName = a.DisplayName,
+            //        StartStopCommand = new ReactiveCommand(),
+            //        ShowLogCommand = new ReactiveCommand()
+            //    }).ToList();
+            ////↑自作のLINQメソッドでcommandに設定をしたい。。。
+            ///public static class LINQExtension {}でなんだかんだしたけど実現できず。。
+
+
 
             //試作2:indexをつかわず
-            this.ServiceCards = new List<ServiceViewModel>();
+            //.Subscribeの処理があるので、結局foreach以外繰り返し方法が思いつかないためこうなりましたー
 
+            this.ServiceCards = new List<ServiceViewModel>();
             foreach (ServiceManager x in Model.ServiceManagers)
             {
-                ServiceViewModel tmp = new ServiceViewModel
+                if ((0 < (int)x.Status) || ((int)x.Status) <= 7)
                 {
-                    CanStop = x.ObserveProperty(y => y.CanStop).ToReactiveProperty(),
-                    Status = x.ObserveProperty(y => y.Status).ToReactiveProperty(),
-                    DisplayName = x.DisplayName,
-                    StartStopCommand = new ReactiveCommand(),
-                    ShowLogCommand = new ReactiveCommand()
-                };
 
-                tmp.SetCommand(x);
+                    ServiceViewModel tmp = new ServiceViewModel
+                    {
+                        CanStop = x.ObserveProperty(y => y.CanStop).ToReactiveProperty(),
+                        Status = x.ObserveProperty(y => y.Status).ToReactiveProperty(),
+                        DisplayName = x.DisplayName,
+                        StartStopCommand = new ReactiveCommand(),
+                        ShowLogCommand = new ReactiveCommand()
+                    };
 
-                ServiceCards.Add(tmp);
+                    tmp.SetCommand(x);
+
+                    ServiceCards.Add(tmp);
+                }
             }
 
-            ////試作1:indexを追加して対応
+            ////試作1:indexを追加して対応（未インストール時のstatuには未対応)
             //int i = 0;
             //this.ServiceCards = Model.ServiceManagers
             //    .Select(a => new ServiceViewModel

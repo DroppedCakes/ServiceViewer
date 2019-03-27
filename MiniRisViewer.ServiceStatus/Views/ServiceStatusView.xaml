@@ -19,6 +19,7 @@
         <local1:SimpleStatus x:Key="SimpleStatus" />
         <local1:DispButton x:Key="DispButton" />
         <local1:DispPose x:Key="DispPose" />
+
     </UserControl.Resources>
 
     <UserControl.DataContext>
