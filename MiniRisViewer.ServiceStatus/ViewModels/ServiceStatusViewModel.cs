@@ -32,10 +32,12 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         //public int ServiceIndex { get; set; }
 
         //試作2
-        public void SetCommand( ServiceManager x ) {
+        public void SetCommand(ServiceManager x)
+        {
 
-            StartStopCommand.Subscribe(() =>{if (CanStop.Value != false) x.Stop(); else x.Start();});
+            StartStopCommand.Subscribe(() => { if (CanStop.Value != false) x.Stop(); else x.Start(); });
             ShowLogCommand.Subscribe(() => x.ShowLogFolder());
+
         }
 
     }
@@ -54,7 +56,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         ///<summary>
         ///全サービスの状態
         ///</summary>
-        public List<ServiceViewModel> ServiceCards;
+        public List<ServiceViewModel> ServiceCards { get; set; }
 
         /// <summary>
         /// 全てのサービスを停止するコマンド
@@ -180,36 +182,12 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         {
             CreateModel();
 
-            //this.ServiceCards = Model.ServiceManagers
-            //    .Select(a => new ServiceViewModel
-            //    {
-            //        CanStop = a.ObserveProperty(x => x.CanStop).ToReactiveProperty(),
-            //        Status = a.ObserveProperty(x => x.Status).ToReactiveProperty(),
-            //        DisplayName = a.DisplayName,
-            //        StartStopCommand = new ReactiveCommand(),
-            //        ShowLogCommand = new ReactiveCommand()
-            //    }).ToList();
-
-            //int i = 0;
-            //foreach ( ServiceViewModel x in this.ServiceCards)
-            //{              
-            //    x.StartStopCommand.Subscribe(() =>
-            //                           {
-            //                               if (x.CanStop.Value != false) Model.ServiceManagers[i].Stop();
-            //                               else Model.ServiceManagers[i].Start();
-            //                           });
-            //    x.ShowLogCommand.Subscribe(() => Model.ServiceManagers[i].ShowLogFolder());
-            //    i = i + 1;
-            //}
-
-
-
 
 
             //試作2:indexをつかわず
             this.ServiceCards = new List<ServiceViewModel>();
 
-            foreach (ServiceManager x  in Model.ServiceManagers )
+            foreach (ServiceManager x in Model.ServiceManagers)
             {
                 ServiceViewModel tmp = new ServiceViewModel
                 {
