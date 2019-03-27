@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.ServiceProcess;
@@ -24,7 +25,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public ReactiveProperty<ServiceControllerStatus> Status { set; get; } = new ReactiveProperty<ServiceControllerStatus>();
         public ReactiveProperty<bool> CanStop { set; get; } = new ReactiveProperty<bool>();
         public ReactiveCommand StartStopCommand { set; get; } = new ReactiveCommand();
-        public ReactiveCommand ShowLogCommand { get; private set; } = new ReactiveCommand();
+        public ReactiveCommand ShowLogCommand { get; set; } = new ReactiveCommand();
         public string DisplayName { get; set; }
     }
 
@@ -41,7 +42,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         ///<summary>
         ///全サービスの状態
         ///</summary>
-        public List<ServiceViewModel> ServiceCards { get; set; }
+        public List<ServiceViewModel> ServiceCards;
 
         /// <summary>
         /// 全てのサービスを停止するコマンド
@@ -166,6 +167,30 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public ServiceStatusViewModel()
         {
             CreateModel();
+
+            //this.ServiceCards = Model.ServiceManagers
+            //    .Select(a => new ServiceViewModel
+            //    {
+            //        CanStop = a.ObserveProperty(x => x.CanStop).ToReactiveProperty(),
+            //        Status = a.ObserveProperty(x => x.Status).ToReactiveProperty(),
+            //        DisplayName = a.DisplayName,
+            //        StartStopCommand = new ReactiveCommand(),
+            //        ShowLogCommand = new ReactiveCommand()
+            //    }).ToList();
+
+            //int i = 0;
+            //foreach ( ServiceViewModel x in this.ServiceCards)
+            //{              
+            //    x.StartStopCommand.Subscribe(() =>
+            //                           {
+            //                               if (x.CanStop.Value != false) Model.ServiceManagers[i].Stop();
+            //                               else Model.ServiceManagers[i].Start();
+            //                           });
+            //    x.ShowLogCommand.Subscribe(() => Model.ServiceManagers[i].ShowLogFolder());
+            //    i = i + 1;
+            //}
+
+
 
 
             int loopindex;

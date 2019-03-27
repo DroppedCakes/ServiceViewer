@@ -31,6 +31,12 @@
             <StackPanel>
                 <GroupBox Margin="16,16,16,16" Header="サービス稼働状況">
                     <WrapPanel Orientation="Horizontal">
+                        <TextBlock
+                                                Margin="16,16,16,4"
+                                                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                                Text="{Binding ServiceCards[0].DisplayName}"
+                                                TextAlignment="Center" />
+
 
                         <ItemsControl ItemsSource="{Binding ServiceCards}">
                             <ItemsControl.ItemsPanel>
