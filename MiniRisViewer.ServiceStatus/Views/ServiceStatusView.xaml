@@ -34,7 +34,7 @@
 
                     <WrapPanel Orientation="Horizontal">
 
-                        <ItemsControl ItemsSource="{Binding ServiceCards}">
+                        <ItemsControl ItemsSource="{Binding Services}">
                             <!--<ItemsControl ItemsSource="{Binding ServiceCards}">-->
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>

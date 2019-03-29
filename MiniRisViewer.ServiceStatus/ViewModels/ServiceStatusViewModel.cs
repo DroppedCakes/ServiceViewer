@@ -21,14 +21,11 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
     /// <summary>
     /// MV→Vのためのサービス
     /// </summary>
-    public class ServiceViewModel
+    public class Service
     {
         public ReactiveProperty<ServiceControllerStatus> Status { set; get; } = new ReactiveProperty<ServiceControllerStatus>();
         public ReactiveProperty<bool> CanStop { set; get; } = new ReactiveProperty<bool>();
-        //public ReactiveCommand StartStopCommand { set; get; } = new ReactiveCommand();
-        //public ReactiveCommand ShowLogCommand { get; set; } = new ReactiveCommand();
         public string DisplayName { get; }
-
         public DelegateCommand StopCommand { get; }
         public DelegateCommand StartCommand { get; }
         public DelegateCommand StartStopCommand { set; get; }
@@ -38,7 +35,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public ServiceViewModel(ServiceManager model)
+        public Service(ServiceManager model)
         {
             this.Status = model.ObserveProperty(x => x.Status).ToReactiveProperty();
             this.CanStop = model.ObserveProperty(x => x.CanStop).ToReactiveProperty();
@@ -63,23 +60,11 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             );
         }
 
-        ////試作1
-        //public int ServiceIndex { get; set; }
-
-        //試作2
-        //public void SetCommand(ServiceManager x)
-        //{
-        //    StartStopCommand.Subscribe(
-        //        () => { if (CanStop.Value) x.Stop(); else x.Start(); }
-        //    );
-        //    ShowLogCommand.Subscribe(() => x.ShowLogFolder());
-        //}
     }
 
 
     public class ServiceStatusViewModel : BindableBase, IDisposable
     {
-        #region other
         public Reactive.Bindings.Notifiers.BooleanNotifier InProgress { get; } = new Reactive.Bindings.Notifiers.BooleanNotifier(false);
         public ReactivePropertySlim<string> ProgressMessage { get; } = new ReactivePropertySlim<string>("");
 
@@ -91,7 +76,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         ///<summary>
         ///全サービスの状態
         ///</summary>
-        public ServiceViewModel[] ServiceCards { get; }
+        public Service[] Services { get; }
 
         /// <summary>
         /// 全てのサービスを停止するコマンド
@@ -210,8 +195,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             }
         }
 
-        #endregion 
-
 
         /// <summary>
         /// コンストラクタ
@@ -220,107 +203,11 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         {
             CreateModel();
 
-            this.ServiceCards = Model.ServiceManagers
+            this.Services = Model.ServiceManagers
                 .Where(service => service.Visible)
-                .Select(service => new ServiceViewModel(service))
+                .Select(service => new Service(service))
                 .ToArray();
 
-
-            //試作2:indexをつかわず
-            //.Subscribeの処理があるので、結局foreach以外繰り返し方法が思いつかないためこうなりましたー
-
-            //this.ServiceCards = new List<ServiceViewModel>();
-            //foreach (ServiceManager x in Model.ServiceManagers)
-            //{
-            //    if ((0 < (int)x.Status) || ((int)x.Status) <= 7)
-            //    {
-
-            //        ServiceViewModel tmp = new ServiceViewModel
-            //        {
-            //            CanStop = x.ObserveProperty(y => y.CanStop).ToReactiveProperty(),
-            //            Status = x.ObserveProperty(y => y.Status).ToReactiveProperty(),
-            //            DisplayName = x.DisplayName,
-            //            StartStopCommand = new ReactiveCommand(),
-            //            ShowLogCommand = new ReactiveCommand()
-            //        };
-
-            //        tmp.SetCommand(x);
-
-            //        ServiceCards.Add(tmp);
-            //    }
-            //}
-
-            //試作1:indexを追加して対応（未インストール時のstatuには未対応)
-            //int i = 0;
-            //this.ServiceCards = Model.ServiceManagers
-            //    .Select(a => new ServiceViewModel
-            //    {
-            //        CanStop = a.ObserveProperty(x => x.CanStop).ToReactiveProperty(),
-            //        Status = a.ObserveProperty(x => x.Status).ToReactiveProperty(),
-            //        DisplayName = a.DisplayName,
-            //        StartStopCommand = new ReactiveCommand(),
-            //        ShowLogCommand = new ReactiveCommand(),
-            //        ServiceIndex = i++
-            //    }).ToList();
-            // System.Collections.IEnumerable' を実装していないため、型 'ReactiveCommand' はコレクション初期化子で初期化することはできません。
-            //と言われ、宣言時に設定する方法がなさそうなため、結局。。。foreach。indexを追加したのでテンポラリ問題は解決
-            //foreach (ServiceViewModel x in this.ServiceCards)
-            //{
-            //    x.StartStopCommand.Subscribe(() =>
-            //                           {
-            //                               if (x.CanStop.Value != false) Model.ServiceManagers[x.ServiceIndex].Stop();
-            //                               else Model.ServiceManagers[x.ServiceIndex].Start();
-            //                           });
-            //    x.ShowLogCommand.Subscribe(() => Model.ServiceManagers[x.ServiceIndex].ShowLogFolder());
-            //}
-
-
-
-            //アドバイス前
-            //int loopindex;
-
-            //int serviceCount = Enum.GetValues(typeof(Ailias)).Length;
-
-            //this.ServiceCards = new List<ServiceViewModel>();
-
-            //int status;
-            //for (loopindex = 0; loopindex < serviceCount; loopindex++)
-            //{
-            //    //ServiceViewModel TmpServiceCard = new ServiceViewModel();
-            //    status = (int)Model.ServiceManagers[loopindex].Status;
-
-            //    //indexで値を受けないと（loopindex =  serviceCount)固定となる
-            //    int index = loopindex;
-
-            //    if ((0 <= status) && (status <= 7))
-            //    {
-
-            //        ServiceViewModel TmpServiceCard = new ServiceViewModel();
-            //        ServiceCards.Add(TmpServiceCard);
-
-
-            //        // Stop判定のM -> VMの接続
-            //        ServiceCards[index].CanStop = Model.ServiceManagers[index].ObserveProperty(x => x.CanStop).ToReactiveProperty();
-
-            //        // ステータスのM -> VMの接続
-            //        ServiceCards[index].Status = Model.ServiceManagers[index].ObserveProperty(x => x.Status).ToReactiveProperty();
-
-            //        //画面表示名のM->VMの接続
-            //        ServiceCards[index].DisplayName = Model.ServiceManagers[index].DisplayName;
-
-            //        //// 開始・停止
-            //        ServiceCards[index].StartStopCommand.Subscribe(() =>
-            //        {
-            //            if (ServiceCards[index].CanStop.Value != false) Model.ServiceManagers[index].Stop();
-            //            else Model.ServiceManagers[index].Start();
-
-            //        });
-
-            //        // ログ
-            //        ServiceCards[index].ShowLogCommand.Subscribe(() => Model.ServiceManagers[index].ShowLogFolder());
-
-            //    }
-            //}
 
             // 1秒ごとに購読する
             ScreenSynchronousTimer = new ReactiveTimer(TimeSpan.FromSeconds(1));
