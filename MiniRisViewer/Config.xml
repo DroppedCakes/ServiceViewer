@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
   <services>
-    <service name="UsFileImporter">
+    <service name="UsFileImporter" visible="true">
       <Caption>ファイル取込サービス</Caption>
       <LogPath>C:\WriteEnable\Logs\UsFileImporter</LogPath>
     </service>
-    <service name="UsMwmResponder">
+    <service name="UsMwmResponder" visible="true">
       <Caption>MWM応答サービス</Caption>
       <LogPath>C:\WriteEnable\Logs\UsMwmResponder</LogPath>
     </service>
-    <service name="UsScpCore">
+    <service name="UsScpCore" visible="true">
       <Caption>DICOMSCP</Caption>
       <LogPath>C:\WriteEnable\Logs\UsScpCoreService</LogPath>
     </service>
-    <service name="UsAscService">
+    <service name="UsAscService" visible="true">
       <Caption>DICOMアソシエーション</Caption>
       <LogPath>C:\WriteEnable\Logs\UsAscService</LogPath>
     </service>
-    <service name="UsMppsReceiver">
+    <service name="UsMppsReceiver" visible="true">
       <Caption>MPPS通知連携</Caption>
       <LogPath>C:\WriteEnable\Logs\UsMppsReceiver</LogPath>
     </service>

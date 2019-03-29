@@ -31,8 +31,11 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <GroupBox Margin="16,16,16,16" Header="サービス稼働状況">
+
                     <WrapPanel Orientation="Horizontal">
+
                         <ItemsControl ItemsSource="{Binding ServiceCards}">
+                            <!--<ItemsControl ItemsSource="{Binding ServiceCards}">-->
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel Orientation="Horizontal" />
@@ -45,8 +48,7 @@
                                     <materialDesign:Card
                                         Width="250"
                                         Margin="8,8,8,8"
-                                        Padding="0"
-                                        Visibility="{Binding Status.Value, Converter={StaticResource DispService}}">
+                                        Padding="0">
                                         <StackPanel>
                                             <TextBlock
                                                 Margin="16,16,16,4"

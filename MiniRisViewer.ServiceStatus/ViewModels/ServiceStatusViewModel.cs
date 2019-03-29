@@ -1,5 +1,6 @@
 ﻿using MiniRisViewer.Domain.Model;
 using MiniRisViewer.Domain.Service;
+using Prism.Commands;
 using Prism.Mvvm;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
@@ -12,6 +13,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.ServiceProcess;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MiniRisViewer.ServiceStatus.ViewModels
 {
@@ -23,22 +25,55 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
     {
         public ReactiveProperty<ServiceControllerStatus> Status { set; get; } = new ReactiveProperty<ServiceControllerStatus>();
         public ReactiveProperty<bool> CanStop { set; get; } = new ReactiveProperty<bool>();
-        public ReactiveCommand StartStopCommand { set; get; } = new ReactiveCommand();
-        public ReactiveCommand ShowLogCommand { get; set; } = new ReactiveCommand();
-        public string DisplayName { get; set; }
+        //public ReactiveCommand StartStopCommand { set; get; } = new ReactiveCommand();
+        //public ReactiveCommand ShowLogCommand { get; set; } = new ReactiveCommand();
+        public string DisplayName { get; }
+
+        public DelegateCommand StopCommand { get; }
+        public DelegateCommand StartCommand { get; }
+        public DelegateCommand StartStopCommand { set; get; }
+        public DelegateCommand ShowLogCommand { set; get; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ServiceViewModel(ServiceManager model)
+        {
+            this.Status = model.ObserveProperty(x => x.Status).ToReactiveProperty();
+            this.CanStop = model.ObserveProperty(x => x.CanStop).ToReactiveProperty();
+
+            this.DisplayName = model.DisplayName;
+
+            this.StopCommand = new DelegateCommand(
+                () => model.Stop(),
+                () => model.CanStop
+            );
+
+            this.StartCommand = new DelegateCommand(
+                () => model.Start()
+            );
+
+            this.StartStopCommand = new DelegateCommand(
+                () => { if (model.CanStop) model.Stop(); else model.Start(); }
+            );
+
+            this.ShowLogCommand = new DelegateCommand(
+                model.ShowLogFolder
+            );
+        }
 
         ////試作1
         //public int ServiceIndex { get; set; }
 
         //試作2
-        public void SetCommand(ServiceManager x)
-        {
-
-            StartStopCommand.Subscribe(() => { if (CanStop.Value != false) x.Stop(); else x.Start(); });
-            ShowLogCommand.Subscribe(() => x.ShowLogFolder());
-
-        }
-
+        //public void SetCommand(ServiceManager x)
+        //{
+        //    StartStopCommand.Subscribe(
+        //        () => { if (CanStop.Value) x.Stop(); else x.Start(); }
+        //    );
+        //    ShowLogCommand.Subscribe(() => x.ShowLogFolder());
+        //}
     }
 
 
@@ -56,7 +91,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         ///<summary>
         ///全サービスの状態
         ///</summary>
-        public List<ServiceViewModel> ServiceCards { get; set; }
+        public ServiceViewModel[] ServiceCards { get; }
 
         /// <summary>
         /// 全てのサービスを停止するコマンド
@@ -185,51 +220,37 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         {
             CreateModel();
 
-
-            ////試作3:試作2を改良したい
-            //this.ServiceCards = new List<ServiceViewModel>();
-
-            //this.ServiceCards = Model.ServiceManagers
-            //    .Where(a => 0 < (int)a.Status)
-            //    .Where(a => (int)a.Status <= 7)
-            //    .Select(a => new ServiceViewModel
-            //    {
-            //        CanStop = a.ObserveProperty(x => x.CanStop).ToReactiveProperty(),
-            //        Status = a.ObserveProperty(x => x.Status).ToReactiveProperty(),
-            //        DisplayName = a.DisplayName,
-            //        StartStopCommand = new ReactiveCommand(),
-            //        ShowLogCommand = new ReactiveCommand()
-            //    }).ToList();
-            ////↑自作のLINQメソッドでcommandに設定をしたい。。。
-            ///public static class LINQExtension {}でなんだかんだしたけど実現できず。。
-
+            this.ServiceCards = Model.ServiceManagers
+                .Where(service => service.Visible)
+                .Select(service => new ServiceViewModel(service))
+                .ToArray();
 
 
             //試作2:indexをつかわず
             //.Subscribeの処理があるので、結局foreach以外繰り返し方法が思いつかないためこうなりましたー
 
-            this.ServiceCards = new List<ServiceViewModel>();
-            foreach (ServiceManager x in Model.ServiceManagers)
-            {
-                if ((0 < (int)x.Status) || ((int)x.Status) <= 7)
-                {
+            //this.ServiceCards = new List<ServiceViewModel>();
+            //foreach (ServiceManager x in Model.ServiceManagers)
+            //{
+            //    if ((0 < (int)x.Status) || ((int)x.Status) <= 7)
+            //    {
 
-                    ServiceViewModel tmp = new ServiceViewModel
-                    {
-                        CanStop = x.ObserveProperty(y => y.CanStop).ToReactiveProperty(),
-                        Status = x.ObserveProperty(y => y.Status).ToReactiveProperty(),
-                        DisplayName = x.DisplayName,
-                        StartStopCommand = new ReactiveCommand(),
-                        ShowLogCommand = new ReactiveCommand()
-                    };
+            //        ServiceViewModel tmp = new ServiceViewModel
+            //        {
+            //            CanStop = x.ObserveProperty(y => y.CanStop).ToReactiveProperty(),
+            //            Status = x.ObserveProperty(y => y.Status).ToReactiveProperty(),
+            //            DisplayName = x.DisplayName,
+            //            StartStopCommand = new ReactiveCommand(),
+            //            ShowLogCommand = new ReactiveCommand()
+            //        };
 
-                    tmp.SetCommand(x);
+            //        tmp.SetCommand(x);
 
-                    ServiceCards.Add(tmp);
-                }
-            }
+            //        ServiceCards.Add(tmp);
+            //    }
+            //}
 
-            ////試作1:indexを追加して対応（未インストール時のstatuには未対応)
+            //試作1:indexを追加して対応（未インストール時のstatuには未対応)
             //int i = 0;
             //this.ServiceCards = Model.ServiceManagers
             //    .Select(a => new ServiceViewModel
@@ -241,8 +262,8 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             //        ShowLogCommand = new ReactiveCommand(),
             //        ServiceIndex = i++
             //    }).ToList();
-            //// System.Collections.IEnumerable' を実装していないため、型 'ReactiveCommand' はコレクション初期化子で初期化することはできません。
-            ////と言われ、宣言時に設定する方法がなさそうなため、結局。。。foreach。indexを追加したのでテンポラリ問題は解決
+            // System.Collections.IEnumerable' を実装していないため、型 'ReactiveCommand' はコレクション初期化子で初期化することはできません。
+            //と言われ、宣言時に設定する方法がなさそうなため、結局。。。foreach。indexを追加したのでテンポラリ問題は解決
             //foreach (ServiceViewModel x in this.ServiceCards)
             //{
             //    x.StartStopCommand.Subscribe(() =>

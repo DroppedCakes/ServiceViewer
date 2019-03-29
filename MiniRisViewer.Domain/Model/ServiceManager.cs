@@ -9,13 +9,12 @@ namespace MiniRisViewer.Domain.Model
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        //public ServiceManager(string serviceName, string displayName, string logFolderPath, bool visble)
-        public ServiceManager(string serviceName, string displayName, string logFolderPath)
+        public ServiceManager(string serviceName, string displayName, string logFolderPath, bool visble)
         {
             ServiceName = serviceName;
             DisplayName = displayName;
             LogFolderPath = logFolderPath;
-//            Visible = visble;
+            Visible = visble;
         }
 
         /// <summary>
@@ -33,13 +32,10 @@ namespace MiniRisViewer.Domain.Model
         /// </summary>
         public string LogFolderPath { get; }
 
-        //private bool visible;
-
-        //public bool Visible
-        //{
-        //    get { return visible; }
-        //    set { SetProperty(ref visible, value); }
-        //}
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool Visible { get; }
 
         /// <summary>
         /// サービスの状態
