@@ -20,8 +20,10 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
     /// </summary>
     public class Service
     {
-        public ReactiveProperty<ServiceControllerStatus> Status { set; get; } = new ReactiveProperty<ServiceControllerStatus>();
-        public ReactiveProperty<bool> CanStop { set; get; } = new ReactiveProperty<bool>();
+        private CompositeDisposable DisposeCollection = new CompositeDisposable();
+
+        public ReactiveProperty<ServiceControllerStatus> Status { set; get; }
+        public ReactiveProperty<bool> CanStop { set; get; }
         public string DisplayName { get; }
         public DelegateCommand StopCommand { get; }
         public DelegateCommand StartCommand { get; }
@@ -33,8 +35,8 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// </summary>
         public Service(ServiceManager model)
         {
-            this.Status = model.ObserveProperty(x => x.Status).ToReactiveProperty();
-            this.CanStop = model.ObserveProperty(x => x.CanStop).ToReactiveProperty();
+            this.Status = model.ObserveProperty(x => x.Status).ToReactiveProperty().AddTo(this.DisposeCollection);
+            this.CanStop = model.ObserveProperty(x => x.CanStop).ToReactiveProperty().AddTo(this.DisposeCollection);
 
             this.DisplayName = model.DisplayName;
 
@@ -217,15 +219,15 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             ScreenSynchronousTimer = new ReactiveTimer(TimeSpan.FromSeconds(1));
             // タイマーを購読し、
             // サービスのステータスを最新のものに同期する
-            ScreenSynchronousTimer.Subscribe(_ => Model.UpdateServiceStatusAsync());
+            ScreenSynchronousTimer.Subscribe(_ => Model.UpdateServiceStatusAsync()).AddTo(this.DisposeCollection);
             ScreenSynchronousTimer.Start();
 
             //// 全てのサービスを停止するコマンド
-            AllstopServiceCommand.Subscribe(() => StopAllServiceAsync());
+            AllstopServiceCommand.Subscribe(() => StopAllServiceAsync()).AddTo(this.DisposeCollection);
             //// 全てのサービスを起動するコマンド
-            AllstartServiceCommand.Subscribe(() => StartAllServiceAsync());
+            AllstartServiceCommand.Subscribe(() => StartAllServiceAsync()).AddTo(this.DisposeCollection);
             //// 全てのサービスを再起動するコマンド
-            RestartServiceCommand.Subscribe(() => RestartAllServiceAsync());
+            RestartServiceCommand.Subscribe(() => RestartAllServiceAsync()).AddTo(this.DisposeCollection);
         }
     }
 }
