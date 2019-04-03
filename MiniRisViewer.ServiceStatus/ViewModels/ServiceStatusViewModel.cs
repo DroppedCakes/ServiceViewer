@@ -1,5 +1,6 @@
 ﻿using MiniRisViewer.Domain.Model;
 using MiniRisViewer.Domain.Service;
+using NLog;
 using Prism.Commands;
 using Prism.Mvvm;
 using Reactive.Bindings;
@@ -72,7 +73,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// Model
         /// </summary>
         public Domain.Model.ServiceAdministrator Model;
-
         ///<summary>
         ///全サービスの状態
         ///</summary>
@@ -179,20 +179,32 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// <summary>
         /// 
         /// </summary>
+        /// 
+        private Logger _logger = LogManager.GetCurrentClassLogger();
         public void CreateModel()
         {
+            _logger.Info("start CreateModel()");
+
 
             try
             {
-                string ConfigPath = @"C:\ProgramData\UsTEC\MiniRisViewer\Config.xml";
+                string ConfigPath = @"C:\ProgramData\UsTEC\UsMiniRisViewer\Config.xml";
                 var config = ConfigLoader.LoadConfigFromFile(ConfigPath);
+                _logger.Info("OK1");
+
                 Model = new ServiceAdministrator(config);
+                _logger.Info ("OK2");
+
             }
 
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.Log(LogLevel.Fatal, ex, "例外発生！！");
                 // メッセージボックスだして、アプリを終了させる
             }
+
+            _logger.Info("end CreateModel()");
+
         }
 
 

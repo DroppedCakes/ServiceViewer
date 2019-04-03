@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
   <services>
-    <service name="UsFileImporter" visible="true">
+    <service name="UsFileImporter" visible="false">
       <Caption>ファイル取込サービス</Caption>
       <LogPath>C:\WriteEnable\Logs\UsFileImporter</LogPath>
     </service>
-    <service name="UsMwmResponder" visible="true">
+    <service name="UsMwmResponder" visible="false">
       <Caption>MWM応答サービス</Caption>
       <LogPath>C:\WriteEnable\Logs\UsMwmResponder</LogPath>
     </service>
