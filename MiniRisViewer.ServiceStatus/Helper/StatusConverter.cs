@@ -57,11 +57,10 @@ namespace MiniRisViewer.ServiceStatus.Helper
         }
     }
 
-
     /// <summary>
     //サービスの状態が不明の場合は、インストールされていないと判断して、表示しない
     /// <summary>
-    [ValueConversion(typeof(ServiceControllerStatus ), typeof(String ))]
+    [ValueConversion(typeof(ServiceControllerStatus), typeof(String))]
     public class DispService : IValueConverter
     {
         public string DispServiceVisibility;
@@ -73,12 +72,10 @@ namespace MiniRisViewer.ServiceStatus.Helper
             if ((target >= 1) && (target <= 7))
             {
                 DispServiceVisibility = "Visible";
-
             }
             else
             {
                 DispServiceVisibility = "Collapsed";
-
             }
 
             return DispServiceVisibility;
@@ -90,14 +87,14 @@ namespace MiniRisViewer.ServiceStatus.Helper
         }
     }
 
-
     /// <summary>
     //ToggleButton（IsChecked）のため、実行中(4)以外はfalseとする
     /// <summary>
     [ValueConversion(typeof(ServiceControllerStatus), typeof(Boolean))]
     public class SimpleStatus : IValueConverter
     {
-        public Boolean  Simple;
+        public Boolean Simple;
+
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             int target = (int)value;
@@ -105,12 +102,13 @@ namespace MiniRisViewer.ServiceStatus.Helper
             if (target != 4)
             {
                 Simple = false;
-                if(target == 2) { 
-                 Simple = true;
+                if (target == 2)
+                {
+                    Simple = true;
                 }
             }
             else
-{
+            {
                 Simple = true;
             }
             return Simple;
@@ -119,17 +117,16 @@ namespace MiniRisViewer.ServiceStatus.Helper
         //ToggleButtonの入力はtrue,falseのため、booleanで返す
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Boolean  target = (Boolean )value;
+            Boolean target = (Boolean)value;
             Simple = target;
             return Simple;
         }
-
     }
 
     /// <summary>
     //ToggleButtonとpase表示の切り替えのため、実行中,停止中以外はToggleButton非表示、pose表示とする
     /// <summary>
-    [ValueConversion(typeof(ServiceControllerStatus), typeof(String ))]
+    [ValueConversion(typeof(ServiceControllerStatus), typeof(String))]
     public class DispButton : IValueConverter
     {
         public string DispButtonVisibility;
@@ -138,16 +135,13 @@ namespace MiniRisViewer.ServiceStatus.Helper
         {
             int target = (int)value;
 
-
-            if ((target ==1)|| (target == 4))
+            if ((target == 1) || (target == 4))
             {
                 DispButtonVisibility = "Visible";
-
             }
             else
             {
                 DispButtonVisibility = "Collapsed";
-
             }
             return DispButtonVisibility;
         }
@@ -172,16 +166,13 @@ namespace MiniRisViewer.ServiceStatus.Helper
         {
             int target = (int)value;
 
-
             if ((target == 1) || (target == 4))
             {
                 DispPoseVisibility = "Collapsed";
-
             }
             else
             {
                 DispPoseVisibility = "Visible";
-
             }
             return DispPoseVisibility;
         }
@@ -193,5 +184,4 @@ namespace MiniRisViewer.ServiceStatus.Helper
             return DispPoseVisibility;
         }
     }
-
 }

@@ -8,10 +8,9 @@ namespace MiniRisViewer.ServiceStatus
     public class ServiceStatusModule : IModule
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
 
         public void OnInitialized(IContainerProvider containerProvider)
         {

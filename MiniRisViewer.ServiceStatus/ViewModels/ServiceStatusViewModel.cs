@@ -6,19 +6,15 @@ using Prism.Mvvm;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.ServiceProcess;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace MiniRisViewer.ServiceStatus.ViewModels
 {
-
     /// <summary>
     /// MV→Vのためのサービス
     /// </summary>
@@ -32,9 +28,8 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public DelegateCommand StartStopCommand { set; get; }
         public DelegateCommand ShowLogCommand { set; get; }
 
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Service(ServiceManager model)
         {
@@ -60,9 +55,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
                 model.ShowLogFolder
             );
         }
-
     }
-
 
     public class ServiceStatusViewModel : BindableBase, IDisposable
     {
@@ -73,6 +66,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// Model
         /// </summary>
         public Domain.Model.ServiceAdministrator Model;
+
         ///<summary>
         ///全サービスの状態
         ///</summary>
@@ -82,15 +76,16 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// 全てのサービスを停止するコマンド
         /// </summary>
         public ReactiveCommand AllstopServiceCommand { get; } = new ReactiveCommand();
+
         /// <summary>
         /// 全てのサービスを起動するコマンド
         /// </summary>
         public ReactiveCommand AllstartServiceCommand { get; } = new ReactiveCommand();
+
         /// <summary>
         /// 全てのサービスを再起動するコマンド
         /// </summary>
         public ReactiveCommand RestartServiceCommand { get; } = new ReactiveCommand();
-
 
         /// <summary>
         /// サービスの状態を更新するタイマー
@@ -98,7 +93,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public ReactiveTimer ScreenSynchronousTimer;
 
         public ReactiveCommand ShowDialogMaterialCommand { get; private set; } = new ReactiveCommand();
-
 
         /// <summary>
         /// IDisposableの実装部
@@ -143,6 +137,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
                 InProgress.TurnOff();
             }
         }
+
         /// <summary>
         /// 非同期でサービスの再起動を行い、
         /// UIはBusyIndicatorでブロックする
@@ -160,6 +155,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
                 InProgress.TurnOff();
             }
         }        /// <summary>
+
                  /// 非同期でサービスの再起動を行い、
                  /// UIはBusyIndicatorでブロックする
                  /// </summary>
@@ -176,15 +172,16 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
                 InProgress.TurnOff();
             }
         }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        /// 
+        ///
         private Logger _logger = LogManager.GetCurrentClassLogger();
+
         public void CreateModel()
         {
             _logger.Info("start CreateModel()");
-
 
             try
             {
@@ -193,10 +190,8 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
                 _logger.Info("OK1");
 
                 Model = new ServiceAdministrator(config);
-                _logger.Info ("OK2");
-
+                _logger.Info("OK2");
             }
-
             catch (Exception ex)
             {
                 _logger.Log(LogLevel.Fatal, ex, "例外発生！！");
@@ -204,9 +199,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             }
 
             _logger.Info("end CreateModel()");
-
         }
-
 
         /// <summary>
         /// コンストラクタ
@@ -219,7 +212,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
                 .Where(service => service.Visible)
                 .Select(service => new Service(service))
                 .ToArray();
-
 
             // 1秒ごとに購読する
             ScreenSynchronousTimer = new ReactiveTimer(TimeSpan.FromSeconds(1));
@@ -234,12 +226,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             AllstartServiceCommand.Subscribe(() => StartAllServiceAsync());
             //// 全てのサービスを再起動するコマンド
             RestartServiceCommand.Subscribe(() => RestartAllServiceAsync());
-
         }
-
-
     }
-
-
-
 }
