@@ -7,40 +7,37 @@ using Prism.Mvvm;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.ServiceProcess;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace MiniRisViewer.ServiceStatus.ViewModels
 {
-
     /// <summary>
     /// MV→Vのためのサービス
     /// </summary>
     public class Service
     {
-        public ReactiveProperty<ServiceControllerStatus> Status { set; get; } = new ReactiveProperty<ServiceControllerStatus>();
-        public ReactiveProperty<bool> CanStop { set; get; } = new ReactiveProperty<bool>();
+        private CompositeDisposable DisposeCollection = new CompositeDisposable();
+
+        public ReactiveProperty<ServiceControllerStatus> Status { set; get; }
+        public ReactiveProperty<bool> CanStop { set; get; }
         public string DisplayName { get; }
         public DelegateCommand StopCommand { get; }
         public DelegateCommand StartCommand { get; }
         public DelegateCommand StartStopCommand { set; get; }
         public DelegateCommand ShowLogCommand { set; get; }
 
-
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public Service(ServiceManager model)
         {
-            this.Status = model.ObserveProperty(x => x.Status).ToReactiveProperty();
-            this.CanStop = model.ObserveProperty(x => x.CanStop).ToReactiveProperty();
+            this.Status = model.ObserveProperty(x => x.Status).ToReactiveProperty().AddTo(this.DisposeCollection);
+            this.CanStop = model.ObserveProperty(x => x.CanStop).ToReactiveProperty().AddTo(this.DisposeCollection);
 
             this.DisplayName = model.DisplayName;
 
@@ -61,9 +58,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
                 model.ShowLogFolder
             );
         }
-
     }
-
 
     public class ServiceStatusViewModel : BindableBase, IDisposable
     {
@@ -74,6 +69,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// Model
         /// </summary>
         public Domain.Model.ServiceAdministrator Model;
+
         ///<summary>
         ///全サービスの状態
         ///</summary>
@@ -83,15 +79,16 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// 全てのサービスを停止するコマンド
         /// </summary>
         public ReactiveCommand AllstopServiceCommand { get; } = new ReactiveCommand();
+
         /// <summary>
         /// 全てのサービスを起動するコマンド
         /// </summary>
         public ReactiveCommand AllstartServiceCommand { get; } = new ReactiveCommand();
+
         /// <summary>
         /// 全てのサービスを再起動するコマンド
         /// </summary>
         public ReactiveCommand RestartServiceCommand { get; } = new ReactiveCommand();
-
 
         /// <summary>
         /// サービスの状態を更新するタイマー
@@ -149,6 +146,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
                 InProgress.TurnOff();
             }
         }
+
         /// <summary>
         /// 非同期でサービスの再起動を行い、
         /// UIはBusyIndicatorでブロックする
@@ -166,6 +164,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
                 InProgress.TurnOff();
             }
         }        /// <summary>
+
                  /// 非同期でサービスの再起動を行い、
                  /// UIはBusyIndicatorでブロックする
                  /// </summary>
@@ -182,8 +181,9 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
                 InProgress.TurnOff();
             }
         }
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// 
 
@@ -200,7 +200,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
                 Model = new ServiceAdministrator(config);
 
             }
-
             catch (Exception ex)
             {
                 // メッセージボックスだして、アプリを終了させる
@@ -224,26 +223,19 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
                 .Select(service => new Service(service))
                 .ToArray();
 
-
             // 1秒ごとに購読する
             ScreenSynchronousTimer = new ReactiveTimer(TimeSpan.FromSeconds(1));
             // タイマーを購読し、
             // サービスのステータスを最新のものに同期する
-            ScreenSynchronousTimer.Subscribe(_ => Model.UpdateServiceStatusAsync());
+            ScreenSynchronousTimer.Subscribe(_ => Model.UpdateServiceStatusAsync()).AddTo(this.DisposeCollection);
             ScreenSynchronousTimer.Start();
 
             //// 全てのサービスを停止するコマンド
-            AllstopServiceCommand.Subscribe(() => StopAllServiceAsync());
+            AllstopServiceCommand.Subscribe(() => StopAllServiceAsync()).AddTo(this.DisposeCollection);
             //// 全てのサービスを起動するコマンド
-            AllstartServiceCommand.Subscribe(() => StartAllServiceAsync());
+            AllstartServiceCommand.Subscribe(() => StartAllServiceAsync()).AddTo(this.DisposeCollection);
             //// 全てのサービスを再起動するコマンド
-            RestartServiceCommand.Subscribe(() => RestartAllServiceAsync());
-
+            RestartServiceCommand.Subscribe(() => RestartAllServiceAsync()).AddTo(this.DisposeCollection);
         }
-
-
     }
-
-
-
 }

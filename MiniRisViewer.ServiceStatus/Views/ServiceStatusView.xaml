@@ -19,8 +19,6 @@
         <local1:SimpleStatus x:Key="SimpleStatus" />
         <local1:DispButton x:Key="DispButton" />
         <local1:DispPose x:Key="DispPose" />
-        
-
     </UserControl.Resources>
     
     <UserControl.DataContext>
@@ -91,15 +89,13 @@
                                                 Margin="16,0,16,8"
                                                 Command="{Binding ShowLogCommand}"
                                                 Content="Log" />
-
-                                            </StackPanel>
-                                        </materialDesign:Card>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-
-                        </WrapPanel>
-                    </GroupBox>
+                                        </StackPanel>
+                                    </materialDesign:Card>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </WrapPanel>
+                </GroupBox>
 
                     <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal">
                         <Button
@@ -114,13 +110,8 @@
                         Margin="16,16,16,16"
                         Command="{Binding RestartServiceCommand}"
                         Content="全てのサービスを再起動" />
-
-                    </WrapPanel>
-
-                </StackPanel>
-            </ScrollViewer>
-        </xctk:BusyIndicator>
-    </Grid>
+                </WrapPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </xctk:BusyIndicator>
 </UserControl>
-
-    

@@ -33,7 +33,7 @@ namespace MiniRisViewer.Domain.Model
         public string LogFolderPath { get; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public bool Visible { get; }
 
@@ -69,7 +69,7 @@ namespace MiniRisViewer.Domain.Model
                     CanStop = sc.CanStop;
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 Status = 0;
             }
@@ -230,9 +230,7 @@ namespace MiniRisViewer.Domain.Model
             }
             catch (Exception)
             {
-
             }
-            
         }
 
         /// <summary>

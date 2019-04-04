@@ -1,13 +1,12 @@
 ﻿using MiniRisViewer.Domain.Service;
 using Prism.Mvvm;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MiniRisViewer.Domain.Model
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class ServiceAdministrator : BindableBase
     {
@@ -46,7 +45,6 @@ namespace MiniRisViewer.Domain.Model
             );
         }
 
-
         ///<summary>
         ///全サービスの起動を行う
         /// </summary>
@@ -56,7 +54,6 @@ namespace MiniRisViewer.Domain.Model
                 ServiceManagers.Select(service => Task.Run(() => service.Start()))
             );
         }
-
 
         ///<summary>
         ///全サービスの再起動を行う

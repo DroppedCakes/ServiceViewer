@@ -15,7 +15,7 @@ namespace MiniRisViewer
     public partial class App
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
@@ -37,17 +37,14 @@ namespace MiniRisViewer
 
                 region_manager.RequestNavigate("ContentRegion", nameof(ServiceStatus));
 
-                _logger.Info ("ContentRegion");
-
+                _logger.Info("ContentRegion");
             }
-
             catch (Exception ex)
             {
 
                 _logger.Log(LogLevel.Fatal, ex, "起動時エラー");
                 // メッセージボックスだして、アプリを終了させる
             }
-
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
