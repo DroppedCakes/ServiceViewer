@@ -2,6 +2,7 @@
 using MiniRisViewer.Domain.Service;
 using NLog;
 using Prism.Commands;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
@@ -100,6 +101,9 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public ReactiveCommand ShowDialogMaterialCommand { get; private set; } = new ReactiveCommand();
 
 
+        public InteractionRequest<Notification> NotificationRequestDialog { get; } = new InteractionRequest<Notification>();
+
+
         /// <summary>
         /// IDisposableの実装部
         /// </summary>
@@ -132,6 +136,8 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// </summary>
         public async void StopAllServiceAsync()
         {
+            this.NotificationRequestDialog.Raise(new Notification { Title = "Alert", Content = "Notification message." });
+
             InProgress.TurnOn();
             ProgressMessage.Value = "サービス停止中";
             try
@@ -180,32 +186,30 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// 
         /// </summary>
         /// 
-        private Logger _logger = LogManager.GetCurrentClassLogger();
-        public void CreateModel()
-        {
-            _logger.Info("start CreateModel()");
 
+
+        public async Task CreateModelAsync()
+        {
 
             try
             {
+
                 string ConfigPath = @"C:\ProgramData\UsTEC\UsMiniRisViewer\Config.xml";
                 var config = ConfigLoader.LoadConfigFromFile(ConfigPath);
-                _logger.Info("OK1");
 
                 Model = new ServiceAdministrator(config);
-                _logger.Info ("OK2");
 
             }
 
             catch (Exception ex)
             {
-                _logger.Log(LogLevel.Fatal, ex, "例外発生！！");
                 // メッセージボックスだして、アプリを終了させる
             }
 
-            _logger.Info("end CreateModel()");
 
         }
+
+        public InteractionRequest<Notification> NotificationRequest { get; } = new InteractionRequest<Notification>();
 
 
         /// <summary>
@@ -213,7 +217,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// </summary>
         public ServiceStatusViewModel()
         {
-            CreateModel();
+            CreateModelAsync();
 
             this.Services = Model.ServiceManagers
                 .Where(service => service.Visible)

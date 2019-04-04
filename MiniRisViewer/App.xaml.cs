@@ -27,10 +27,10 @@ namespace MiniRisViewer
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            _logger.Info("OnInitialized実行");
 
             try
             {
+                _logger.Info("起動");
                 var region_manager = CommonServiceLocator.ServiceLocator.Current.GetInstance<IRegionManager>();
 
                 _logger.Info("region_manager");
@@ -43,7 +43,8 @@ namespace MiniRisViewer
 
             catch (Exception ex)
             {
-                _logger.Log(LogLevel.Fatal, ex, "例外発生！！");
+
+                _logger.Log(LogLevel.Fatal, ex, "起動時エラー");
                 // メッセージボックスだして、アプリを終了させる
             }
 

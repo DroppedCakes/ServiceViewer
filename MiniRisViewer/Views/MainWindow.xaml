@@ -12,6 +12,7 @@
     prism:ViewModelLocator.AutoWireViewModel="True"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{DynamicResource MaterialDesignFont}"
+    SaveWindowPosition="True"
     TextElement.FontSize="13"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -20,6 +21,6 @@
 
     <Grid>
         <ContentControl prism:RegionManager.RegionName="ContentRegion" />
-        <!--        <ContentControl Grid.ColumnSpan="2" prism:RegionManager.RegionName="ContentRegion" />
--->    </Grid>
+        <!--        <ContentControl Grid.ColumnSpan="2" prism:RegionManager.RegionName="ContentRegion" />        -->    
+    </Grid>
 </controls:MetroWindow>

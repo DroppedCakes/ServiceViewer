@@ -19,98 +19,108 @@
         <local1:SimpleStatus x:Key="SimpleStatus" />
         <local1:DispButton x:Key="DispButton" />
         <local1:DispPose x:Key="DispPose" />
+        
 
     </UserControl.Resources>
-
+    
     <UserControl.DataContext>
         <local:ServiceStatusViewModel />
     </UserControl.DataContext>
 
-    <xctk:BusyIndicator BusyContent="{Binding ProgressMessage.Value}" IsBusy="{Binding InProgress.Value}">
+    <Grid>
+        <xctk:BusyIndicator BusyContent="{Binding ProgressMessage.Value}" IsBusy="{Binding InProgress.Value}">
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel>
-                <GroupBox Margin="16,16,16,16" Header="サービス稼働状況">
 
-                    <WrapPanel Orientation="Horizontal">
 
-                        <ItemsControl ItemsSource="{Binding Services}">
-                            <!--<ItemsControl ItemsSource="{Binding ServiceCards}">-->
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
 
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
 
-                                    <materialDesign:Card
+                <StackPanel>
+
+                    <GroupBox Margin="16,16,16,16" Header="サービス稼働状況">
+
+                        <WrapPanel Orientation="Horizontal">
+
+                            <ItemsControl ItemsSource="{Binding Services}">
+                                <!--<ItemsControl ItemsSource="{Binding ServiceCards}">-->
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+
+                                        <materialDesign:Card
                                         Width="250"
                                         Margin="8,8,8,8"
                                         Padding="0">
-                                        <StackPanel>
-                                            <TextBlock
+                                            <StackPanel>
+                                                <TextBlock
                                                 Margin="16,16,16,4"
                                                 Style="{StaticResource MaterialDesignHeadlineTextBlock}"
                                                 Text="{Binding DisplayName}"
                                                 TextAlignment="Center" />
-                                            <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
-                                            <StackPanel Height="50">
-                                                <StackPanel Orientation="Horizontal" Visibility="{Binding Status.Value, Converter={StaticResource DispButton}}">
-                                                    <TextBlock
+                                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                                <StackPanel Height="50">
+                                                    <StackPanel Orientation="Horizontal" Visibility="{Binding Status.Value, Converter={StaticResource DispButton}}">
+                                                        <TextBlock
                                                         Margin="16,8,16,8"
                                                         HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         Style="{StaticResource MaterialDesignHeadlineTextBlock}"
                                                         Text="{Binding Status.Value, Converter={StaticResource StatusConverter}}" />
-                                                    <ToggleButton
+                                                        <ToggleButton
                                                         Margin="16,8,16,8"
                                                         Command="{Binding StartStopCommand}"
                                                         IsChecked="{Binding Status.Value, Converter={StaticResource SimpleStatus}}"
                                                         Style="{StaticResource MaterialDesignSwitchToggleButton}"
                                                         ToolTip="Default ToggleButton Style" />
-                                                </StackPanel>
-                                                <StackPanel VerticalAlignment="Center" Visibility="{Binding Status.Value, Converter={StaticResource DispPose}}">
-                                                    <ProgressBar
+                                                    </StackPanel>
+                                                    <StackPanel VerticalAlignment="Center" Visibility="{Binding Status.Value, Converter={StaticResource DispPose}}">
+                                                        <ProgressBar
                                                         Margin="16,8,16,8"
                                                         IsIndeterminate="true"
                                                         Style="{StaticResource MaterialDesignCircularProgressBar}"
                                                         Value="50" />
+                                                    </StackPanel>
                                                 </StackPanel>
-                                            </StackPanel>
-                                            <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
-                                            <Button
+                                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                                <Button
                                                 Margin="16,0,16,8"
                                                 Command="{Binding ShowLogCommand}"
                                                 Content="Log" />
 
-                                        </StackPanel>
-                                    </materialDesign:Card>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                                            </StackPanel>
+                                        </materialDesign:Card>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
 
-                    </WrapPanel>
-                </GroupBox>
+                        </WrapPanel>
+                    </GroupBox>
 
-                <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <Button
+                    <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                        <Button
                         Margin="16,16,16,16"
                         Command="{Binding AllstopServiceCommand}"
                         Content="全てのサービスを停止" />
-                    <Button
+                        <Button
                         Margin="16,16,16,16"
                         Command="{Binding AllstartServiceCommand}"
                         Content="全てのサービスを起動" />
-                    <Button
+                        <Button
                         Margin="16,16,16,16"
                         Command="{Binding RestartServiceCommand}"
                         Content="全てのサービスを再起動" />
 
-                </WrapPanel>
+                    </WrapPanel>
 
-            </StackPanel>
-        </ScrollViewer>
-    </xctk:BusyIndicator>
+                </StackPanel>
+            </ScrollViewer>
+        </xctk:BusyIndicator>
+    </Grid>
 </UserControl>
+
+    
