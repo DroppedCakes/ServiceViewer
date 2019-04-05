@@ -18,8 +18,6 @@ namespace MiniRisViewer.ServiceStatus
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            _logger.Info("RegisterTypes");
-
             containerRegistry.RegisterSingleton<ServiceStatusViewModel>();
             _logger.Info("containerRegistry.RegisterSingleton<ServiceStatusViewModel>();");
 

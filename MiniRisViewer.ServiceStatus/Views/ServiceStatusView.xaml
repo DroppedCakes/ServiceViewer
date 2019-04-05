@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:MiniRisViewer.ServiceStatus.ViewModels"
     xmlns:local1="clr-namespace:MiniRisViewer.ServiceStatus.Helper"
     xmlns:local2="clr-namespace:MiniRisViewer.ServiceStatus.Views"
@@ -11,81 +12,79 @@
     xmlns:md="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    d:DataContext="{d:DesignInstance {x:Type local:ServiceStatusViewModel},
+                                     IsDesignTimeCreatable=True}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
+
     <UserControl.Resources>
         <local1:StatusConverter x:Key="StatusConverter" />
         <local1:DispService x:Key="DispService" />
         <local1:SimpleStatus x:Key="SimpleStatus" />
         <local1:DispButton x:Key="DispButton" />
-        <local1:DispPose x:Key="DispPose" />
+        <local1:DispPause x:Key="DispPause" />
     </UserControl.Resources>
-    
-    <UserControl.DataContext>
+
+    <!--<UserControl.DataContext>
         <local:ServiceStatusViewModel />
-    </UserControl.DataContext>
+    </UserControl.DataContext>-->
 
-    <Grid>
-        <xctk:BusyIndicator BusyContent="{Binding ProgressMessage.Value}" IsBusy="{Binding InProgress.Value}">
+    <xctk:BusyIndicator BusyContent="{Binding ProgressMessage.Value}" IsBusy="{Binding InProgress.Value}">
 
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
 
+                <GroupBox Margin="16,16,16,16" Header="サービス稼働状況">
 
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <WrapPanel Orientation="Horizontal">
 
+                        <ItemsControl ItemsSource="{Binding Services}">
+                            <!--<ItemsControl ItemsSource="{Binding ServiceCards}">-->
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
 
-                <StackPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
 
-                    <GroupBox Margin="16,16,16,16" Header="サービス稼働状況">
-
-                        <WrapPanel Orientation="Horizontal">
-
-                            <ItemsControl ItemsSource="{Binding Services}">
-                                <!--<ItemsControl ItemsSource="{Binding ServiceCards}">-->
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel Orientation="Horizontal" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-
-                                        <materialDesign:Card
+                                    <materialDesign:Card
                                         Width="250"
                                         Margin="8,8,8,8"
                                         Padding="0">
-                                            <StackPanel>
-                                                <TextBlock
+                                        <StackPanel>
+                                            <TextBlock
                                                 Margin="16,16,16,4"
                                                 Style="{StaticResource MaterialDesignHeadlineTextBlock}"
                                                 Text="{Binding DisplayName}"
                                                 TextAlignment="Center" />
-                                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
-                                                <StackPanel Height="50">
-                                                    <StackPanel Orientation="Horizontal" Visibility="{Binding Status.Value, Converter={StaticResource DispButton}}">
-                                                        <TextBlock
+                                            <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                            <StackPanel Height="50">
+                                                <StackPanel Orientation="Horizontal" Visibility="{Binding Status.Value, Converter={StaticResource DispButton}}">
+                                                    <TextBlock
                                                         Margin="16,8,16,8"
                                                         HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         Style="{StaticResource MaterialDesignHeadlineTextBlock}"
                                                         Text="{Binding Status.Value, Converter={StaticResource StatusConverter}}" />
-                                                        <ToggleButton
+                                                    <ToggleButton
                                                         Margin="16,8,16,8"
                                                         Command="{Binding StartStopCommand}"
                                                         IsChecked="{Binding Status.Value, Converter={StaticResource SimpleStatus}}"
                                                         Style="{StaticResource MaterialDesignSwitchToggleButton}"
                                                         ToolTip="Default ToggleButton Style" />
-                                                    </StackPanel>
-                                                    <StackPanel VerticalAlignment="Center" Visibility="{Binding Status.Value, Converter={StaticResource DispPose}}">
-                                                        <ProgressBar
+                                                </StackPanel>
+                                                <StackPanel VerticalAlignment="Center" Visibility="{Binding Status.Value, Converter={StaticResource DispPause}}">
+                                                    <ProgressBar
                                                         Margin="16,8,16,8"
                                                         IsIndeterminate="true"
                                                         Style="{StaticResource MaterialDesignCircularProgressBar}"
                                                         Value="50" />
-                                                    </StackPanel>
                                                 </StackPanel>
-                                                <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
-                                                <Button
+                                            </StackPanel>
+                                            <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                                            <Button
                                                 Margin="16,0,16,8"
                                                 Command="{Binding ShowLogCommand}"
                                                 Content="Log" />
@@ -97,21 +96,31 @@
                     </WrapPanel>
                 </GroupBox>
 
-                    <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                        <Button
+                <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Button
                         Margin="16,16,16,16"
                         Command="{Binding AllstopServiceCommand}"
                         Content="全てのサービスを停止" />
-                        <Button
+                    <Button
                         Margin="16,16,16,16"
                         Command="{Binding AllstartServiceCommand}"
                         Content="全てのサービスを起動" />
-                        <Button
+                    <Button
                         Margin="16,16,16,16"
                         Command="{Binding RestartServiceCommand}"
                         Content="全てのサービスを再起動" />
+                    <Button Command="{Binding ShowDialogMaterialCommand }" Content="ダイアログ表示" />
+
                 </WrapPanel>
             </StackPanel>
         </ScrollViewer>
     </xctk:BusyIndicator>
+
+    <i:Interaction.Triggers>
+
+        <prism:InteractionRequestTrigger SourceObject="{Binding NormalConfirmation}">
+            <prism:PopupWindowAction IsModal="True" WindowStartupLocation="CenterOwner" />
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+
 </UserControl>

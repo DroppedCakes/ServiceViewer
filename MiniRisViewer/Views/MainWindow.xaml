@@ -5,6 +5,7 @@
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     Title="{Binding Title}"
     Width="860"
     Height="600"
@@ -19,8 +20,17 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto">
 
+
     <Grid>
         <ContentControl prism:RegionManager.RegionName="ContentRegion" />
         <!--        <ContentControl Grid.ColumnSpan="2" prism:RegionManager.RegionName="ContentRegion" />        -->    
     </Grid>
+
+
+    <i:Interaction.Triggers>
+
+        <prism:InteractionRequestTrigger SourceObject="{Binding NormalConfirmation}">
+            <prism:PopupWindowAction IsModal="True" WindowStartupLocation="CenterOwner" />
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
 </controls:MetroWindow>

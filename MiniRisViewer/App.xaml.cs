@@ -1,11 +1,17 @@
-﻿using MiniRisViewer.ServiceStatus;
+﻿using MiniRisViewer.Domain.Model;
+using MiniRisViewer.Domain.Service;
+using MiniRisViewer.ServiceStatus;
 using MiniRisViewer.Views;
 using NLog;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
+using Prism.Unity;
+using Reactive.Bindings;
 using System;
 using System.Windows;
+using Unity.Injection;
 
 namespace MiniRisViewer
 {
@@ -32,23 +38,33 @@ namespace MiniRisViewer
             {
                 _logger.Info("起動");
                 var region_manager = CommonServiceLocator.ServiceLocator.Current.GetInstance<IRegionManager>();
-
-                _logger.Info("region_manager");
-
                 region_manager.RequestNavigate("ContentRegion", nameof(ServiceStatus));
 
-                _logger.Info("ContentRegion");
             }
             catch (Exception ex)
             {
-
                 _logger.Log(LogLevel.Fatal, ex, "起動時エラー");
-                // メッセージボックスだして、アプリを終了させる
+
             }
         }
 
+        public Domain.Model.ServiceAdministrator ModelData;
+
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+
+            string ConfigPath = @"C:\ProgramData\UsTEC\UsMiniRisViewer\Config.xml";
+
+            try
+            {
+                var config = ConfigLoader.LoadConfigFromFile(ConfigPath);
+                ModelData = new ServiceAdministrator(config);
+                containerRegistry.RegisterInstance<ServiceAdministrator>(ModelData);
+            }
+            catch (Exception ex)
+            {
+                _logger.Log(LogLevel.Error , ex, "Config.xml読み込みエラー");
+            }
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

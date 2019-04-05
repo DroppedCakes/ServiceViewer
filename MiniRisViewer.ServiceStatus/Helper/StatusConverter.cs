@@ -124,7 +124,7 @@ namespace MiniRisViewer.ServiceStatus.Helper
     }
 
     /// <summary>
-    //ToggleButtonとpase表示の切り替えのため、実行中,停止中以外はToggleButton非表示、pose表示とする
+    //ToggleButtonとpause表示の切り替えのため、実行中,停止中以外はToggleButton非表示、pause表示とする
     /// <summary>
     [ValueConversion(typeof(ServiceControllerStatus), typeof(String))]
     public class DispButton : IValueConverter
@@ -155,12 +155,12 @@ namespace MiniRisViewer.ServiceStatus.Helper
     }
 
     /// <summary>
-    //ToggleButtonとpase表示の切り替えのため、実行中,停止中以外はToggleButton非表示、pose表示とする
+    //ToggleButtonとpause表示の切り替えのため、実行中,停止中以外はToggleButton非表示、pause表示とする
     /// <summary>
     [ValueConversion(typeof(ServiceControllerStatus), typeof(String))]
-    public class DispPose : IValueConverter
+    public class DispPause : IValueConverter
     {
-        public string DispPoseVisibility;
+        public string DispPauseVisibility;
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -168,20 +168,20 @@ namespace MiniRisViewer.ServiceStatus.Helper
 
             if ((target == 1) || (target == 4))
             {
-                DispPoseVisibility = "Collapsed";
+                DispPauseVisibility = "Collapsed";
             }
             else
             {
-                DispPoseVisibility = "Visible";
+                DispPauseVisibility = "Visible";
             }
-            return DispPoseVisibility;
+            return DispPauseVisibility;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             String target = (string)value;
-            DispPoseVisibility = target;
-            return DispPoseVisibility;
+            DispPauseVisibility = target;
+            return DispPauseVisibility;
         }
     }
 }

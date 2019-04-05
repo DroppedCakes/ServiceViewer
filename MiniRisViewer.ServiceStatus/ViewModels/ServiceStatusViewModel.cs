@@ -1,6 +1,5 @@
 ﻿using MiniRisViewer.Domain.Model;
 using MiniRisViewer.Domain.Service;
-using NLog;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
@@ -13,6 +12,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.ServiceProcess;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MiniRisViewer.ServiceStatus.ViewModels
 {
@@ -30,6 +30,14 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public DelegateCommand StartCommand { get; }
         public DelegateCommand StartStopCommand { set; get; }
         public DelegateCommand ShowLogCommand { set; get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        internal Service()
+        {
+            this.DisplayName = "Service";
+        }
 
         /// <summary>
         ///
@@ -68,7 +76,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// <summary>
         /// Model
         /// </summary>
-        public Domain.Model.ServiceAdministrator Model;
+        public Domain.Model.ServiceAdministrator Model { get; }
 
         ///<summary>
         ///全サービスの状態
@@ -96,9 +104,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public ReactiveTimer ScreenSynchronousTimer;
 
         public ReactiveCommand ShowDialogMaterialCommand { get; private set; } = new ReactiveCommand();
-
-
-        public InteractionRequest<Notification> NotificationRequestDialog { get; } = new InteractionRequest<Notification>();
 
 
         /// <summary>
@@ -133,8 +138,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// </summary>
         public async void StopAllServiceAsync()
         {
-            this.NotificationRequestDialog.Raise(new Notification { Title = "Alert", Content = "Notification message." });
-
             InProgress.TurnOn();
             ProgressMessage.Value = "サービス停止中";
             try
@@ -165,9 +168,9 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             }
         }        /// <summary>
 
-                 /// 非同期でサービスの再起動を行い、
-                 /// UIはBusyIndicatorでブロックする
-                 /// </summary>
+        /// 非同期でサービスの再起動を行い、
+        /// UIはBusyIndicatorでブロックする
+        /// </summary>
         public async void RestartAllServiceAsync()
         {
             InProgress.TurnOn();
@@ -183,40 +186,23 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         }
 
         /// <summary>
-        ///
+        ///　Viewで確認用コンストラクタ
         /// </summary>
-        /// 
-
-
-        public async Task CreateModelAsync()
-        {
-
-            try
-            {
-
-                string ConfigPath = @"C:\ProgramData\UsTEC\UsMiniRisViewer\Config.xml";
-                var config = ConfigLoader.LoadConfigFromFile(ConfigPath);
-
-                Model = new ServiceAdministrator(config);
-
-            }
-            catch (Exception ex)
-            {
-                // メッセージボックスだして、アプリを終了させる
-            }
-
-
+        public ServiceStatusViewModel() {
+            this.Services = new[] {
+                new Service()
+                {
+                }
+            };
         }
-
-        public InteractionRequest<Notification> NotificationRequest { get; } = new InteractionRequest<Notification>();
-
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ServiceStatusViewModel()
+        public ServiceStatusViewModel(ServiceAdministrator model)
         {
-            CreateModelAsync();
+            this.Model = model;
+            //CreateModel();
 
             this.Services = Model.ServiceManagers
                 .Where(service => service.Visible)
@@ -236,6 +222,8 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             AllstartServiceCommand.Subscribe(() => StartAllServiceAsync()).AddTo(this.DisposeCollection);
             //// 全てのサービスを再起動するコマンド
             RestartServiceCommand.Subscribe(() => RestartAllServiceAsync()).AddTo(this.DisposeCollection);
+
+
         }
     }
 }

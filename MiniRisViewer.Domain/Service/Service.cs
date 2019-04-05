@@ -3,6 +3,7 @@ using System.Xml.Serialization;
 
 namespace MiniRisViewer.Domain.Service
 {
+
     [Serializable]
     public class Service
     {

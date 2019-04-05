@@ -43,4 +43,5 @@
                 Color="{DynamicResource Primary500}" />
         </ResourceDictionary>
     </Application.Resources>
+    
 </prism:PrismApplication>
