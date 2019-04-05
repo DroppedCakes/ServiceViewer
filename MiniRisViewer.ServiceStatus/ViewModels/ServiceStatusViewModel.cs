@@ -1,5 +1,6 @@
 ﻿using MiniRisViewer.Domain.Model;
 using MiniRisViewer.Domain.Service;
+using NLog;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
@@ -111,6 +112,8 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// </summary>
         private CompositeDisposable DisposeCollection = new CompositeDisposable();
 
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         #region IDisposable Support
 
         private bool disposedValue = false; // 重複する呼び出しを検出するには
@@ -196,6 +199,23 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             };
         }
 
+        
+        //InteractionRequestクラスのプロパティ
+        public InteractionRequest<Notification> NotificationRequest { get; } = new InteractionRequest<Notification>();
+
+        public DelegateCommand NotificationCommand { get; }
+
+        //Raiseイベントの実装
+        private void NotificationCommandExecute()
+        {
+            this.NotificationRequest.Raise(new Notification { Title = "Dialog", Content = "Notification message." });
+        }
+
+
+        public InteractionRequest<Notification> MetroNotification { get; private set; } = new InteractionRequest<Notification>();
+        public ReactiveCommand RaiseMetroNotification { get; private set; } = new ReactiveCommand();
+
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -204,10 +224,29 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             this.Model = model;
             //CreateModel();
 
-            this.Services = Model.ServiceManagers
+            try {
+                this.Services = Model.ServiceManagers
                 .Where(service => service.Visible)
                 .Select(service => new Service(service))
                 .ToArray();
+
+            }
+            catch (Exception ex)
+            {
+
+                _logger.Log(LogLevel.Error, ex, "アプリ終了");
+
+
+                this.MetroNotification.Raise(new Notification()
+                {
+                    Title = "MetroNotification",
+                    Content = "MetroNotification",
+                }, n => Console.WriteLine("MetroNotification"));
+
+
+                Environment.Exit(0);
+            }
+
 
             // 1秒ごとに購読する
             ScreenSynchronousTimer = new ReactiveTimer(TimeSpan.FromSeconds(1));
@@ -222,6 +261,14 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             AllstartServiceCommand.Subscribe(() => StartAllServiceAsync()).AddTo(this.DisposeCollection);
             //// 全てのサービスを再起動するコマンド
             RestartServiceCommand.Subscribe(() => RestartAllServiceAsync()).AddTo(this.DisposeCollection);
+
+            this.NotificationCommand = new DelegateCommand(this.NotificationCommandExecute);
+
+            this.RaiseMetroNotification.Subscribe(() => this.MetroNotification.Raise(new Notification()
+            {
+                Title = "MetroNotification",
+                Content = "MetroNotification",
+            }, n => Console.WriteLine("MetroNotification")));
 
 
         }

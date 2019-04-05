@@ -25,6 +25,9 @@ namespace MiniRisViewer
         /// </summary>
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
+        //InteractionRequestクラスのプロパティ
+        public InteractionRequest<Notification> TestNotificationRequest { get; } = new InteractionRequest<Notification>();
+
         protected override Window CreateShell()
         {
             return Container.Resolve<MainWindow>();
@@ -53,6 +56,7 @@ namespace MiniRisViewer
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
 
+
             string ConfigPath = @"C:\ProgramData\UsTEC\UsMiniRisViewer\Config.xml";
 
             try
@@ -60,10 +64,19 @@ namespace MiniRisViewer
                 var config = ConfigLoader.LoadConfigFromFile(ConfigPath);
                 ModelData = new ServiceAdministrator(config);
                 containerRegistry.RegisterInstance<ServiceAdministrator>(ModelData);
+
+
             }
             catch (Exception ex)
             {
-                _logger.Log(LogLevel.Error , ex, "Config.xml読み込みエラー");
+
+                _logger.Log(LogLevel.Error , ex, "Config.xml読み込みエラー。アプリ終了");
+                return ;
+                
+                //理想はここでダイアログだして終了、画面ないときにダイアログを表示する実装が
+                //実現できず、、、、画面のほうでダイアログを表示して、終了させる
+                //this.TestNotificationRequest.Raise(new Notification { Title = "Alert", Content = "Notification message." });
+                //Environment.Exit(0);
             }
         }
 
