@@ -115,13 +115,13 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Prism.Interactivity.MahAppsPack.git\Prism.Interactivity.MahAppsPack\Prism.Interactivity.MahAppsPack.csproj">
-      <Project>{4e4ed199-c227-4492-a259-a3da10946172}</Project>
-      <Name>Prism.Interactivity.MahAppsPack</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MiniRisViewer.Domain\MiniRisViewer.Domain.csproj">
       <Project>{1b2eb201-6585-4c08-8cf3-38ae0b4b940e}</Project>
       <Name>MiniRisViewer.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Prism.Interactivity.MahAppsPack\Prism.Interactivity.MahAppsPack.csproj">
+      <Project>{4e4ed199-c227-4492-a259-a3da10946172}</Project>
+      <Name>Prism.Interactivity.MahAppsPack</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

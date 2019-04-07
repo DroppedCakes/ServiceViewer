@@ -132,10 +132,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Prism.Interactivity.MahAppsPack.git\Prism.Interactivity.MahAppsPack\Prism.Interactivity.MahAppsPack.csproj">
-      <Project>{4e4ed199-c227-4492-a259-a3da10946172}</Project>
-      <Name>Prism.Interactivity.MahAppsPack</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MiniRisViewer.Domain\MiniRisViewer.Domain.csproj">
       <Project>{1B2EB201-6585-4C08-8CF3-38AE0B4B940E}</Project>
       <Name>MiniRisViewer.Domain</Name>
@@ -143,6 +139,10 @@
     <ProjectReference Include="..\MiniRisViewer.ServiceStatus\MiniRisViewer.ServiceStatus.csproj">
       <Project>{1EEB3F88-7D05-4D17-90C1-39CD798A4DB9}</Project>
       <Name>MiniRisViewer.ServiceStatus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Prism.Interactivity.MahAppsPack\Prism.Interactivity.MahAppsPack.csproj">
+      <Project>{4e4ed199-c227-4492-a259-a3da10946172}</Project>
+      <Name>Prism.Interactivity.MahAppsPack</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
