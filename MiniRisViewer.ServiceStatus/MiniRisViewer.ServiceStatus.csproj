@@ -115,6 +115,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MiniRisViewer.Dialog\MiniRisViewer.Dialog.csproj">
+      <Project>{844DB7F2-9A9B-4546-A2AB-BB3E1436BB68}</Project>
+      <Name>MiniRisViewer.Dialog</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MiniRisViewer.Domain\MiniRisViewer.Domain.csproj">
       <Project>{1b2eb201-6585-4c08-8cf3-38ae0b4b940e}</Project>
       <Name>MiniRisViewer.Domain</Name>

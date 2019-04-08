@@ -1,4 +1,5 @@
-﻿using MiniRisViewer.Domain.Model;
+﻿using MiniRisViewer.Dialog;
+using MiniRisViewer.Domain.Model;
 using MiniRisViewer.Domain.Service;
 using MiniRisViewer.ServiceStatus;
 using MiniRisViewer.Views;
@@ -11,6 +12,7 @@ using Prism.Unity;
 using Reactive.Bindings;
 using System;
 using System.Windows;
+using Unity;
 using Unity.Injection;
 
 namespace MiniRisViewer
@@ -55,7 +57,8 @@ namespace MiniRisViewer
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            DialogService dialogService = new DialogService();
+            containerRegistry.RegisterInstance<DialogService>(dialogService);
 
             string ConfigPath = @"C:\ProgramData\UsTEC\UsMiniRisViewer\Config.xml";
 
@@ -64,6 +67,7 @@ namespace MiniRisViewer
                 var config = ConfigLoader.LoadConfigFromFile(ConfigPath);
                 ModelData = new ServiceAdministrator(config);
                 containerRegistry.RegisterInstance<ServiceAdministrator>(ModelData);
+                dialogService.ShowMessage("設定ファイルが読み込めなかったため、アプリを終了します。");
 
 
             }
@@ -72,9 +76,13 @@ namespace MiniRisViewer
 
                 _logger.Log(LogLevel.Error , ex, "Config.xml読み込みエラー。アプリ終了");
 
-                //MVVMを無視して直接表示・・・
-                MessageBox.Show("設定ファイルが読み込めなかったため、アプリを終了します。", "Error");
-                Environment.Exit(0);
+
+//                container.Resolve<DialogService>("CommonDialog").ShowMessage("設定ファイルが読み込めなかったため、アプリを終了します。");
+
+
+                ////MVVMを無視して直接表示・・・
+                //MessageBox.Show("設定ファイルが読み込めなかったため、アプリを終了します。", "Error");
+                //Environment.Exit(0);
 
                 return;
                 

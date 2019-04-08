@@ -9,12 +9,12 @@ namespace MiniRisViewer.Dialog
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {
+ 
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<DialogView>();
-
+            containerRegistry.RegisterInstance<DialogService>(new DialogService());
         }
     }
 }

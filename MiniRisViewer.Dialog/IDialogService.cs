@@ -8,9 +8,6 @@ namespace MiniRisViewer.Dialog
 {
     public interface IDialogService
     {
-        /// <summary>
-        /// メッセージを表示する
-        /// </summary>
-        void ShowMessage(String msg);
+        void ShowMessage(string message);
     }
 }

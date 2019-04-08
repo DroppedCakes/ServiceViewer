@@ -20,6 +20,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MiniRisViewerSetup64", "Min
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prism.Interactivity.MahAppsPack", "Prism.Interactivity.MahAppsPack\Prism.Interactivity.MahAppsPack.csproj", "{4E4ED199-C227-4492-A259-A3DA10946172}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniRisViewer.Dialog", "MiniRisViewer.Dialog\MiniRisViewer.Dialog.csproj", "{844DB7F2-9A9B-4546-A2AB-BB3E1436BB68}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{4E4ED199-C227-4492-A259-A3DA10946172}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E4ED199-C227-4492-A259-A3DA10946172}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E4ED199-C227-4492-A259-A3DA10946172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{844DB7F2-9A9B-4546-A2AB-BB3E1436BB68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{844DB7F2-9A9B-4546-A2AB-BB3E1436BB68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{844DB7F2-9A9B-4546-A2AB-BB3E1436BB68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{844DB7F2-9A9B-4546-A2AB-BB3E1436BB68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

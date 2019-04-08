@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{86C41AF1-F4A6-454C-8DB3-BAD68FE3F20A}</ProjectGuid>
+    <ProjectGuid>{844DB7F2-9A9B-4546-A2AB-BB3E1436BB68}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MiniRisViewer.Dialog</RootNamespace>
@@ -48,9 +48,10 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="DialogModule.cs" />
+    <Compile Include="DialogService.cs" />
+    <Compile Include="IDialogService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -79,17 +80,14 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup />
-
   <ItemGroup>
     <Page Include="Views\ViewA.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Prism.Wpf" Version="7.1.0.431" />
+    <PackageReference Include="Prism.Wpf" Version="7.1.0.431&#xD;" />
   </ItemGroup>
-
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

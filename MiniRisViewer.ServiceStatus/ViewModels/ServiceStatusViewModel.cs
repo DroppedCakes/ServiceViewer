@@ -1,4 +1,5 @@
-﻿using MiniRisViewer.Domain.Model;
+﻿using MiniRisViewer.Dialog;
+using MiniRisViewer.Domain.Model;
 using MiniRisViewer.Domain.Service;
 using NLog;
 using Prism.Commands;
@@ -191,7 +192,8 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// <summary>
         ///　Viewで確認用コンストラクタ
         /// </summary>
-        public ServiceStatusViewModel() {
+        public ServiceStatusViewModel()
+        {
             this.Services = new[] {
                 new Service()
                 {
@@ -199,7 +201,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             };
         }
 
-        
+
         //InteractionRequestクラスのプロパティ
         public InteractionRequest<Notification> NotificationRequest { get; } = new InteractionRequest<Notification>();
 
@@ -215,16 +217,16 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public InteractionRequest<Notification> MetroNotification { get; private set; } = new InteractionRequest<Notification>();
         public ReactiveCommand RaiseMetroNotification { get; private set; } = new ReactiveCommand();
 
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ServiceStatusViewModel(ServiceAdministrator model)
+        public ServiceStatusViewModel(ServiceAdministrator model,DialogService dialog)
         {
             this.Model = model;
             //CreateModel();
 
-            try {
+            try
+            {
                 this.Services = Model.ServiceManagers
                 .Where(service => service.Visible)
                 .Select(service => new Service(service))
@@ -264,13 +266,15 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
 
             this.NotificationCommand = new DelegateCommand(this.NotificationCommandExecute);
 
-            this.RaiseMetroNotification.Subscribe(() => this.MetroNotification.Raise(new Notification()
-            {
-                Title = "MetroNotification",
-                Content = "MetroNotification",
-            }, n => Console.WriteLine("MetroNotification")));
+            //this.RaiseMetroNotification.Subscribe(() => this.MetroNotification.Raise(new Notification()
+            //{
+            //    Title = "MetroNotification",
+            //    Content = "MetroNotification",
+            //}, n => Console.WriteLine("MetroNotification")));
 
 
+            this.RaiseMetroNotification.Subscribe(() => dialog.ShowMessage("aaaa"));
         }
     }
+    
 }
