@@ -10,9 +10,7 @@ namespace MiniRisViewer.Views
     {
         public MainWindow()
         {
-            InitializeComponent();
-//            ContentRendered += (s, e) => { MessageBox.Show("ContentRendered", "TEST"); };
-
+                InitializeComponent();
         }
     }
 }

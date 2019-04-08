@@ -25,8 +25,8 @@ namespace MiniRisViewer
         /// </summary>
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        //InteractionRequestクラスのプロパティ
-        public InteractionRequest<Notification> TestNotificationRequest { get; } = new InteractionRequest<Notification>();
+        ////InteractionRequestクラスのプロパティ
+        //public InteractionRequest<Notification> TestNotificationRequest { get; } = new InteractionRequest<Notification>();
 
         protected override Window CreateShell()
         {
@@ -71,12 +71,13 @@ namespace MiniRisViewer
             {
 
                 _logger.Log(LogLevel.Error , ex, "Config.xml読み込みエラー。アプリ終了");
-                return ;
+
+                //MVVMを無視して直接表示・・・
+                MessageBox.Show("設定ファイルが読み込めなかったため、アプリを終了します。", "Error");
+                Environment.Exit(0);
+
+                return;
                 
-                //理想はここでダイアログだして終了、画面ないときにダイアログを表示する実装が
-                //実現できず、、、、画面のほうでダイアログを表示して、終了させる
-                //this.TestNotificationRequest.Raise(new Notification { Title = "Alert", Content = "Notification message." });
-                //Environment.Exit(0);
             }
         }
 
