@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace MiniRisViewer.Dialog
+namespace MiniRisViewer.Domain
 {
     public class DialogService:IDialogService 
     {
-        public void ShowMessage(string message)
+        public void ShowMessage(string message,string title)
         {
-            MessageBox.Show(message);
+            MessageBox.Show(message,title);
         }
     }
 }

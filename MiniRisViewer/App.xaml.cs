@@ -1,4 +1,4 @@
-﻿using MiniRisViewer.Dialog;
+﻿using MiniRisViewer.Domain;
 using MiniRisViewer.Domain.Model;
 using MiniRisViewer.Domain.Service;
 using MiniRisViewer.ServiceStatus;
@@ -26,9 +26,7 @@ namespace MiniRisViewer
         ///
         /// </summary>
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
-        ////InteractionRequestクラスのプロパティ
-        //public InteractionRequest<Notification> TestNotificationRequest { get; } = new InteractionRequest<Notification>();
+        private static DialogService dialogService;
 
         protected override Window CreateShell()
         {
@@ -49,6 +47,8 @@ namespace MiniRisViewer
             catch (Exception ex)
             {
                 _logger.Log(LogLevel.Fatal, ex, "起動時エラー");
+                dialogService.ShowMessage("起動できませんでした。\nアプリを終了します。", "Error");
+                Environment.Exit(0);
 
             }
         }
@@ -57,41 +57,61 @@ namespace MiniRisViewer
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            DialogService dialogService = new DialogService();
-            containerRegistry.RegisterInstance<DialogService>(dialogService);
+
+            //DI登録時にエラー判定、ダイアログ表示をしたいので
+            //DIコンテナに登録
+            dialogService = new DialogService();
+            containerRegistry.RegisterSingleton<IDialogService,DialogService >();
 
             string ConfigPath = @"C:\ProgramData\UsTEC\UsMiniRisViewer\Config.xml";
+            Config config;
 
+            //設定ファイルの読込
             try
             {
-                var config = ConfigLoader.LoadConfigFromFile(ConfigPath);
-                ModelData = new ServiceAdministrator(config);
-                containerRegistry.RegisterInstance<ServiceAdministrator>(ModelData);
-                dialogService.ShowMessage("設定ファイルが読み込めなかったため、アプリを終了します。");
+                config = ConfigLoader.LoadConfigFromFile(ConfigPath);             
+               
+            }
+            catch (Exception ex)
+            {
+                _logger.Log(LogLevel.Error , ex, "Config.xml読み込みエラー。アプリ終了");
+                throw;
+            }
 
+            //設定ファイルからデータ作成
+            try
+            {
+                ModelData = new ServiceAdministrator(config);
 
             }
             catch (Exception ex)
             {
-
-                _logger.Log(LogLevel.Error , ex, "Config.xml読み込みエラー。アプリ終了");
-
-
-//                container.Resolve<DialogService>("CommonDialog").ShowMessage("設定ファイルが読み込めなかったため、アプリを終了します。");
-
-
-                ////MVVMを無視して直接表示・・・
-                //MessageBox.Show("設定ファイルが読み込めなかったため、アプリを終了します。", "Error");
-                //Environment.Exit(0);
-
-                return;
-                
+                _logger.Log(LogLevel.Error, ex, "Config.xml内容エラー。アプリ終了");
+                dialogService.ShowMessage("設定ファイルを確認してください。\nアプリを終了します。", "Error");
+                Environment.Exit(0);
             }
+
+            containerRegistry.RegisterInstance<ServiceAdministrator>(ModelData);
+
+        }
+
+        public static IDialogService CreateDialogService()
+        {
+
+            if (App.dialogService == null) {
+                App.dialogService = new DialogService();
+            }
+
+            return App.dialogService;
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
             moduleCatalog.AddModule<ServiceStatusModule>();
+
+            //App.xaml.cs内でダイアログを使用したいため、上記RegisterTypesにて登録のためコメントアウト
+            //moduleCatalog.AddModule<DomainModule>();
+
         }
     }
 }

@@ -74,9 +74,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="app.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -85,10 +82,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ServiceStatusView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MetroWindowStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -115,17 +108,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MiniRisViewer.Dialog\MiniRisViewer.Dialog.csproj">
-      <Project>{844DB7F2-9A9B-4546-A2AB-BB3E1436BB68}</Project>
-      <Name>MiniRisViewer.Dialog</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MiniRisViewer.Domain\MiniRisViewer.Domain.csproj">
       <Project>{1b2eb201-6585-4c08-8cf3-38ae0b4b940e}</Project>
       <Name>MiniRisViewer.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Prism.Interactivity.MahAppsPack\Prism.Interactivity.MahAppsPack.csproj">
-      <Project>{4e4ed199-c227-4492-a259-a3da10946172}</Project>
-      <Name>Prism.Interactivity.MahAppsPack</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

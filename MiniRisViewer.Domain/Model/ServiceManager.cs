@@ -230,17 +230,29 @@ namespace MiniRisViewer.Domain.Model
             }
             catch (Exception)
             {
+                throw;
             }
         }
 
         /// <summary>
         /// ログ出力先フォルダを
-        /// エクスプローラで開く
+        /// エクスプローラで開くログファイルのパスから開けなかった場合は、explorerをひらく
         /// </summary>
-        public void ShowLogFolder()
+        public bool ShowLogFolder()
         {
-            System.Diagnostics.Process.Start(
-                "EXPLORER.EXE", LogFolderPath);
+            bool result;
+            try
+            {
+                System.Diagnostics.Process.Start(LogFolderPath);
+                result =  true;
+            }
+            catch(Exception)
+            {
+                System.Diagnostics.Process.Start(
+                    "EXPLORER.EXE");
+                result = false;
+            }
+            return result;
         }
     }
 }

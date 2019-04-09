@@ -49,9 +49,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DialogModule.cs" />
-    <Compile Include="DialogService.cs" />
-    <Compile Include="IDialogService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

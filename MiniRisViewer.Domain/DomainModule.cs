@@ -1,11 +1,10 @@
-﻿using MiniRisViewer.Dialog.Views;
-using Prism.Ioc;
+﻿using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 
-namespace MiniRisViewer.Dialog
+namespace MiniRisViewer.Domain
 {
-    public class DialogModule : IModule
+    public class DomainModule : IModule
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {
@@ -14,6 +13,7 @@ namespace MiniRisViewer.Dialog
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            //App.xaml.csにてDI登録
             containerRegistry.RegisterInstance<DialogService>(new DialogService());
         }
     }

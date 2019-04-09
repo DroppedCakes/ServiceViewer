@@ -1,4 +1,4 @@
-﻿using MiniRisViewer.Dialog;
+﻿using MiniRisViewer.Domain;
 using MiniRisViewer.Domain.Model;
 using MiniRisViewer.Domain.Service;
 using NLog;
@@ -41,11 +41,14 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             this.DisplayName = "Service";
         }
 
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         ///
         /// </summary>
-        public Service(ServiceManager model)
+        public Service(ServiceManager model,IDialogService dialog)
         {
+
             this.Status = model.ObserveProperty(x => x.Status).ToReactiveProperty().AddTo(this.DisposeCollection);
             this.CanStop = model.ObserveProperty(x => x.CanStop).ToReactiveProperty().AddTo(this.DisposeCollection);
 
@@ -65,7 +68,11 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             );
 
             this.ShowLogCommand = new DelegateCommand(
-                model.ShowLogFolder
+                () => {
+                    if (!(model.ShowLogFolder())){
+                        dialog.ShowMessage("Config.xmlのlogファイルパスにフォルダがありません。\nエクスプローラーを起動します。", "");
+                    }                      
+                }
             );
         }
     }
@@ -201,19 +208,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             };
         }
 
-
-        //InteractionRequestクラスのプロパティ
-        public InteractionRequest<Notification> NotificationRequest { get; } = new InteractionRequest<Notification>();
-
-        public DelegateCommand NotificationCommand { get; }
-
-        //Raiseイベントの実装
-        private void NotificationCommandExecute()
-        {
-            this.NotificationRequest.Raise(new Notification { Title = "Dialog", Content = "Notification message." });
-        }
-
-
         public InteractionRequest<Notification> MetroNotification { get; private set; } = new InteractionRequest<Notification>();
         public ReactiveCommand RaiseMetroNotification { get; private set; } = new ReactiveCommand();
 
@@ -223,32 +217,20 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public ServiceStatusViewModel(ServiceAdministrator model,DialogService dialog)
         {
             this.Model = model;
-            //CreateModel();
 
             try
             {
                 this.Services = Model.ServiceManagers
                 .Where(service => service.Visible)
-                .Select(service => new Service(service))
+                .Select(service => new Service(service,dialog ))
                 .ToArray();
-
             }
             catch (Exception ex)
             {
-
-                _logger.Log(LogLevel.Error, ex, "アプリ終了");
-
-
-                this.MetroNotification.Raise(new Notification()
-                {
-                    Title = "MetroNotification",
-                    Content = "MetroNotification",
-                }, n => Console.WriteLine("MetroNotification"));
-
-
+                _logger.Log(LogLevel.Error, ex);
+                dialog.ShowMessage("設定ファイルの内容を確認してください。\nアプリを終了します。", "Error");
                 Environment.Exit(0);
             }
-
 
             // 1秒ごとに購読する
             ScreenSynchronousTimer = new ReactiveTimer(TimeSpan.FromSeconds(1));
@@ -264,16 +246,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             //// 全てのサービスを再起動するコマンド
             RestartServiceCommand.Subscribe(() => RestartAllServiceAsync()).AddTo(this.DisposeCollection);
 
-            this.NotificationCommand = new DelegateCommand(this.NotificationCommandExecute);
-
-            //this.RaiseMetroNotification.Subscribe(() => this.MetroNotification.Raise(new Notification()
-            //{
-            //    Title = "MetroNotification",
-            //    Content = "MetroNotification",
-            //}, n => Console.WriteLine("MetroNotification")));
-
-
-            this.RaiseMetroNotification.Subscribe(() => dialog.ShowMessage("aaaa"));
         }
     }
     

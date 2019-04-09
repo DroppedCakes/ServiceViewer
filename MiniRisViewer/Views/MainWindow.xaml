@@ -23,20 +23,6 @@
 
     <Grid>
         <ContentControl prism:RegionManager.RegionName="ContentRegion" />
-        <!--        <ContentControl Grid.ColumnSpan="2" prism:RegionManager.RegionName="ContentRegion" />        -->
     </Grid>
-
-    <i:Interaction.Triggers>
-        <prism:InteractionRequestTrigger SourceObject="{Binding TestNotificationRequest}">
-            <prism:PopupWindowAction IsModal="True" WindowStartupLocation="CenterOwner">
-                <prism:PopupWindowAction.WindowStyle>
-                    <Style TargetType="Window">
-                        <Setter Property="ResizeMode" Value="NoResize" />
-                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
-                    </Style>
-                </prism:PopupWindowAction.WindowStyle>
-            </prism:PopupWindowAction>
-        </prism:InteractionRequestTrigger>
-    </i:Interaction.Triggers>
 
 </controls:MetroWindow>

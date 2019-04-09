@@ -27,16 +27,9 @@ namespace MiniRisViewer.Domain.Model
         /// </summary>
         public ServiceAdministrator(Config config)
         {
-            try { 
             this.ServiceManagers = config.Services
                 .Select(service => new ServiceManager(service.Name, service.Caption, service.LogPath, System.Convert.ToBoolean(service.Visible)))
                 .ToArray();
-            }
-            catch (Exception ex)
-            {
-                _logger.Log(LogLevel.Error, ex, "Config.xmlファイル内容エラー");
-                return;
-            }
         }
 
         /// <summary>
