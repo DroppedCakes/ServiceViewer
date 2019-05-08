@@ -244,9 +244,9 @@ namespace MiniRisViewer.Domain.Model
             try
             {
                 System.Diagnostics.Process.Start(LogFolderPath);
-                result =  true;
+                result = true;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 System.Diagnostics.Process.Start(
                     "EXPLORER.EXE");

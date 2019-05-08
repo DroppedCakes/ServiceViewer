@@ -4,16 +4,12 @@ using MiniRisViewer.Domain.Service;
 using MiniRisViewer.ServiceStatus;
 using MiniRisViewer.Views;
 using NLog;
-using Prism.Interactivity.InteractionRequest;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
-using Prism.Unity;
-using Reactive.Bindings;
 using System;
 using System.Windows;
 using Unity;
-using Unity.Injection;
 
 namespace MiniRisViewer
 {
@@ -26,6 +22,7 @@ namespace MiniRisViewer
         ///
         /// </summary>
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private static DialogService dialogService;
 
         protected override Window CreateShell()
@@ -42,14 +39,12 @@ namespace MiniRisViewer
                 _logger.Info("起動");
                 var region_manager = CommonServiceLocator.ServiceLocator.Current.GetInstance<IRegionManager>();
                 region_manager.RequestNavigate("ContentRegion", nameof(ServiceStatus));
-
             }
             catch (Exception ex)
             {
                 _logger.Log(LogLevel.Fatal, ex, "起動時エラー");
                 dialogService.ShowMessage("起動できませんでした。\nアプリを終了します。", "Error");
                 Environment.Exit(0);
-
             }
         }
 
@@ -57,11 +52,10 @@ namespace MiniRisViewer
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
             //DI登録時にエラー判定、ダイアログ表示をしたいので
             //DIコンテナに登録
             dialogService = new DialogService();
-            containerRegistry.RegisterSingleton<IDialogService,DialogService >();
+            containerRegistry.RegisterSingleton<IDialogService, DialogService>();
 
             string ConfigPath = @"C:\ProgramData\UsTEC\UsMiniRisViewer\Config.xml";
             Config config;
@@ -69,12 +63,11 @@ namespace MiniRisViewer
             //設定ファイルの読込
             try
             {
-                config = ConfigLoader.LoadConfigFromFile(ConfigPath);             
-               
+                config = ConfigLoader.LoadConfigFromFile(ConfigPath);
             }
             catch (Exception ex)
             {
-                _logger.Log(LogLevel.Error , ex, "Config.xml読み込みエラー。アプリ終了");
+                _logger.Log(LogLevel.Error, ex, "Config.xml読み込みエラー。アプリ終了");
                 throw;
             }
 
@@ -82,7 +75,6 @@ namespace MiniRisViewer
             try
             {
                 ModelData = new ServiceAdministrator(config);
-
             }
             catch (Exception ex)
             {
@@ -92,13 +84,12 @@ namespace MiniRisViewer
             }
 
             containerRegistry.RegisterInstance<ServiceAdministrator>(ModelData);
-
         }
 
         public static IDialogService CreateDialogService()
         {
-
-            if (App.dialogService == null) {
+            if (App.dialogService == null)
+            {
                 App.dialogService = new DialogService();
             }
 
@@ -111,7 +102,6 @@ namespace MiniRisViewer
 
             //App.xaml.cs内でダイアログを使用したいため、上記RegisterTypesにて登録のためコメントアウト
             //moduleCatalog.AddModule<DomainModule>();
-
         }
     }
 }

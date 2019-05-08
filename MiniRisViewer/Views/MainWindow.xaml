@@ -20,9 +20,7 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto">
 
-
     <Grid>
         <ContentControl prism:RegionManager.RegionName="ContentRegion" />
     </Grid>
-
 </controls:MetroWindow>

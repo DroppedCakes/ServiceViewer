@@ -1,6 +1,5 @@
 ﻿using Prism.Ioc;
 using Prism.Modularity;
-using Prism.Regions;
 
 namespace MiniRisViewer.Domain
 {
@@ -8,7 +7,6 @@ namespace MiniRisViewer.Domain
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {
- 
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

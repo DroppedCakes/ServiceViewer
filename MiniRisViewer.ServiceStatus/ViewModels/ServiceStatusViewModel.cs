@@ -1,6 +1,5 @@
 ﻿using MiniRisViewer.Domain;
 using MiniRisViewer.Domain.Model;
-using MiniRisViewer.Domain.Service;
 using NLog;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
@@ -14,7 +13,6 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.ServiceProcess;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace MiniRisViewer.ServiceStatus.ViewModels
 {
@@ -34,7 +32,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public DelegateCommand ShowLogCommand { set; get; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         internal Service()
         {
@@ -46,9 +44,8 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// <summary>
         ///
         /// </summary>
-        public Service(ServiceManager model,IDialogService dialog)
+        public Service(ServiceManager model, IDialogService dialog)
         {
-
             this.Status = model.ObserveProperty(x => x.Status).ToReactiveProperty().AddTo(this.DisposeCollection);
             this.CanStop = model.ObserveProperty(x => x.CanStop).ToReactiveProperty().AddTo(this.DisposeCollection);
 
@@ -68,10 +65,12 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             );
 
             this.ShowLogCommand = new DelegateCommand(
-                () => {
-                    if (!(model.ShowLogFolder())){
+                () =>
+                {
+                    if (!(model.ShowLogFolder()))
+                    {
                         dialog.ShowMessage("Config.xmlのlogファイルパスにフォルダがありません。\nエクスプローラーを起動します。", "");
-                    }                      
+                    }
                 }
             );
         }
@@ -113,7 +112,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         public ReactiveTimer ScreenSynchronousTimer;
 
         public ReactiveCommand ShowDialogMaterialCommand { get; private set; } = new ReactiveCommand();
-
 
         /// <summary>
         /// IDisposableの実装部
@@ -214,7 +212,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ServiceStatusViewModel(ServiceAdministrator model,DialogService dialog)
+        public ServiceStatusViewModel(ServiceAdministrator model, DialogService dialog)
         {
             this.Model = model;
 
@@ -222,7 +220,7 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             {
                 this.Services = Model.ServiceManagers
                 .Where(service => service.Visible)
-                .Select(service => new Service(service,dialog ))
+                .Select(service => new Service(service, dialog))
                 .ToArray();
             }
             catch (Exception ex)
@@ -245,8 +243,6 @@ namespace MiniRisViewer.ServiceStatus.ViewModels
             AllstartServiceCommand.Subscribe(() => StartAllServiceAsync()).AddTo(this.DisposeCollection);
             //// 全てのサービスを再起動するコマンド
             RestartServiceCommand.Subscribe(() => RestartAllServiceAsync()).AddTo(this.DisposeCollection);
-
         }
     }
-    
 }

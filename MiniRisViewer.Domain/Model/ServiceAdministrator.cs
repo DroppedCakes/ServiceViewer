@@ -1,21 +1,17 @@
 ﻿using MiniRisViewer.Domain.Service;
 using NLog;
 using Prism.Mvvm;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MiniRisViewer.Domain.Model
 {
-
     /// <summary>
     ///
     /// </summary>
     public class ServiceAdministrator : BindableBase
     {
-
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
 
         /// <summary>
         /// 各サービスの状態・操作を行う
@@ -29,7 +25,7 @@ namespace MiniRisViewer.Domain.Model
         {
             this.ServiceManagers = config.Services
                 .Select(service => new ServiceManager(service.Name, service.Caption, service.LogPath, System.Convert.ToBoolean(service.Visible)))
-                .Where(service=>service.Visible==true)
+                .Where(service => service.Visible == true)
                 .ToArray();
         }
 

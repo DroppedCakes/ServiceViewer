@@ -105,12 +105,8 @@
                         Margin="16,16,16,16"
                         Command="{Binding RestartServiceCommand}"
                         Content="全てのサービスを再起動" />
-                    
-
                 </WrapPanel>
             </StackPanel>
         </ScrollViewer>
     </xctk:BusyIndicator>
-
-
 </UserControl>

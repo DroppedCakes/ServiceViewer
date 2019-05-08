@@ -1,5 +1,4 @@
 ﻿using MahApps.Metro.Controls;
-using System.Windows;
 
 namespace MiniRisViewer.Views
 {
@@ -10,7 +9,7 @@ namespace MiniRisViewer.Views
     {
         public MainWindow()
         {
-                InitializeComponent();
+            InitializeComponent();
         }
     }
 }
