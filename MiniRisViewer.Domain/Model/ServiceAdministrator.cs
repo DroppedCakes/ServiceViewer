@@ -29,6 +29,7 @@ namespace MiniRisViewer.Domain.Model
         {
             this.ServiceManagers = config.Services
                 .Select(service => new ServiceManager(service.Name, service.Caption, service.LogPath, System.Convert.ToBoolean(service.Visible)))
+                .Where(service=>service.Visible==true)
                 .ToArray();
         }
 
