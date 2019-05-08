@@ -107,7 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DomainModule.cs" />
-    <Compile Include="Model\Ailias.cs" />
     <Compile Include="Model\ServiceManager.cs" />
     <Compile Include="Model\ServiceAdministrator.cs" />
     <Compile Include="Service\ConfigLoader.cs" />
