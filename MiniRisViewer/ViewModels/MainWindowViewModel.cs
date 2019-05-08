@@ -4,7 +4,8 @@ namespace MiniRisViewer.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private string _title = "Prism Application";
+        private string _title = "ミニRIS監視プログラム";
+
         public string Title
         {
             get { return _title; }
@@ -13,7 +14,6 @@ namespace MiniRisViewer.ViewModels
 
         public MainWindowViewModel()
         {
-
         }
     }
 }
